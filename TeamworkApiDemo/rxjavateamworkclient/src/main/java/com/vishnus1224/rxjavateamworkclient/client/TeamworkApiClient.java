@@ -18,7 +18,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 /**
  * Created by Vishnu on 8/13/2016.
  */
-public class TeamworkApiClient {
+class TeamworkApiClient {
 
     private static String apiToken;
 
@@ -26,7 +26,7 @@ public class TeamworkApiClient {
 
     private static Retrofit retrofit;
 
-    public TeamworkApiClient(TeamworkApiConfig teamworkApiConfig){
+    protected TeamworkApiClient(TeamworkApiConfig teamworkApiConfig){
 
         //check if the config that is passed in has the same api token and base url.
         //if they are different then create a new retrofit instance.
