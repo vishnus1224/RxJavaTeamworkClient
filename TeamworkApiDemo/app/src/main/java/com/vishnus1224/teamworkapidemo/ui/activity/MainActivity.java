@@ -1,13 +1,15 @@
-package com.vishnus1224.teamworkapidemo;
+package com.vishnus1224.teamworkapidemo.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.vishnus1224.teamworkapidemo.R;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 }
