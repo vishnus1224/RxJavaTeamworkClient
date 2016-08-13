@@ -18,7 +18,7 @@ public class TeamworkApiClientTest {
 
     private final String emptyUrl = "";
 
-    private final String FAKE_URL = "s3efaahh";
+    private final String FAKE_URL = "https://www.xyz.com";
 
     private final String FAKE_TOKEN = "sdgdgwrtw";
 
