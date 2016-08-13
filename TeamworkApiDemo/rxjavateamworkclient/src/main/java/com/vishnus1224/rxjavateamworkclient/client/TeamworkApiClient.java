@@ -20,17 +20,17 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  */
 public class TeamworkApiClient {
 
-    private String apiToken;
+    private static String apiToken;
 
-    private String baseUrl;
+    private static String baseUrl;
 
-    private Retrofit retrofit;
+    private static Retrofit retrofit;
 
     public TeamworkApiClient(TeamworkApiConfig teamworkApiConfig){
 
         //check if the config that is passed in has the same api token and base url.
         //if they are different then create a new retrofit instance.
-        if(!teamworkApiConfig.getApiToken().equals(apiToken) && !teamworkApiConfig.getBaseUrl().equals(baseUrl)){
+        if(!teamworkApiConfig.getApiToken().equals(apiToken) || !teamworkApiConfig.getBaseUrl().equals(baseUrl)){
 
             this.apiToken = teamworkApiConfig.getApiToken();
             this.baseUrl = teamworkApiConfig.getBaseUrl();
@@ -38,6 +38,12 @@ public class TeamworkApiClient {
             retrofit = createRetrofit(baseUrl);
 
         }
+
+    }
+
+    protected Retrofit getRetrofit(){
+
+        return retrofit;
 
     }
 
