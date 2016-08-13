@@ -12,7 +12,7 @@ public class Account {
     @JsonField
     private String name;
 
-    @JsonField
+    @JsonField(name = "companyname")
     private String companyName;
 
     @JsonField
