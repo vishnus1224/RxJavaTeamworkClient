@@ -7,7 +7,9 @@ public class TeamworkApiClient {
 
     private final String apiToken;
 
-    public TeamworkApiClient(String apiToken){
+    private final String url;
+
+    public TeamworkApiClient(String apiToken, String url){
 
         if(apiToken == null || apiToken.isEmpty()){
 
@@ -15,7 +17,14 @@ public class TeamworkApiClient {
 
         }
 
+        if(url == null || url.isEmpty()){
+
+            throw new IllegalArgumentException("Url cannot be null or empty");
+
+        }
+
         this.apiToken = apiToken;
+        this.url = url;
 
     }
 }

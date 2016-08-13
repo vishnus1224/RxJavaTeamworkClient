@@ -14,6 +14,12 @@ public class TeamworkApiClientTest {
 
     private final String emptyApiToken = "";
 
+    private final String nullUrl = null;
+
+    private final String emptyUrl = "";
+
+    private final String FAKE_URL = "s3efaahh";
+
     private final String FAKE_TOKEN = "sdgdgwrtw";
 
     @Before
@@ -24,22 +30,42 @@ public class TeamworkApiClientTest {
     @Test(expected = IllegalArgumentException.class)
     public void testNullToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(nullApiToken);
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(nullApiToken, FAKE_URL);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(emptyApiToken);
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(emptyApiToken, FAKE_URL);
 
     }
 
     @Test
     public void testValidToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN);
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, FAKE_URL);
 
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullUrl(){
+
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, nullUrl);
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testEmptyUrl(){
+
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, emptyUrl);
+
+    }
+
+    @Test
+    public void testValidUrl(){
+
+        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, FAKE_URL);
 
     }
 }
