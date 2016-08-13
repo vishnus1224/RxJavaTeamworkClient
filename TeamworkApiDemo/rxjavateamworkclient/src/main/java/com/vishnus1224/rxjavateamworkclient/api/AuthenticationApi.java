@@ -1,4 +1,4 @@
-package com.vishnus1224.rxjavateamworkclient;
+package com.vishnus1224.rxjavateamworkclient.api;
 
 import com.vishnus1224.rxjavateamworkclient.model.AccountResponse;
 

@@ -1,6 +1,7 @@
-package com.vishnus1224.rxjavateamworkclient;
+package com.vishnus1224.rxjavateamworkclient.client;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
+import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 
 import java.io.IOException;
 
@@ -13,36 +14,30 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+
 /**
  * Created by Vishnu on 8/13/2016.
  */
 public class TeamworkApiClient {
 
-    private final String apiToken;
+    private String apiToken;
 
-    private final String baseUrl;
+    private String baseUrl;
 
     private Retrofit retrofit;
 
-    public TeamworkApiClient(String apiToken, String baseUrl) {
+    public TeamworkApiClient(TeamworkApiConfig teamworkApiConfig){
 
-        if (apiToken == null || apiToken.isEmpty()) {
+        //check if the config that is passed in has the same api token and base url.
+        //if they are different then create a new retrofit instance.
+        if(!teamworkApiConfig.getApiToken().equals(apiToken) && !teamworkApiConfig.getBaseUrl().equals(baseUrl)){
 
-            throw new IllegalArgumentException("Token cannot be null or empty");
+            this.apiToken = teamworkApiConfig.getApiToken();
+            this.baseUrl = teamworkApiConfig.getBaseUrl();
+
+            retrofit = createRetrofit(baseUrl);
 
         }
-
-        if (baseUrl == null || baseUrl.isEmpty()) {
-
-            throw new IllegalArgumentException("Url cannot be null or empty");
-
-        }
-
-        this.apiToken = apiToken;
-
-        this.baseUrl = baseUrl;
-
-        this.retrofit = createRetrofit();
 
     }
 
@@ -83,7 +78,7 @@ public class TeamworkApiClient {
 
     }
 
-    private Retrofit createRetrofit() {
+    private Retrofit createRetrofit(String baseUrl) {
 
         return new Retrofit.Builder().
                 baseUrl(baseUrl).
@@ -93,5 +88,6 @@ public class TeamworkApiClient {
                 build();
 
     }
+
 
 }

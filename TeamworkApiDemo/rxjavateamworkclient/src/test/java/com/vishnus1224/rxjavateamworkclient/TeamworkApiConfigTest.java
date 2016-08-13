@@ -1,14 +1,14 @@
 package com.vishnus1224.rxjavateamworkclient;
 
+import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Vishnu on 8/13/2016.
  */
-public class TeamworkApiClientTest {
+public class TeamworkApiConfigTest {
 
     private final String nullApiToken = null;
 
@@ -30,42 +30,42 @@ public class TeamworkApiClientTest {
     @Test(expected = IllegalArgumentException.class)
     public void testNullToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(nullApiToken, FAKE_URL);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(nullApiToken, FAKE_URL);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(emptyApiToken, FAKE_URL);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(emptyApiToken, FAKE_URL);
 
     }
 
     @Test
     public void testValidToken(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, FAKE_URL);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(FAKE_TOKEN, FAKE_URL);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullUrl(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, nullUrl);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(FAKE_TOKEN, nullUrl);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyUrl(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, emptyUrl);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(FAKE_TOKEN, emptyUrl);
 
     }
 
     @Test
     public void testValidUrl(){
 
-        TeamworkApiClient teamworkApiClient = new TeamworkApiClient(FAKE_TOKEN, FAKE_URL);
+        TeamworkApiConfig teamworkApiClient = new TeamworkApiConfig(FAKE_TOKEN, FAKE_URL);
 
     }
 }
