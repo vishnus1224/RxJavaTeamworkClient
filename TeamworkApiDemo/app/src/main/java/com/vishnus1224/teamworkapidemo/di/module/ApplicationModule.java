@@ -1,5 +1,7 @@
 package com.vishnus1224.teamworkapidemo.di.module;
 
+import android.app.Application;
+
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.BuildConfig;
 
@@ -13,6 +15,13 @@ import dagger.Provides;
  */
 @Module
 public class ApplicationModule {
+
+    private Application application;
+
+    public ApplicationModule(Application application){
+
+        this.application = application;
+    }
 
     @Provides @Singleton
     TeamworkApiConfig provideTeamworkApiConfig(){
