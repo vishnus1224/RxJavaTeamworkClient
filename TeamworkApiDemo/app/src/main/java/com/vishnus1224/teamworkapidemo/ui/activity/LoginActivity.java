@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.ActivityComponent;
 import com.vishnus1224.teamworkapidemo.di.module.ActivityModule;
+import com.vishnus1224.teamworkapidemo.manager.TokenManager;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LoginPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.LoginView;
 
@@ -33,6 +34,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Inject
     LoginPresenter loginPresenter;
 
+    @Inject
+    TokenManager tokenManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,50 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         loginPresenter.onViewDetached(this);
 
     }
+
+
+    @Override
+    public void showProgressDialog() {
+
+        progressDialog.setMessage(getResources().getString(R.string.label_authenticating));
+
+        progressDialog.show();
+
+    }
+
+    @Override
+    public void hideProgressDialog() {
+
+        if(progressDialog.isShowing()) {
+
+            progressDialog.hide();
+
+        }
+
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialogInterface) {
+
+        loginPresenter.cancelLogin();
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+
+            case R.id.loginButton:
+
+                loginButtonClicked();
+
+                break;
+
+        }
+    }
+
 
     private void setupViews() {
 
@@ -81,50 +129,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    @Override
-    public void onClick(View view) {
+    private void loginButtonClicked() {
 
-        switch (view.getId()){
+        if(isTokenValid(apiKeyEditText.getText().toString())) {
 
-            case R.id.loginButton:
+            setToken(apiKeyEditText.getText().toString());
 
-                loginButtonClicked();
-
-                break;
+            login();
 
         }
+
     }
 
-    private void loginButtonClicked() {
+    private void setToken(String apiToken) {
+
+        tokenManager.setApiToken(apiToken);
+
+    }
+
+    private void login() {
 
         loginPresenter.loginUser();
 
     }
 
-    @Override
-    public void showProgressDialog() {
 
-        progressDialog.setMessage(getResources().getString(R.string.label_authenticating));
+    private boolean isTokenValid(String apiToken){
 
-        progressDialog.show();
-
-    }
-
-    @Override
-    public void hideProgressDialog() {
-
-        if(progressDialog.isShowing()) {
-
-            progressDialog.hide();
-            
-        }
-
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialogInterface) {
-
-        loginPresenter.cancelLogin();
+        return !apiToken.trim().isEmpty();
 
     }
 }
