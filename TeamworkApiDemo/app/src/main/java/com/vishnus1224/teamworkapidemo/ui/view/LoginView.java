@@ -9,4 +9,5 @@ public interface LoginView extends BaseView {
 
     void hideProgressDialog();
 
+    void showError(String message);
 }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.ActivityComponent;
@@ -75,6 +76,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             progressDialog.hide();
 
         }
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
 
     }
 
