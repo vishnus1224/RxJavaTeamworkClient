@@ -10,6 +10,7 @@ import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
 import com.vishnus1224.teamworkapidemo.model.UserConfig;
+import com.vishnus1224.teamworkapidemo.ui.fragment.BaseActivitiesFragment;
 import com.vishnus1224.teamworkapidemo.util.Constants;
 
 public class MainActivity extends BaseActivity {
@@ -72,7 +73,9 @@ public class MainActivity extends BaseActivity {
 
     private void showActivitiesFragment() {
 
+        BaseActivitiesFragment baseActivitiesFragment = new BaseActivitiesFragment();
 
+        replaceFragment(R.id.drawerContentFrame, baseActivitiesFragment);
 
     }
 
