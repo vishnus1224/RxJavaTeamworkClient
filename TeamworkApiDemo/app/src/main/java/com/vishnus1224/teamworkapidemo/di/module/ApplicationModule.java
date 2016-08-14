@@ -1,9 +1,12 @@
 package com.vishnus1224.teamworkapidemo.di.module;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.vishnus1224.rxjavateamworkclient.client.AuthenticationApiClient;
 import com.vishnus1224.teamworkapidemo.manager.TokenManager;
+import com.vishnus1224.teamworkapidemo.util.Constants;
 
 import javax.inject.Singleton;
 
@@ -42,6 +45,13 @@ public class ApplicationModule {
     AuthenticationApiClient authenticationApiClient(TokenManager tokenManager){
 
         return new AuthenticationApiClient(tokenManager.getApiToken());
+
+    }
+
+    @Provides @Singleton
+    SharedPreferences provideSharedPreferences(Application application){
+
+        return application.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
 
     }
 }
