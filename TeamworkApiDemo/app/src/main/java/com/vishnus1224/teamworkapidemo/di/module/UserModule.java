@@ -12,21 +12,18 @@ import dagger.Provides;
 @Module
 public class UserModule {
 
-    private String baseUrl;
+    private TeamworkApiConfig teamworkApiConfig;
 
-    private String apiToken;
+    public UserModule(TeamworkApiConfig teamworkApiConfig){
 
-    public UserModule(String apiToken, String baseUrl){
-
-        this.apiToken = apiToken;
-        this.baseUrl = baseUrl;
+        this.teamworkApiConfig = teamworkApiConfig;
 
     }
 
     @Provides @PerUser
     TeamworkApiConfig provideTeamworkApiConfig(){
 
-        return new TeamworkApiConfig(apiToken, baseUrl);
+        return teamworkApiConfig;
 
     }
 }
