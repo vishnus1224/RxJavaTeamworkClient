@@ -42,12 +42,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         injectDependencies();
 
+        if(alreadyLoggedIn()){
+
+            goToMainScreen();
+
+        }
+
         setContentView(R.layout.activity_login);
 
         setupViews();
 
         initPresenter();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -93,6 +100,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mainActivityIntent.putExtra(Constants.INTENT_KEY_USER_CONFIG, loginPresenter.obtainUserConfig());
 
         startActivity(mainActivityIntent);
+
+        finish();
 
     }
 
@@ -168,6 +177,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private boolean isTokenValid(String apiToken){
 
         return !apiToken.trim().isEmpty();
+
+    }
+
+
+    private boolean alreadyLoggedIn() {
+
+        return loginPresenter.obtainUserConfig().getApiToken() != null;
 
     }
 }
