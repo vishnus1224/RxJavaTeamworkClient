@@ -3,6 +3,7 @@ package com.vishnus1224.teamworkapidemo.usecase;
 import com.vishnus1224.rxjavateamworkclient.client.AuthenticationApiClient;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import rx.Observable;
 
@@ -11,10 +12,10 @@ import rx.Observable;
  */
 public class AuthenticationUseCase extends UseCase {
 
-    private AuthenticationApiClient authenticationApiClient;
+    private Provider<AuthenticationApiClient> authenticationApiClient;
 
     @Inject
-    public AuthenticationUseCase(AuthenticationApiClient authenticationApiClient){
+    public AuthenticationUseCase(Provider<AuthenticationApiClient> authenticationApiClient){
 
         this.authenticationApiClient = authenticationApiClient;
 
@@ -23,7 +24,7 @@ public class AuthenticationUseCase extends UseCase {
     @Override
     Observable buildUseCase() {
 
-        return authenticationApiClient.authenticate();
+        return authenticationApiClient.get().authenticate();
 
     }
 }
