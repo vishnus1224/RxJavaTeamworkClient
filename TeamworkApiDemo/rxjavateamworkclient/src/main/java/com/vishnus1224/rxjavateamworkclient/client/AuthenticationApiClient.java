@@ -12,8 +12,10 @@ import rx.Observable;
  */
 public class AuthenticationApiClient extends TeamworkApiClient {
 
-    public AuthenticationApiClient(TeamworkApiConfig teamworkApiConfig) {
-        super(teamworkApiConfig);
+    private static final String AUTHENTICATION_URL = "http://authenticate.teamworkpm.net";
+
+    public AuthenticationApiClient(String apiToken) {
+        super(new TeamworkApiConfig(apiToken, AUTHENTICATION_URL));
     }
 
     /**
