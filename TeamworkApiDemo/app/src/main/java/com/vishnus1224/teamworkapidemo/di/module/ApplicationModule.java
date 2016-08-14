@@ -38,7 +38,7 @@ public class ApplicationModule {
 
     }
 
-    @Provides @Singleton
+    @Provides
     AuthenticationApiClient authenticationApiClient(TokenManager tokenManager){
 
         return new AuthenticationApiClient(tokenManager.getApiToken());
