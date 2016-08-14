@@ -34,13 +34,6 @@ public class ApplicationModule {
 
     }
 
-    @Provides @Singleton
-    TokenManager provideTokenManager(){
-
-        return new TokenManager();
-
-    }
-
     @Provides
     AuthenticationApiClient authenticationApiClient(TokenManager tokenManager){
 
