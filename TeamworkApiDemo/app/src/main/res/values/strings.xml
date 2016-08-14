@@ -2,4 +2,5 @@
     <string name="app_name">TeamworkApiDemo</string>
     <string name="label_enter_api_key">Enter api key</string>
     <string name="label_login">login</string>
+    <string name="label_authenticating">Authenticating...</string>
 </resources>
