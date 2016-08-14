@@ -28,4 +28,10 @@ public class TeamworkApiDemo extends Application {
 
         applicationComponent.inject(this);
     }
+
+    public ApplicationComponent getApplicationComponent(){
+
+        return applicationComponent;
+
+    }
 }
