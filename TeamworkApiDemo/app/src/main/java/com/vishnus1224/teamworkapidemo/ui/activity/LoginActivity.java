@@ -2,6 +2,7 @@ package com.vishnus1224.teamworkapidemo.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -12,9 +13,9 @@ import android.widget.Toast;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.ActivityComponent;
 import com.vishnus1224.teamworkapidemo.di.module.ActivityModule;
-import com.vishnus1224.teamworkapidemo.manager.TokenManager;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LoginPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.LoginView;
+import com.vishnus1224.teamworkapidemo.util.Constants;
 
 import javax.inject.Inject;
 
@@ -35,17 +36,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Inject
     LoginPresenter loginPresenter;
 
-    @Inject
-    TokenManager tokenManager;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        injectDependencies();
+
         setContentView(R.layout.activity_login);
 
         setupViews();
-
-        injectDependencies();
 
         initPresenter();
     }
@@ -83,6 +82,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void showError(String message) {
 
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void goToMainScreen() {
+
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+
+        mainActivityIntent.putExtra(Constants.INTENT_KEY_USER_CONFIG, loginPresenter.obtainUserConfig());
+
+        startActivity(mainActivityIntent);
 
     }
 
@@ -141,23 +151,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         if(isTokenValid(apiKeyEditText.getText().toString())) {
 
-            setToken(apiKeyEditText.getText().toString());
-
-            login();
+            login(apiKeyEditText.getText().toString());
 
         }
 
     }
 
-    private void setToken(String apiToken) {
 
-        tokenManager.setApiToken(apiToken);
+    private void login(String apiToken) {
 
-    }
-
-    private void login() {
-
-        loginPresenter.loginUser();
+        loginPresenter.loginUser(apiToken);
 
     }
 

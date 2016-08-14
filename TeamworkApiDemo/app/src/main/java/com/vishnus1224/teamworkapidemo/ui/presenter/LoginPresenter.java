@@ -101,7 +101,7 @@ public class LoginPresenter implements BasePresenter<LoginView> {
 
                 hideProgressDialog();
 
-                loginView.goToMainScreen(accountResponse.getAccount());
+                loginView.goToMainScreen();
 
 
             }
