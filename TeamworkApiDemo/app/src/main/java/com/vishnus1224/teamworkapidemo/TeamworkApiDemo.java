@@ -23,7 +23,7 @@ public class TeamworkApiDemo extends Application {
     private void injectApplicationComponent() {
 
         applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this, BuildConfig.API_TOKEN))
+                .applicationModule(new ApplicationModule(this))
                 .build();
 
         applicationComponent.inject(this);

@@ -3,6 +3,7 @@ package com.vishnus1224.teamworkapidemo.di.module;
 import android.app.Application;
 
 import com.vishnus1224.rxjavateamworkclient.client.AuthenticationApiClient;
+import com.vishnus1224.teamworkapidemo.manager.TokenManager;
 
 import javax.inject.Singleton;
 
@@ -17,13 +18,10 @@ public class ApplicationModule {
 
     private Application application;
 
-    private String apiToken;
-
-    public ApplicationModule(Application application, String apiToken){
+    public ApplicationModule(Application application){
 
         this.application = application;
 
-        this.apiToken = apiToken;
     }
 
     @Provides @Singleton
@@ -34,9 +32,16 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    AuthenticationApiClient authenticationApiClient(){
+    TokenManager provideTokenManager(){
 
-        return new AuthenticationApiClient(apiToken);
+        return new TokenManager();
+
+    }
+
+    @Provides @Singleton
+    AuthenticationApiClient authenticationApiClient(TokenManager tokenManager){
+
+        return new AuthenticationApiClient(tokenManager.getApiToken());
 
     }
 }
