@@ -5,6 +5,7 @@ import com.vishnus1224.rxjavateamworkclient.model.AccountResponse;
 import com.vishnus1224.teamworkapidemo.di.scope.PerActivity;
 import com.vishnus1224.teamworkapidemo.manager.PreferencesManager;
 import com.vishnus1224.teamworkapidemo.manager.TokenManager;
+import com.vishnus1224.teamworkapidemo.model.UserConfig;
 import com.vishnus1224.teamworkapidemo.ui.view.LoginView;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 import com.vishnus1224.teamworkapidemo.util.Constants;
@@ -14,6 +15,7 @@ import java.net.UnknownHostException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dagger.Lazy;
 import rx.Subscriber;
 
 /**
@@ -22,7 +24,8 @@ import rx.Subscriber;
 @PerActivity
 public class LoginPresenter implements BasePresenter<LoginView> {
 
-    private UseCase useCase;
+    @Inject @Named("authentication")
+    Lazy<UseCase> useCase;
 
     private LoginView loginView;
 
@@ -31,10 +34,7 @@ public class LoginPresenter implements BasePresenter<LoginView> {
     private TokenManager tokenManager;
 
     @Inject
-    public LoginPresenter(@Named("authentication") UseCase useCase, PreferencesManager preferencesManager,
-                          TokenManager tokenManager) {
-
-        this.useCase = useCase;
+    public LoginPresenter(PreferencesManager preferencesManager, TokenManager tokenManager) {
 
         this.preferencesManager = preferencesManager;
 
@@ -51,7 +51,7 @@ public class LoginPresenter implements BasePresenter<LoginView> {
     @Override
     public void onViewDetached(LoginView loginView) {
 
-        useCase.unSubscribe();
+        useCase.get().unSubscribe();
 
         this.loginView = null;
 
@@ -67,7 +67,7 @@ public class LoginPresenter implements BasePresenter<LoginView> {
 
         setToken(apiToken);
 
-        useCase.execute(new Subscriber<AccountResponse>() {
+        useCase.get().execute(new Subscriber<AccountResponse>() {
 
             @Override
             public void onCompleted() {
@@ -114,7 +114,14 @@ public class LoginPresenter implements BasePresenter<LoginView> {
      */
     public void cancelLogin() {
 
-        useCase.unSubscribe();
+        useCase.get().unSubscribe();
+
+    }
+
+    public UserConfig obtainUserConfig(){
+
+        return new UserConfig(preferencesManager.get(Constants.PREFS_KEY_API_TOKEN),
+                preferencesManager.get(Constants.PREFS_KEY_SITE_URL));
 
     }
 
