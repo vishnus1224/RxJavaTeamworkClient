@@ -2,9 +2,6 @@ package com.vishnus1224.teamworkapidemo.di.module;
 
 import android.app.Application;
 
-import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
-import com.vishnus1224.teamworkapidemo.BuildConfig;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -24,9 +21,9 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    TeamworkApiConfig provideTeamworkApiConfig(){
+    Application provideApplication(){
 
-        return new TeamworkApiConfig(BuildConfig.API_TOKEN, BuildConfig.API_URL);
+        return application;
 
     }
 }
