@@ -26,6 +26,12 @@ public class PreferencesManager {
 
     }
 
+    public String get(String key){
+
+        return sharedPreferences.getString(key, null);
+
+    }
+
     public void remove(String key){
 
         sharedPreferences.edit().remove(key).commit();
