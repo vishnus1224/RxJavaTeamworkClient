@@ -1,6 +1,7 @@
 package com.vishnus1224.teamworkapidemo.di.component;
 
 import com.vishnus1224.teamworkapidemo.TeamworkApiDemo;
+import com.vishnus1224.teamworkapidemo.di.module.ActivityModule;
 import com.vishnus1224.teamworkapidemo.di.module.ApplicationModule;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
 
@@ -17,5 +18,6 @@ public interface ApplicationComponent {
 
     void inject(TeamworkApiDemo teamworkApiDemo);
 
+    ActivityComponent activityComponent(ActivityModule activityModule);
     UserComponent userComponent(UserModule userModule);
 }
