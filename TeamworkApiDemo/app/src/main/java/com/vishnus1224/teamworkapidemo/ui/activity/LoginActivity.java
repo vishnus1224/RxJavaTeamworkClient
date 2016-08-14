@@ -41,6 +41,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         setupViews();
 
         injectDependencies();
+
+        initPresenter();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        loginPresenter.onViewDetached(this);
+
     }
 
     private void setupViews() {
@@ -62,6 +72,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 .activityComponent(new ActivityModule(this));
 
         activityComponent.inject(this);
+
+    }
+
+    private void initPresenter() {
+
+        loginPresenter.onViewAttached(this);
 
     }
 
