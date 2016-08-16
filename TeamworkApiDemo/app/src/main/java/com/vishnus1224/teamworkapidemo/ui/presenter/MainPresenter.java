@@ -54,8 +54,15 @@ public class MainPresenter implements BasePresenter<MainView> {
 
         setSelectedItemPosition(position);
 
+        closeDrawer();
+
         showScreen(position);
 
+    }
+
+    private void setSelectedItemPosition(int position) {
+
+        selectedItemPosition = position;
 
     }
 
@@ -87,9 +94,13 @@ public class MainPresenter implements BasePresenter<MainView> {
 
     }
 
-    private void setSelectedItemPosition(int position) {
 
-        selectedItemPosition = position;
+
+    private void closeDrawer() {
+
+        mainView.closeDrawer();
 
     }
+
+
 }
