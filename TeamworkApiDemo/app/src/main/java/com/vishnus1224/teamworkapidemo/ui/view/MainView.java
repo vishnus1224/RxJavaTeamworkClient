@@ -10,4 +10,8 @@ public interface MainView extends BaseView {
     void showProjectsScreen();
 
     void showTaskScreen();
+
+    void openDrawer();
+
+    void closeDrawer();
 }
