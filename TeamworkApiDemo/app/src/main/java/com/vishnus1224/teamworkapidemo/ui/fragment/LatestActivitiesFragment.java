@@ -11,13 +11,13 @@ import com.vishnus1224.teamworkapidemo.R;
 /**
  * Created by Vishnu on 8/14/2016.
  */
-public class BaseActivitiesFragment extends BaseFragment {
+public class LatestActivitiesFragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_base_activities, container, false);
+        View view = inflater.inflate(R.layout.fragment_latest_activities, container, false);
 
         return view;
 
