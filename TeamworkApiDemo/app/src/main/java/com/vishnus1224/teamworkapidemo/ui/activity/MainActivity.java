@@ -1,6 +1,10 @@
 package com.vishnus1224.teamworkapidemo.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -10,16 +14,25 @@ import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
 import com.vishnus1224.teamworkapidemo.model.UserConfig;
-import com.vishnus1224.teamworkapidemo.ui.fragment.BaseActivitiesFragment;
+import com.vishnus1224.teamworkapidemo.ui.fragment.LatestActivitiesFragment;
+import com.vishnus1224.teamworkapidemo.ui.presenter.MainPresenter;
+import com.vishnus1224.teamworkapidemo.ui.view.MainView;
 import com.vishnus1224.teamworkapidemo.util.Constants;
 
-public class MainActivity extends BaseActivity {
+import javax.inject.Inject;
+
+public class MainActivity extends BaseActivity implements MainView {
 
     private FrameLayout contentFrameLayout;
 
     private ListView drawerItemsListView;
 
+    private DrawerLayout drawerLayout;
+
     private UserComponent userComponent;
+
+    @Inject
+    MainPresenter mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +50,75 @@ public class MainActivity extends BaseActivity {
 
         setupViews();
 
+        initPresenter();
+
+        initActionBar();
+
         setDrawerListAdapter();
 
-        showActivitiesFragment();
+        setDrawerItemClickListener();
+
+        showLatestActivityScreen();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mainPresenter.onViewDetached(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+
+                toggleDrawerState();
+                
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showLatestActivityScreen() {
+
+        LatestActivitiesFragment latestActivitiesFragment = new LatestActivitiesFragment();
+
+        replaceFragment(R.id.drawerContentFrame, latestActivitiesFragment);
+
+    }
+
+    @Override
+    public void showProjectsScreen() {
+
+    }
+
+    @Override
+    public void showTaskScreen() {
+
+    }
+
+    @Override
+    public void openDrawer(){
+
+        drawerLayout.openDrawer(drawerItemsListView);
+
+    }
+
+    @Override
+    public void closeDrawer() {
+
+        if(drawerLayout.isDrawerOpen(drawerItemsListView)){
+
+            drawerLayout.closeDrawer(drawerItemsListView);
+
+        }
 
     }
 
@@ -59,7 +138,29 @@ public class MainActivity extends BaseActivity {
 
         drawerItemsListView = (ListView) findViewById(R.id.drawerItemListView);
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
     }
+
+
+
+    private void initPresenter() {
+
+        mainPresenter.onViewAttached(this);
+
+    }
+
+
+    private void initActionBar() {
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_media_pause);
+
+    }
+
 
     private void setDrawerListAdapter() {
 
@@ -71,13 +172,32 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void showActivitiesFragment() {
+    private void setDrawerItemClickListener() {
 
-        BaseActivitiesFragment baseActivitiesFragment = new BaseActivitiesFragment();
+        drawerItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        replaceFragment(R.id.drawerContentFrame, baseActivitiesFragment);
+                mainPresenter.drawerItemClicked(i);
+
+            }
+        });
 
     }
 
+
+    private void toggleDrawerState() {
+
+        if(drawerLayout.isDrawerOpen(drawerItemsListView)){
+
+            closeDrawer();
+
+        }else{
+
+            openDrawer();
+
+        }
+
+    }
 
 }
