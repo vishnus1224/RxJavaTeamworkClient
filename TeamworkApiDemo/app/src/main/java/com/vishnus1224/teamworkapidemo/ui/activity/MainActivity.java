@@ -13,6 +13,7 @@ import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
+import com.vishnus1224.teamworkapidemo.model.ActionBarTitle;
 import com.vishnus1224.teamworkapidemo.model.UserConfig;
 import com.vishnus1224.teamworkapidemo.ui.fragment.LatestActivitiesFragment;
 import com.vishnus1224.teamworkapidemo.ui.presenter.MainPresenter;
@@ -30,6 +31,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private DrawerLayout drawerLayout;
 
     private UserComponent userComponent;
+
+    private ActionBarTitle[] actionBarTitles;
 
     @Inject
     MainPresenter mainPresenter;
@@ -50,17 +53,18 @@ public class MainActivity extends BaseActivity implements MainView {
 
         setupViews();
 
-        initPresenter();
-
         initActionBar();
+
+        initActionBarTitles();
 
         setDrawerListAdapter();
 
         setDrawerItemClickListener();
 
-        showLatestActivityScreen();
+        initPresenter();
 
     }
+
 
     @Override
     protected void onDestroy() {
@@ -122,6 +126,13 @@ public class MainActivity extends BaseActivity implements MainView {
 
     }
 
+    @Override
+    public void updateTitle(int position) {
+
+        getSupportActionBar().setTitle(actionBarTitles[position].getTitle());
+
+    }
+
     private void injectDependencies(UserConfig userConfig) {
 
         userComponent = getApplicationComponent().
@@ -161,6 +172,22 @@ public class MainActivity extends BaseActivity implements MainView {
 
     }
 
+
+    private void initActionBarTitles() {
+
+        String[] titles = getResources().getStringArray(R.array.action_bar_titles);
+
+        actionBarTitles = new ActionBarTitle[titles.length];
+
+        for(int i = 0; i < titles.length; i++){
+
+            ActionBarTitle actionBarTitle = new ActionBarTitle(titles[i]);
+
+            actionBarTitles[i] = actionBarTitle;
+
+        }
+
+    }
 
     private void setDrawerListAdapter() {
 

@@ -10,4 +10,10 @@
         <item>Tasks</item>
     </string-array>
 
+    <string-array name="action_bar_titles">
+        <item>All Activity</item>
+        <item>All Projects</item>
+        <item>Task List</item>
+    </string-array>
+
 </resources>

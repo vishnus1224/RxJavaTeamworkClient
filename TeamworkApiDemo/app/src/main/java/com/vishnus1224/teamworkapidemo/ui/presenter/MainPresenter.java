@@ -34,6 +34,8 @@ public class MainPresenter implements BasePresenter<MainView> {
 
         this.mainView = mainView;
 
+        showScreen(selectedItemPosition);
+
     }
 
     @Override
@@ -92,8 +94,15 @@ public class MainPresenter implements BasePresenter<MainView> {
 
         }
 
+        updateTitle(position);
+
     }
 
+    private void updateTitle(int position) {
+
+        mainView.updateTitle(position);
+
+    }
 
 
     private void closeDrawer() {

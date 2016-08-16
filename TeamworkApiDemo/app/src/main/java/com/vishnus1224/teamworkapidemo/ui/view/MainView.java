@@ -14,4 +14,6 @@ public interface MainView extends BaseView {
     void openDrawer();
 
     void closeDrawer();
+
+    void updateTitle(int position);
 }
