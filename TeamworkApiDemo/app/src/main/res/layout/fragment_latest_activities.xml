@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/baseActivitiesFrame"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/latestActivitiesSwipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:visibility="gone"
+        layout="@layout/layout_no_activities" />
 
-</FrameLayout>
+    <include
+        android:visibility="gone"
+        layout="@layout/layout_latest_activities" />
+
+
+</android.support.v4.widget.SwipeRefreshLayout>
