@@ -15,11 +15,19 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.ui.activity.MainActivity;
+import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
+import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
+
+import javax.inject.Inject;
 
 /**
  * Created by Vishnu on 8/14/2016.
  */
-public class LatestActivitiesFragment extends BaseFragment implements MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class LatestActivitiesFragment extends BaseFragment implements MenuItemCompat.OnActionExpandListener,
+        SearchView.OnQueryTextListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+        LatestActivitiesView {
 
     private SearchView searchView;
 
@@ -28,6 +36,11 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private ListView latestActivityListView;
+
+    private UserComponent userComponent;
+
+    @Inject
+    LatestActivitiesPresenter latestActivitiesPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +60,22 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
         return view;
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        injectDependencies();
+
+        latestActivitiesPresenter.onViewAttached(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        latestActivitiesPresenter.onViewDetached(this);
     }
 
     @Override
@@ -149,6 +178,15 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     public void onRefresh() {
 
 
+    }
+
+
+    private void injectDependencies() {
+
+        userComponent = ((MainActivity)getActivity()).getUserComponent();
+
+        userComponent.inject(this);
 
     }
+
 }
