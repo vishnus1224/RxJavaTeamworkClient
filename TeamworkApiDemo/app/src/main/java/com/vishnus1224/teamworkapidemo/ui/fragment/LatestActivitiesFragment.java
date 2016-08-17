@@ -3,12 +3,15 @@ package com.vishnus1224.teamworkapidemo.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.vishnus1224.teamworkapidemo.R;
@@ -16,9 +19,15 @@ import com.vishnus1224.teamworkapidemo.R;
 /**
  * Created by Vishnu on 8/14/2016.
  */
-public class LatestActivitiesFragment extends BaseFragment implements MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener {
+public class LatestActivitiesFragment extends BaseFragment implements MenuItemCompat.OnActionExpandListener, SearchView.OnQueryTextListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private SearchView searchView;
+
+    private Button checkAgainButton;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    private ListView latestActivityListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +42,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_latest_activities, container, false);
+
+        setupViews(view);
 
         return view;
 
@@ -104,4 +115,40 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     }
 
+
+
+    private void setupViews(View view) {
+
+        checkAgainButton = (Button) view.findViewById(R.id.noActivitiesButtonCheckAgain);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.latestActivitiesSwipeRefresh);
+
+        latestActivityListView = (ListView) view.findViewById(R.id.latestActivitiesListView);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        checkAgainButton.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+
+            case R.id.noActivitiesButtonCheckAgain:
+
+
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void onRefresh() {
+
+
+
+    }
 }
