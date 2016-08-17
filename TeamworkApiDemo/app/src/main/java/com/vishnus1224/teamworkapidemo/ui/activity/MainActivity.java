@@ -37,6 +37,12 @@ public class MainActivity extends BaseActivity implements MainView {
     @Inject
     MainPresenter mainPresenter;
 
+    public UserComponent getUserComponent(){
+
+        return userComponent;
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
