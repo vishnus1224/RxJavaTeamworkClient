@@ -2,7 +2,7 @@ package com.vishnus1224.rxjavateamworkclient.client;
 
 import com.vishnus1224.rxjavateamworkclient.api.LatestActivityApi;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponseWrapper;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class LatestActivityApiClient extends TeamworkApiClient implements Limita
         super(teamworkApiConfig);
     }
 
-    public Observable<List<LatestActivityResponse>> getLatestActivity(){
+    public Observable<LatestActivityResponseWrapper> getLatestActivity(){
 
         return getRetrofit().create(LatestActivityApi.class).getLatestActivity(maxItems, onlyStarred);
 

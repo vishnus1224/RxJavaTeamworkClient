@@ -1,6 +1,6 @@
 package com.vishnus1224.rxjavateamworkclient.api;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponseWrapper;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ import rx.Observable;
 public interface LatestActivityApi {
 
     @GET("/latestActivity.json")
-    Observable<List<LatestActivityResponse>> getLatestActivity(@Query("maxItems") int maxItems,
-                                                               @Query("onlyStarred ") boolean onlyStarred);
+    Observable<LatestActivityResponseWrapper> getLatestActivity(@Query("maxItems") int maxItems,
+                                                                      @Query("onlyStarred ") boolean onlyStarred);
 }
