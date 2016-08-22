@@ -7,7 +7,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
  * Created by Vishnu on 8/22/2016.
  */
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
-public class LatestActivityResponse extends BaseResponse {
+public class LatestActivityResponse {
 
     @JsonField(name = "project-id")
     private String projectId;

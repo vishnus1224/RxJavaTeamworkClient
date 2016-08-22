@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Vishnu on 8/22/2016.
  */
 @JsonObject
-public class LatestActivityResponseWrapper {
+public class LatestActivityResponseWrapper  extends BaseResponse {
 
     @JsonField(name = "activity")
     private List<LatestActivityResponse> latestActivityResponseList;
