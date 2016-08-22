@@ -5,6 +5,7 @@ import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -13,5 +14,6 @@ import rx.Observable;
 public interface LatestActivityApi {
 
     @GET("/latestActivity.json")
-    Observable<List<LatestActivityResponse>> getLatestActivity();
+    Observable<List<LatestActivityResponse>> getLatestActivity(@Query("maxItems") int maxItems,
+                                                               @Query("onlyStarred ") boolean onlyStarred);
 }
