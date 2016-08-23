@@ -4,8 +4,6 @@ import com.vishnus1224.rxjavateamworkclient.api.LatestActivityApi;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponseWrapper;
 
-import java.util.List;
-
 import rx.Observable;
 
 /**
