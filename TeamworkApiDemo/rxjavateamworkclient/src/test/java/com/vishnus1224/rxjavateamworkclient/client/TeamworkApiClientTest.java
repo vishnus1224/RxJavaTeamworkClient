@@ -14,8 +14,6 @@ import static org.junit.Assert.*;
  */
 public class TeamworkApiClientTest {
 
-    private TeamworkApiConfig teamworkApiConfig;
-
     private final String FAKE_URL_1 = "https://www.xyz.com";
 
     private final String FAKE_URL_2 = "https://www.xyz.co.nt";
