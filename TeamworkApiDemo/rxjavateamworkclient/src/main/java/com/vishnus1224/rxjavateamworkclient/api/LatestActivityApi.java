@@ -15,5 +15,5 @@ public interface LatestActivityApi {
 
     @GET("/latestActivity.json")
     Observable<LatestActivityResponseWrapper> getLatestActivity(@Query("maxItems") int maxItems,
-                                                                      @Query("onlyStarred ") boolean onlyStarred);
+                                                                      @Query("onlyStarred") boolean onlyStarred);
 }
