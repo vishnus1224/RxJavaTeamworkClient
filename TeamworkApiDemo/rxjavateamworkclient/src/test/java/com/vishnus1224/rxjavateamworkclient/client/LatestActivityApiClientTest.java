@@ -1,19 +1,11 @@
 package com.vishnus1224.rxjavateamworkclient.client;
-
-import com.vishnus1224.rxjavateamworkclient.api.AuthenticationApi;
-import com.vishnus1224.rxjavateamworkclient.api.LatestActivityApi;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponseWrapper;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +18,6 @@ import rx.observers.TestSubscriber;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
 
 /**
  * Created by Vishnu on 8/22/2016.
@@ -39,13 +29,9 @@ public class LatestActivityApiClientTest {
     private final String FAKE_TOKEN = "sdgdgwrtw";
 
 
-    @Mock
-    private LatestActivityApi latestActivityApi;
-
     @Before
     public void setUp() throws Exception {
 
-        MockitoAnnotations.initMocks(this);
 
     }
 
