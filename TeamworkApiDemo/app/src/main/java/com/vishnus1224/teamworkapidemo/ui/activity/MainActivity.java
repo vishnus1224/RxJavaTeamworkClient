@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
 import com.vishnus1224.teamworkapidemo.model.ActionBarTitle;
@@ -22,7 +23,7 @@ import com.vishnus1224.teamworkapidemo.util.Constants;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainView, UserComponentDelegate {
 
     private FrameLayout contentFrameLayout;
 
@@ -37,11 +38,13 @@ public class MainActivity extends BaseActivity implements MainView {
     @Inject
     MainPresenter mainPresenter;
 
-    public UserComponent getUserComponent(){
+    @Override
+    public UserComponent provideUserComponent() {
 
         return userComponent;
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
