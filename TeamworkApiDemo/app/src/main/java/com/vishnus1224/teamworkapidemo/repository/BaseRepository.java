@@ -2,6 +2,8 @@ package com.vishnus1224.teamworkapidemo.repository;
 
 import java.util.List;
 
+import rx.Observable;
+
 /**
  * Created by vishnu on 24/08/16.
  */
@@ -23,11 +25,11 @@ public interface BaseRepository<Type> {
      * Get a single item from the repository.
      * @return Instance of type.
      */
-    Type getItem();
+    Observable<Type> getItem();
 
     /**
      * Get all items from the repository.
      * @return List of all items.
      */
-    List<Type> getAllItems();
+    Observable<List<Type>> getAllItems();
 }
