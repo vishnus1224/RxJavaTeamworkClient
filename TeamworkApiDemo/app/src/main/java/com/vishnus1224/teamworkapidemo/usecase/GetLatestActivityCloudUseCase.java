@@ -1,9 +1,6 @@
 package com.vishnus1224.teamworkapidemo.usecase;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
-import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
-import com.vishnus1224.teamworkapidemo.repository.LatestActivityRepository;
 
 import javax.inject.Inject;
 import javax.inject.Named;
