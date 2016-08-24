@@ -40,6 +40,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     private UserComponent userComponent;
 
+
     @Inject
     LatestActivitiesPresenter latestActivitiesPresenter;
 
@@ -47,6 +48,12 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        obtainUserComponent(activity);
+    }
+
+
+    private void obtainUserComponent(Activity activity) {
 
         UserComponentDelegate userComponentDelegate;
 
@@ -200,6 +207,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     private void injectDependencies() {
+
 
         userComponent.inject(this);
 
