@@ -38,11 +38,10 @@ public class MainActivity extends BaseActivity implements MainView, UserComponen
     @Inject
     MainPresenter mainPresenter;
 
+
     @Override
     public UserComponent provideUserComponent() {
-
         return userComponent;
-
     }
 
 
