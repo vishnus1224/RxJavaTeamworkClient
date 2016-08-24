@@ -94,6 +94,9 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         injectDependencies();
 
         latestActivitiesPresenter.onViewAttached(this);
+
+        latestActivitiesPresenter.fetchLatestActivityFromCloud();
+
     }
 
     @Override

@@ -25,7 +25,7 @@ public class GetLatestActivityCloudUseCase extends UseCase {
     @Override
     Observable buildUseCase() {
 
-        return Observable.just(repository.getAllItems());
+        return repository.getAllItems();
 
     }
 }

@@ -52,15 +52,19 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onCompleted() {
 
+            String s = "fdsds";
         }
 
         @Override
         public void onError(Throwable e) {
 
+            String s = "fdsds";
         }
 
         @Override
         public void onNext(List<LatestActivityResponse> latestActivityResponse) {
+
+            String s = "fdsds";
 
         }
     }
