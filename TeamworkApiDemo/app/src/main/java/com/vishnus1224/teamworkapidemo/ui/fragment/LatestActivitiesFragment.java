@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -14,7 +15,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.ui.activity.MainActivity;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
@@ -40,7 +43,29 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     private UserComponent userComponent;
 
     @Inject
+    TeamworkApiConfig teamworkApiConfig;
+
+    @Inject
     LatestActivitiesPresenter latestActivitiesPresenter;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        UserComponentDelegate userComponentDelegate;
+
+        try {
+
+            userComponentDelegate = (UserComponentDelegate) activity;
+
+        }catch (ClassCastException classCastException){
+
+            throw new ClassCastException("Activity should implement UserComponent delegate");
+
+        }
+
+        userComponent = userComponentDelegate.provideUserComponent();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -182,8 +207,6 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     private void injectDependencies() {
-
-        userComponent = ((MainActivity)getActivity()).getUserComponent();
 
         userComponent.inject(this);
 
