@@ -2,6 +2,8 @@ package com.vishnus1224.teamworkapidemo.di.module;
 
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.di.scope.PerUser;
+import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
+import com.vishnus1224.teamworkapidemo.repository.LatestActivityRepository;
 import com.vishnus1224.teamworkapidemo.usecase.GetLatestActivityCloudUseCase;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
@@ -36,6 +38,14 @@ public class UserModule {
     UseCase provideLatestActivityCloudUseCase(GetLatestActivityCloudUseCase getLatestActivityCloudUseCase){
 
         return getLatestActivityCloudUseCase;
+
+    }
+
+    @Provides @PerUser
+    @Named("activityRepo")
+    BaseRepository provideLatestActivityRepository(LatestActivityRepository latestActivityRepository){
+
+        return latestActivityRepository;
 
     }
 }
