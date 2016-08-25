@@ -38,7 +38,7 @@ public class LatestActivityToSectionMapper implements Mapper<List<LatestActivity
 
                 previousProjectId = latestActivityResponse.getProjectId();
 
-                section = new Section<>(i);
+                section = new Section<>(i, latestActivityResponse.getProjectName());
 
                 section.addToList(latestActivityResponse);
 

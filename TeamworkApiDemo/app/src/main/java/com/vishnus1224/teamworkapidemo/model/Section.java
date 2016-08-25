@@ -15,19 +15,27 @@ public class Section<Type> {
     private int sectionNumber;
 
     /**
+     * Title of the section.
+     */
+    private String sectionTitle;
+
+    /**
      * List of elements to be displayed in the section.
      */
     private List<Type> typeList;
 
-    public Section(int sectionNumber) {
+    public Section(int sectionNumber, String sectionTitle) {
 
         this.sectionNumber = sectionNumber;
+
+        this.sectionTitle = sectionTitle;
 
         typeList = new ArrayList<>();
     }
 
-    public Section(int sectionNumber, List<Type> typeList) {
+    public Section(int sectionNumber, String sectionTitle, List<Type> typeList) {
         this.sectionNumber = sectionNumber;
+        this.sectionTitle = sectionTitle;
         this.typeList = typeList;
     }
 
@@ -51,5 +59,13 @@ public class Section<Type> {
 
         this.typeList.add(type);
 
+    }
+
+    public String getSectionTitle() {
+        return sectionTitle;
+    }
+
+    public void setSectionTitle(String sectionTitle) {
+        this.sectionTitle = sectionTitle;
     }
 }
