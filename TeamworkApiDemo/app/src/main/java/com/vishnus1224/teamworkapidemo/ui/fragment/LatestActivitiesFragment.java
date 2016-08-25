@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,12 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.model.Section;
+import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
 
@@ -39,10 +43,13 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private RecyclerView latestActivityListView;
+    private RecyclerView latestActivityRecyclerView;
+
+    private LinearLayout noActivityLayout;
 
     private UserComponent userComponent;
 
+    private LatestActivitiesAdapter latestActivitiesAdapter;
 
     @Inject
     LatestActivitiesPresenter latestActivitiesPresenter;
@@ -71,6 +78,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         View view = inflater.inflate(R.layout.fragment_latest_activities, container, false);
 
         setupViews(view);
+
+        setupAdapter();
 
         return view;
 
@@ -184,12 +193,16 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     @Override
-    public void showLatestActivity(List<Section> sections) {
+    public void showLatestActivity(final List<Section<LatestActivityResponse>> sections) {
+
+        latestActivitiesAdapter.updateData(sections);
 
     }
 
     @Override
     public void showNoActivityView() {
+
+        noActivityLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -203,6 +216,18 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     }
 
+    @Override
+    public void showError() {
+
+
+    }
+
+    @Override
+    public void showLatestActivityView() {
+
+        latestActivityRecyclerView.setVisibility(View.VISIBLE);
+
+    }
 
 
     private void obtainUserComponent(Activity activity) {
@@ -227,11 +252,26 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.latestActivitiesSwipeRefresh);
 
-        latestActivityListView = (RecyclerView) view.findViewById(R.id.latestActivitiesRecyclerView);
+        latestActivityRecyclerView = (RecyclerView) view.findViewById(R.id.latestActivitiesRecyclerView);
+
+        noActivityLayout = (LinearLayout) view.findViewById(R.id.layoutNoActivity);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
         checkAgainButton.setOnClickListener(this);
+
+    }
+
+
+    private void setupAdapter() {
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+        latestActivityRecyclerView.setLayoutManager(layoutManager);
+
+        latestActivitiesAdapter = new LatestActivitiesAdapter();
+
+        latestActivityRecyclerView.setAdapter(latestActivitiesAdapter);
 
     }
 
