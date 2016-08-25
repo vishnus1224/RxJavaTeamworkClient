@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
@@ -228,6 +229,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public void showError() {
 
+        Toast.makeText(getActivity(), "An error occurred.Please try again", Toast.LENGTH_SHORT).show();
 
     }
 
