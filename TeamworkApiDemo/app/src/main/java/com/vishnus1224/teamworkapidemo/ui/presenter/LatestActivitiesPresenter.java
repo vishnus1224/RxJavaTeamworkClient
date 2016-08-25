@@ -58,13 +58,12 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onCompleted() {
 
-            String s = "fdsds";
         }
 
         @Override
         public void onError(Throwable e) {
 
-            String s = "fdsds";
+            latestActivitiesView.showError();
         }
 
         @Override
@@ -72,7 +71,10 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
             List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
 
-            String s = "fdsfs";
+            latestActivitiesView.showLatestActivityView();
+
+            latestActivitiesView.showLatestActivity(sections);
+
 
         }
     }
