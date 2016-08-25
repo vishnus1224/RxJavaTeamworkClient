@@ -11,7 +11,12 @@ import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by vishnu on 25/08/16.
@@ -20,9 +25,17 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     private List<Section<LatestActivityResponse>> sections;
 
+    private StringBuilder stringBuilder;
+
+    private SimpleDateFormat dateFormat;
+
     public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections) {
 
         this.sections = sections;
+
+        stringBuilder = new StringBuilder();
+
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
 
     }
 
@@ -63,11 +76,45 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
             rowTitleTextView.setText(latestActivityResponse.getDescription());
 
-            rowDescriptionTextView.setText(latestActivityResponse.getFromUsername());
+            String formattedDescription = formatDescription(latestActivityResponse);
+
+            rowDescriptionTextView.setText(formattedDescription);
 
             holder.itemContainer.addView(view);
 
         }
 
+    }
+
+
+    private String formatDescription(LatestActivityResponse latestActivityResponse) {
+
+        stringBuilder.setLength(0);
+
+        stringBuilder.append("added by ");
+
+        stringBuilder.append(latestActivityResponse.getFromUsername());
+
+        try {
+
+            dateFormat.applyPattern("yyyy-MM-dd'T'hh:mm:ss'Z'");
+
+            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT + 5:30"));
+
+            Date date = dateFormat.parse(latestActivityResponse.getDateTime());
+
+            dateFormat.applyPattern("E h:m a");
+
+            dateFormat.setTimeZone(TimeZone.getDefault());
+
+            String dateToDisplay = dateFormat.format(date);
+
+            stringBuilder.append(dateToDisplay);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return stringBuilder.toString();
     }
 }

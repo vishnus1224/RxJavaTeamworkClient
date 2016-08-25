@@ -38,7 +38,7 @@ public class LatestActivityToSectionMapper implements Mapper<List<LatestActivity
 
                 previousProjectId = latestActivityResponse.getProjectId();
 
-                section = new Section<>(i, latestActivityResponse.getProjectName());
+                section = new Section<>(i, formatTitle(latestActivityResponse));
 
                 section.addToList(latestActivityResponse);
 
@@ -55,5 +55,24 @@ public class LatestActivityToSectionMapper implements Mapper<List<LatestActivity
         }
 
         return sections;
+    }
+
+
+    private String formatTitle(LatestActivityResponse latestActivityResponse){
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(latestActivityResponse.getProjectName());
+
+        //if the company name is not self, then append it to the project name.
+        if(!latestActivityResponse.getCompanyName().equals("Self")){
+
+            stringBuilder.append(" : ");
+
+            stringBuilder.append(latestActivityResponse.getCompanyName());
+        }
+
+        return stringBuilder.toString();
+
     }
 }
