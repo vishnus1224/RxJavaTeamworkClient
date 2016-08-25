@@ -49,6 +49,8 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     public void fetchLatestActivityFromCloud(){
 
+        latestActivitiesView.showProgressBar();
+
         useCase.execute(new LatestActivityCloudSubscriber());
 
     }
@@ -58,10 +60,14 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onCompleted() {
 
+            latestActivitiesView.hideProgressBar();
+
         }
 
         @Override
         public void onError(Throwable e) {
+
+            latestActivitiesView.hideProgressBar();
 
             latestActivitiesView.showError();
         }
@@ -69,13 +75,22 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onNext(List<LatestActivityResponse> latestActivityResponse) {
 
-            List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
-
-            latestActivitiesView.showLatestActivityView();
-
-            latestActivitiesView.showLatestActivity(sections);
+            onResponseReceived(latestActivityResponse);
 
 
         }
+    }
+
+    private void onResponseReceived(List<LatestActivityResponse> latestActivityResponse) {
+
+        //create a list of sections for the recycler view to display.
+        List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+
+        //show the recycler view.
+        latestActivitiesView.showLatestActivityView();
+
+        //show the items in a list.
+        latestActivitiesView.showLatestActivity(sections);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.vishnus1224.teamworkapidemo.ui.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
@@ -46,6 +48,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     private RecyclerView latestActivityRecyclerView;
 
     private LinearLayout noActivityLayout;
+
+    private ProgressDialog progressDialog;
 
     private UserComponent userComponent;
 
@@ -209,10 +213,15 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public void showProgressBar() {
 
+        progressDialog.setMessage("Loading latest activity");
+        progressDialog.show();
+
     }
 
     @Override
     public void hideProgressBar() {
+
+        progressDialog.hide();
 
     }
 
@@ -255,6 +264,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         latestActivityRecyclerView = (RecyclerView) view.findViewById(R.id.latestActivitiesRecyclerView);
 
         noActivityLayout = (LinearLayout) view.findViewById(R.id.layoutNoActivity);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
