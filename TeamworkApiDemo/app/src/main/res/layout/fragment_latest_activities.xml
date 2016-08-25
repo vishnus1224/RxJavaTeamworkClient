@@ -6,11 +6,12 @@
 
     <include
         android:visibility="gone"
-        layout="@layout/layout_no_activities" />
+        layout="@layout/layout_latest_activities" />
 
     <include
         android:visibility="gone"
-        layout="@layout/layout_latest_activities" />
+        layout="@layout/layout_no_activities" />
+
 
 
 </android.support.v4.widget.SwipeRefreshLayout>
