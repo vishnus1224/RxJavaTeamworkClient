@@ -18,10 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        buildTypes.each {
-            it.buildConfigField 'String', 'API_TOKEN', API_TOKEN
-            it.buildConfigField 'String', 'API_URL', API_URL
-        }
     }
 }
 
@@ -38,4 +34,8 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+
+
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+
 }
