@@ -62,12 +62,16 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
             latestActivitiesView.hideProgressBar();
 
+            latestActivitiesView.hideRefreshIndicator();
+
         }
 
         @Override
         public void onError(Throwable e) {
 
             latestActivitiesView.hideProgressBar();
+
+            latestActivitiesView.hideRefreshIndicator();
 
             latestActivitiesView.showError();
         }

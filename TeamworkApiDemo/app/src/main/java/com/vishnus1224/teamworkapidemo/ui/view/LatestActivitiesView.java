@@ -24,5 +24,6 @@ public interface LatestActivitiesView extends BaseView {
 
     void showLatestActivityView();
 
+    void hideRefreshIndicator();
 
 }

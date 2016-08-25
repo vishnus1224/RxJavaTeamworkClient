@@ -193,6 +193,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public void onRefresh() {
 
+        latestActivitiesPresenter.fetchLatestActivityFromCloud();
 
     }
 
@@ -238,6 +239,16 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
         latestActivityRecyclerView.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void hideRefreshIndicator() {
+
+        if(swipeRefreshLayout.isRefreshing()){
+
+            swipeRefreshLayout.setRefreshing(false);
+
+        }
     }
 
 
