@@ -1,5 +1,8 @@
 package com.vishnus1224.teamworkapidemo.ui.view;
 
+import android.view.View;
+
+import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.model.Section;
 
 import java.util.List;
@@ -9,12 +12,17 @@ import java.util.List;
  */
 public interface LatestActivitiesView extends BaseView {
 
-    void showLatestActivity(List<Section> sections);
+    void showLatestActivity(List<Section<LatestActivityResponse>> sections);
 
     void showNoActivityView();
 
     void showProgressBar();
 
     void hideProgressBar();
+
+    void showError();
+
+    void showLatestActivityView();
+
 
 }
