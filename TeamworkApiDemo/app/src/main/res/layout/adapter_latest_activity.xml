@@ -6,7 +6,10 @@
 
     <TextView
         android:id="@+id/adapterLatestActivitySectionTitle"
-        android:text="Section Title"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:textColor="#00a200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
