@@ -46,6 +46,9 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
         holder.titleTextView.setText(section.getSectionTitle());
 
+        //remove existing views from the container.
+        holder.itemContainer.removeAllViews();
+
         for(int i = 0; i < latestActivityResponses.size(); i++){
 
             LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
