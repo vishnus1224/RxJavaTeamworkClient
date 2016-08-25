@@ -1,6 +1,8 @@
 package com.vishnus1224.teamworkapidemo.ui.presenter;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.teamworkapidemo.mapper.LatestActivityToSectionMapper;
+import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
@@ -20,10 +22,14 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     private UseCase useCase;
 
+    private LatestActivityToSectionMapper latestActivityToSectionMapper;
+
     @Inject
-    public LatestActivitiesPresenter(@Named("activityCloud") UseCase useCase) {
+    public LatestActivitiesPresenter(@Named("activityCloud") UseCase useCase, LatestActivityToSectionMapper latestActivityToSectionMapper) {
 
         this.useCase = useCase;
+
+        this.latestActivityToSectionMapper = latestActivityToSectionMapper;
 
     }
 
@@ -47,7 +53,7 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     }
 
-    public static class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityResponse>>{
+    public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityResponse>>{
 
         @Override
         public void onCompleted() {
@@ -64,7 +70,9 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onNext(List<LatestActivityResponse> latestActivityResponse) {
 
-            String s = "fdsds";
+            List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+
+            String s = "fdsfs";
 
         }
     }

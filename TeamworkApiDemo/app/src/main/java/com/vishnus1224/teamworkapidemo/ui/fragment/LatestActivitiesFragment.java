@@ -18,8 +18,11 @@ import android.widget.SearchView;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,20 +55,6 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         obtainUserComponent(activity);
     }
 
-
-    private void obtainUserComponent(Activity activity) {
-
-        UserComponentDelegate userComponentDelegate;
-
-        try {
-            userComponentDelegate = (UserComponentDelegate) activity;
-        }catch (ClassCastException e){
-
-            throw new ClassCastException("Activity must implement UserComponentDelegate");
-        }
-
-        userComponent = userComponentDelegate.provideUserComponent();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -173,21 +162,6 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     }
 
 
-
-    private void setupViews(View view) {
-
-        checkAgainButton = (Button) view.findViewById(R.id.noActivitiesButtonCheckAgain);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.latestActivitiesSwipeRefresh);
-
-        latestActivityListView = (ListView) view.findViewById(R.id.latestActivitiesListView);
-
-        swipeRefreshLayout.setOnRefreshListener(this);
-
-        checkAgainButton.setOnClickListener(this);
-
-    }
-
     @Override
     public void onClick(View view) {
 
@@ -209,6 +183,60 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     }
 
 
+    @Override
+    public void showLatestActivity(List<Section> sections) {
+
+    }
+
+    @Override
+    public void showNoActivityView() {
+
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+
+
+    private void obtainUserComponent(Activity activity) {
+
+        UserComponentDelegate userComponentDelegate;
+
+        try {
+            userComponentDelegate = (UserComponentDelegate) activity;
+        }catch (ClassCastException e){
+
+            throw new ClassCastException("Activity must implement UserComponentDelegate");
+        }
+
+        userComponent = userComponentDelegate.provideUserComponent();
+    }
+
+
+
+    private void setupViews(View view) {
+
+        checkAgainButton = (Button) view.findViewById(R.id.noActivitiesButtonCheckAgain);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.latestActivitiesSwipeRefresh);
+
+        latestActivityListView = (ListView) view.findViewById(R.id.latestActivitiesListView);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        checkAgainButton.setOnClickListener(this);
+
+    }
+
+
+
     private void injectDependencies() {
 
 
@@ -216,5 +244,4 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     }
-
 }
