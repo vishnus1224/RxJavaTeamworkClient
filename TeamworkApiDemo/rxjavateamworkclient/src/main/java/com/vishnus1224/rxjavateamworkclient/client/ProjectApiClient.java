@@ -15,7 +15,8 @@ import rx.Observable;
  * Created by Vishnu on 8/27/2016.
  */
 public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterDate<ProjectApiClient>
-        , UpdatedAfterTime<ProjectApiClient>{
+        , UpdatedAfterTime<ProjectApiClient>, OrderBy<ProjectApiClient>, CreatedAfterDate<ProjectApiClient>
+        , CreatedAfterTime<ProjectApiClient>, Paginated<ProjectApiClient>{
 
     //Query param constants.
     public static final String PROJECT_STATUS_ALL = "ALL";
@@ -25,16 +26,35 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
     public static final String PROJECT_STATUS_LATE = "LATE";
     public static final String PROJECT_STATUS_COMPLETED = "COMPLETED";
 
+    public static final String ORDER_BY_NAME = "name";
+    public static final String ORDER_BY_COMPANY_NAME = "companyName";
+    public static final String ORDER_BY_LAST_ACTIVITY_DATE = "lastActivityDate";
+
     //Query param keys.
     private static final String KEY_PROJECT_STATUS = "status";
     private static final String KEY_UPDATE_AFTER_DATE = "updatedAfterDate";
     private static final String KEY_UPDATE_AFTER_TIME = "updatedAfterTime";
+    private static final String KEY_ORDER_BY = "orderBy";
+    private static final String KEY_CREATED_AFTER_DATE = "createdAfterDate";
+    private static final String KEY_CREATED_AFTER_TIME = "createdAfterTime";
+    private static final String KEY_INCLUDE_PEOPLE = "includePeople";
+    private static final String KEY_PAGE = "page";
 
     private String projectStatus;
 
     private String updatedAfterDate;
 
     private String updateAfterTime;
+
+    private String orderBy;
+
+    private String createdAfterDate;
+
+    private String createdAfterTime;
+
+    private boolean includePeople;
+
+    private int page;
 
     protected ProjectApiClient(TeamworkApiConfig teamworkApiConfig) {
         super(teamworkApiConfig);
@@ -57,35 +77,6 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
 
         return this;
 
-    }
-
-    /**
-     * Creates a map from the fields that are set.
-     * @return Map containing query params.
-     */
-    private Map<String, String> buildQueryMap() {
-
-        Map<String, String> queryParamMap = new HashMap<>();
-
-        if(projectStatus != null){
-
-            queryParamMap.put(KEY_PROJECT_STATUS, projectStatus);
-
-        }
-
-        if(updatedAfterDate != null){
-
-            queryParamMap.put(KEY_UPDATE_AFTER_DATE, updatedAfterDate);
-
-        }
-
-        if(updateAfterTime != null){
-
-            queryParamMap.put(KEY_UPDATE_AFTER_TIME, updateAfterTime);
-
-        }
-
-        return queryParamMap;
     }
 
     @Override
@@ -131,4 +122,118 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
 
         return this;
     }
+
+    @Override
+    public ProjectApiClient orderBy(String orderBy) {
+
+        this.orderBy = orderBy;
+
+        return this;
+    }
+
+
+    @Override
+    public ProjectApiClient createdAfterDate(String date) throws ParseException {
+
+        try {
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMDDHHMMSS");
+
+            simpleDateFormat.parse(date);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+            throw new ParseException("Date should be in YYYYMMDDHHMMSS format", 0);
+
+        }
+
+        this.createdAfterDate = date;
+
+        return this;
+    }
+
+    @Override
+    public ProjectApiClient createdAfterTime(String timeString) throws ParseException {
+
+        try {
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:MM");
+
+            simpleDateFormat.parse(timeString);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+            throw new ParseException("time should be in HH:MM format", 0);
+
+        }
+
+        this.createdAfterTime = timeString;
+
+        return this;
+    }
+
+
+    @Override
+    public ProjectApiClient page(int pageNumber) {
+
+        this.page = pageNumber;
+
+        return this;
+    }
+
+    /**
+     * Creates a map from the fields that are set.
+     * @return Map containing query params.
+     */
+    private Map<String, Object> buildQueryMap() {
+
+        Map<String, Object> queryParamMap = new HashMap<>();
+
+        if(projectStatus != null){
+
+            queryParamMap.put(KEY_PROJECT_STATUS, projectStatus);
+
+        }
+
+        if(updatedAfterDate != null){
+
+            queryParamMap.put(KEY_UPDATE_AFTER_DATE, updatedAfterDate);
+
+        }
+
+        if(updateAfterTime != null){
+
+            queryParamMap.put(KEY_UPDATE_AFTER_TIME, updateAfterTime);
+
+        }
+
+        if(orderBy != null){
+
+            queryParamMap.put(KEY_ORDER_BY, orderBy);
+
+        }
+
+        if(createdAfterDate != null){
+
+            queryParamMap.put(KEY_CREATED_AFTER_DATE, createdAfterDate);
+
+        }
+
+        if(createdAfterTime != null){
+
+            queryParamMap.put(KEY_CREATED_AFTER_TIME, createdAfterTime);
+
+        }
+
+        queryParamMap.put(KEY_INCLUDE_PEOPLE, includePeople);
+        
+        queryParamMap.put(KEY_PAGE, page);
+
+        return queryParamMap;
+    }
+
 }
