@@ -47,7 +47,7 @@ public class LatestActivityImageManager {
      */
     public void loadImage(String imageUrl, ImageView imageView){
 
-        imageManager.loadImageFromUrl(imageUrl, imageView);
+        imageManager.loadCircularImageFromUrl(imageUrl, imageView);
 
     }
 }

@@ -9,9 +9,9 @@ import android.widget.ImageView;
 public interface ImageManager {
 
     /**
-     * Load the image from the url into the image view.
+     * Load the image from the url into the image view and transform it to a circle.
      * @param url Url of the image.
      * @param imageView View to load the image into.
      */
-    void loadImageFromUrl(String url, ImageView imageView);
+    void loadCircularImageFromUrl(String url, ImageView imageView);
 }
