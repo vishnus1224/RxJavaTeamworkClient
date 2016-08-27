@@ -5,16 +5,24 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/adapterLatestActivityRowType"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <ImageView
         android:id="@+id/adapterLatestActivityRowAvatar"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_launcher"
         android:layout_width="50dp"
         android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/adapterLatestActivityRowTitle"
+        android:layout_toRightOf="@id/adapterLatestActivityRowType"
         android:layout_toLeftOf="@id/adapterLatestActivityRowAvatar"
         android:textColor="@android:color/black"
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -22,6 +30,8 @@
         android:id="@+id/adapterLatestActivityRowDescription"
         android:layout_below="@id/adapterLatestActivityRowTitle"
         android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/adapterLatestActivityRowTitle"
+        android:layout_toRightOf="@id/adapterLatestActivityRowType"
         android:layout_alignRight="@id/adapterLatestActivityRowTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
