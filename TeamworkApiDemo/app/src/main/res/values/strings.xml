@@ -17,4 +17,14 @@
         <item>Task List</item>
     </string-array>
 
+    <string-array name="add_new_activity_items">
+        <item>Task</item>
+        <item>Message</item>
+        <item>Event</item>
+        <item>MileStone</item>
+        <item>Time Log</item>
+        <item>Notebook</item>
+        <item>File</item>
+    </string-array>
+
 </resources>
