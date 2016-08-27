@@ -176,6 +176,12 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
         return this;
     }
 
+    private ProjectApiClient includePeople(boolean includePeople){
+
+        this.includePeople = includePeople;
+
+        return this;
+    }
 
     @Override
     public ProjectApiClient page(int pageNumber) {
@@ -230,7 +236,7 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
         }
 
         queryParamMap.put(KEY_INCLUDE_PEOPLE, includePeople);
-        
+
         queryParamMap.put(KEY_PAGE, page);
 
         return queryParamMap;
