@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.LatestActivityAdapterDelegate;
+import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.manager.PicassoImageManager;
 import com.vishnus1224.teamworkapidemo.model.Section;
@@ -26,10 +27,11 @@ public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActiviti
 
     private LatestActivityAdapterDelegate latestActivityAdapterDelegate;
 
-    public LatestActivitiesAdapter(Context context) {
+
+    public LatestActivitiesAdapter(Context context, LatestActivityItemClickListener latestActivityItemClickListener) {
 
         latestActivityAdapterDelegate = new LatestActivityAdapterDelegate(sections,
-                new LatestActivityImageManager(new PicassoImageManager(context)));
+                new LatestActivityImageManager(new PicassoImageManager(context)), latestActivityItemClickListener);
 
     }
 

@@ -23,6 +23,7 @@ import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
@@ -37,7 +38,7 @@ import javax.inject.Inject;
  */
 public class LatestActivitiesFragment extends BaseFragment implements MenuItemCompat.OnActionExpandListener,
         SearchView.OnQueryTextListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
-        LatestActivitiesView {
+        LatestActivitiesView, LatestActivityItemClickListener {
 
     private SearchView searchView;
 
@@ -251,6 +252,27 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     }
 
 
+    @Override
+    public void onProjectClicked(LatestActivityResponse latestActivityResponse) {
+
+        Toast.makeText(getActivity(), "Show project home", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onTaskClicked(LatestActivityResponse latestActivityResponse) {
+
+        Toast.makeText(getActivity(), "Show task details", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onAvatarClicked(LatestActivityResponse latestActivityResponse) {
+
+        Toast.makeText(getActivity(), "Show contact details", Toast.LENGTH_SHORT).show();
+
+    }
+
     private void obtainUserComponent(Activity activity) {
 
         UserComponentDelegate userComponentDelegate;
@@ -292,7 +314,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
         latestActivityRecyclerView.setLayoutManager(layoutManager);
 
-        latestActivitiesAdapter = new LatestActivitiesAdapter(getActivity());
+        latestActivitiesAdapter = new LatestActivitiesAdapter(getActivity(), this);
 
         latestActivityRecyclerView.setAdapter(latestActivitiesAdapter);
 
@@ -307,4 +329,5 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     }
+
 }

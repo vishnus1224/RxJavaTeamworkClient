@@ -4,10 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
@@ -33,12 +35,16 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     private LatestActivityImageManager latestActivityImageManager;
 
+    private LatestActivityItemClickListener latestActivityItemClickListener;
+
     public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections, LatestActivityImageManager
-                                         latestActivityImageManager) {
+            latestActivityImageManager, LatestActivityItemClickListener latestActivityItemClickListener) {
 
         this.sections = sections;
 
         this.latestActivityImageManager = latestActivityImageManager;
+
+        this.latestActivityItemClickListener = latestActivityItemClickListener;
 
         stringBuilder = new StringBuilder();
 
@@ -71,15 +77,17 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
         for(int i = 0; i < latestActivityResponses.size(); i++){
 
-            LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
+            final LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
 
             View view = LayoutInflater.from(holder.itemContainer.getContext()).inflate(R.layout.adapter_latest_activity_container_row, holder.itemContainer, false);
+
+            RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.adapterLatestActivityRowTypeContainer);
 
             TextView rowTitleTextView = (TextView) view.findViewById(R.id.adapterLatestActivityRowTitle);
 
             TextView rowDescriptionTextView = (TextView) view.findViewById(R.id.adapterLatestActivityRowDescription);
 
-            ImageView activityTypeImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowType);
+            ImageView activityTypeImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowTypeImage);
 
             activityTypeImageView.setImageResource(latestActivityImageManager.
                     getIconForLatestActivity(latestActivityResponse.getType()));
@@ -93,6 +101,41 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
             String formattedDescription = formatDescription(latestActivityResponse);
 
             rowDescriptionTextView.setText(formattedDescription);
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(latestActivityItemClickListener != null){
+
+                        if(latestActivityResponse.getType().equalsIgnoreCase("project")){
+
+                            latestActivityItemClickListener.onProjectClicked(latestActivityResponse);
+
+                        }else if(latestActivityResponse.getType().equalsIgnoreCase("task")){
+
+                            latestActivityItemClickListener.onTaskClicked(latestActivityResponse);
+
+                        }
+
+
+                    }
+
+                }
+            });
+
+            userAvatarImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(latestActivityItemClickListener != null){
+
+                        latestActivityItemClickListener.onAvatarClicked(latestActivityResponse);
+
+                    }
+
+                }
+            });
 
             holder.itemContainer.addView(view);
 
