@@ -292,7 +292,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
         latestActivityRecyclerView.setLayoutManager(layoutManager);
 
-        latestActivitiesAdapter = new LatestActivitiesAdapter();
+        latestActivitiesAdapter = new LatestActivitiesAdapter(getActivity());
 
         latestActivityRecyclerView.setAdapter(latestActivitiesAdapter);
 

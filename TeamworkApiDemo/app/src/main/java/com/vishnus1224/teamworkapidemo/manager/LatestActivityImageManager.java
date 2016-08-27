@@ -1,5 +1,7 @@
 package com.vishnus1224.teamworkapidemo.manager;
 
+import android.widget.ImageView;
+
 import com.vishnus1224.teamworkapidemo.R;
 
 /**
@@ -8,7 +10,12 @@ import com.vishnus1224.teamworkapidemo.R;
  */
 public class LatestActivityImageManager {
 
-    public LatestActivityImageManager() {
+    private ImageManager imageManager;
+
+    public LatestActivityImageManager(ImageManager imageManager) {
+
+        this.imageManager = imageManager;
+
     }
 
     /**
@@ -31,5 +38,16 @@ public class LatestActivityImageManager {
             return R.mipmap.ic_launcher;
 
         }
+    }
+
+    /**
+     * Load the image into image view.
+     * @param imageUrl Url of the image to load.
+     * @param imageView The image view to load the image into.
+     */
+    public void loadImage(String imageUrl, ImageView imageView){
+
+        imageManager.loadImageFromUrl(imageUrl, imageView);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.LatestActivityAdapterDelegate;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
+import com.vishnus1224.teamworkapidemo.manager.PicassoImageManager;
 import com.vishnus1224.teamworkapidemo.model.Section;
 
 import java.util.ArrayList;
@@ -24,10 +26,10 @@ public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActiviti
 
     private LatestActivityAdapterDelegate latestActivityAdapterDelegate;
 
-    public LatestActivitiesAdapter() {
+    public LatestActivitiesAdapter(Context context) {
 
         latestActivityAdapterDelegate = new LatestActivityAdapterDelegate(sections,
-                new LatestActivityImageManager());
+                new LatestActivityImageManager(new PicassoImageManager(context)));
 
     }
 

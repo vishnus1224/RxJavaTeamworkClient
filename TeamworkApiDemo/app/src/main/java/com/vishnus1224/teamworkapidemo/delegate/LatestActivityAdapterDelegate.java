@@ -86,6 +86,8 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
             ImageView userAvatarImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowAvatar);
 
+            latestActivityImageManager.loadImage(latestActivityResponse.getFromUserAvatarUrl(), userAvatarImageView);
+
             rowTitleTextView.setText(latestActivityResponse.getDescription());
 
             String formattedDescription = formatDescription(latestActivityResponse);
