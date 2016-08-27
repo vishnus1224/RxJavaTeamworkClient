@@ -8,12 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.UserModule;
+import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.ActionBarTitle;
 import com.vishnus1224.teamworkapidemo.model.UserConfig;
 import com.vishnus1224.teamworkapidemo.ui.fragment.LatestActivitiesFragment;
@@ -23,7 +25,7 @@ import com.vishnus1224.teamworkapidemo.util.Constants;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainView, UserComponentDelegate {
+public class MainActivity extends BaseActivity implements MainView, UserComponentDelegate, AddNewActivityItemClickListener {
 
     private FrameLayout contentFrameLayout;
 
@@ -235,4 +237,52 @@ public class MainActivity extends BaseActivity implements MainView, UserComponen
 
     }
 
+    @Override
+    public void addNewTaskClicked() {
+
+        Toast.makeText(MainActivity.this, "new task", Toast.LENGTH_SHORT).show();
+        
+    }
+
+    @Override
+    public void addNewMessageClicked() {
+
+        Toast.makeText(MainActivity.this, "new message", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void addNewEventClicked() {
+
+        Toast.makeText(MainActivity.this, "new event", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void addNewMilestoneClicked() {
+
+        Toast.makeText(MainActivity.this, "new milestone", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void addNewTimeLogClicked() {
+
+        Toast.makeText(MainActivity.this, "new time log", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void addNewNotebookClicked() {
+
+        Toast.makeText(MainActivity.this, "new notebook", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void addNewFileClicked() {
+
+        Toast.makeText(MainActivity.this, "new file", Toast.LENGTH_SHORT).show();
+
+    }
 }

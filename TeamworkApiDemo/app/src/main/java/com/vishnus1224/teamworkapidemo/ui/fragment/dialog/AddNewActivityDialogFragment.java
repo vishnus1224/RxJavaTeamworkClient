@@ -12,9 +12,9 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 
 /**
  * Created by Vishnu on 8/27/2016.
@@ -23,9 +23,25 @@ public class AddNewActivityDialogFragment extends DialogFragment implements Adap
 
     private ListView addNewActivityListView;
 
+    private AddNewActivityItemClickListener addNewActivityItemClickListener;
+
+    public void setAddNewActivityItemClickListener(AddNewActivityItemClickListener addNewActivityItemClickListener) {
+        this.addNewActivityItemClickListener = addNewActivityItemClickListener;
+    }
+
+    public static AddNewActivityDialogFragment newInstance(AddNewActivityItemClickListener addNewActivityItemClickListener){
+
+        AddNewActivityDialogFragment addNewActivityDialogFragment = new AddNewActivityDialogFragment();
+        addNewActivityDialogFragment.setAddNewActivityItemClickListener(addNewActivityItemClickListener);
+
+        return addNewActivityDialogFragment;
+
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         Dialog dialog = super.onCreateDialog(savedInstanceState);
 
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -54,7 +70,53 @@ public class AddNewActivityDialogFragment extends DialogFragment implements Adap
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Toast.makeText(getActivity(), "" + i, Toast.LENGTH_SHORT).show();
+        switch (i){
+
+            case 0:
+
+                addNewActivityItemClickListener.addNewTaskClicked();
+
+                break;
+
+            case 1:
+
+                addNewActivityItemClickListener.addNewMessageClicked();
+
+                break;
+
+            case 2:
+
+                addNewActivityItemClickListener.addNewEventClicked();
+
+                break;
+
+            case 3:
+
+                addNewActivityItemClickListener.addNewMilestoneClicked();
+
+                break;
+
+            case 4:
+
+                addNewActivityItemClickListener.addNewTimeLogClicked();
+
+                break;
+
+            case 5:
+
+                addNewActivityItemClickListener.addNewNotebookClicked();
+
+                break;
+
+            case 6:
+
+                addNewActivityItemClickListener.addNewFileClicked();
+
+                break;
+
+        }
+
+        dismiss();
 
     }
 }

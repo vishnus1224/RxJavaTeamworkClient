@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
@@ -57,6 +59,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     private LatestActivitiesAdapter latestActivitiesAdapter;
 
+    private AddNewActivityItemClickListener addNewActivityItemClickListener;
+
     @Inject
     LatestActivitiesPresenter latestActivitiesPresenter;
 
@@ -66,8 +70,9 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         super.onAttach(activity);
 
         obtainUserComponent(activity);
-    }
 
+        obtainAddNewActivityItemClickListener(activity);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,8 +157,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     private void addNewActivityClicked() {
 
-        AddNewActivityDialogFragment dialog = new AddNewActivityDialogFragment();
-        dialog.show(getActivity().getSupportFragmentManager(), "addNew");
+        DialogFragment dialog = AddNewActivityDialogFragment.newInstance(addNewActivityItemClickListener);
+        dialog.show(getActivity().getSupportFragmentManager(), "addNewActivity");
 
     }
 
@@ -295,6 +300,20 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
         }
 
         userComponent = userComponentDelegate.provideUserComponent();
+    }
+
+
+
+    private void obtainAddNewActivityItemClickListener(Activity activity) {
+
+        try {
+
+            addNewActivityItemClickListener = (AddNewActivityItemClickListener) activity;
+
+        }catch (ClassCastException e){
+
+            throw new ClassCastException("Activity must implement AddNewActivityItemClickListener");
+        }
     }
 
 
