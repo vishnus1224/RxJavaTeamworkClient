@@ -19,6 +19,6 @@ public interface ProjectApi {
      * @return Observable containing a list of projects.
      */
     @GET("/projects.json")
-    Observable<ProjectResponseWrapper> getAllProjects(@QueryMap Map<String, String> queryMap);
+    Observable<ProjectResponseWrapper> getAllProjects(@QueryMap Map<String, Object> queryMap);
 
 }
