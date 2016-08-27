@@ -26,6 +26,7 @@ import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
+import com.vishnus1224.teamworkapidemo.ui.fragment.dialog.AddNewActivityDialogFragment;
 import com.vishnus1224.teamworkapidemo.ui.presenter.LatestActivitiesPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
 
@@ -140,11 +141,20 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
             case R.id.latest_activities_add:
 
+                addNewActivityClicked();
+
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addNewActivityClicked() {
+
+        AddNewActivityDialogFragment dialog = new AddNewActivityDialogFragment();
+        dialog.show(getActivity().getSupportFragmentManager(), "addNew");
+
     }
 
     @Override
