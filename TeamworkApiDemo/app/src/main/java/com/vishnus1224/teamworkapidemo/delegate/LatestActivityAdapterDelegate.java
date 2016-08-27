@@ -108,16 +108,7 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
                     if(latestActivityItemClickListener != null){
 
-                        if(latestActivityResponse.getType().equalsIgnoreCase("project")){
-
-                            latestActivityItemClickListener.onProjectClicked(latestActivityResponse);
-
-                        }else if(latestActivityResponse.getType().equalsIgnoreCase("task")){
-
-                            latestActivityItemClickListener.onTaskClicked(latestActivityResponse);
-
-                        }
-
+                        handleItemClick(latestActivityResponse);
 
                     }
 
@@ -138,6 +129,20 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
             });
 
             holder.itemContainer.addView(view);
+
+        }
+
+    }
+
+    private void handleItemClick(LatestActivityResponse latestActivityResponse) {
+
+        if(latestActivityResponse.getType().equalsIgnoreCase("project")){
+
+            latestActivityItemClickListener.onProjectClicked(latestActivityResponse);
+
+        }else if(latestActivityResponse.getType().equalsIgnoreCase("task")){
+
+            latestActivityItemClickListener.onTaskClicked(latestActivityResponse);
 
         }
 
