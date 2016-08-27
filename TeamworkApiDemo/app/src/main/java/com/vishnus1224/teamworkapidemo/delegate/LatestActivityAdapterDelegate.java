@@ -99,11 +99,11 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
             dateFormat.applyPattern("yyyy-MM-dd'T'hh:mm:ss'Z'");
 
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT + 5:30"));
+            dateFormat.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
 
             Date date = dateFormat.parse(latestActivityResponse.getDateTime());
 
-            dateFormat.applyPattern("E h:m a");
+            dateFormat.applyPattern("E hh:mm a");
 
             dateFormat.setTimeZone(TimeZone.getDefault());
 
