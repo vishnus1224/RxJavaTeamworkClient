@@ -3,6 +3,7 @@
     <string name="label_enter_api_key">Enter api key</string>
     <string name="label_login">login</string>
     <string name="label_authenticating">Authenticating...</string>
+    <string name="label_quickly_add_a">Quickly add a...</string>
 
     <string-array name="drawer_items">
         <item>Activity</item>
