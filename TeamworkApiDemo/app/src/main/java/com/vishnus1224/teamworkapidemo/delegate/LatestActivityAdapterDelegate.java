@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
+import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
 
 /**
  * Created by vishnu on 25/08/16.
@@ -29,9 +31,14 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     private SimpleDateFormat dateFormat;
 
-    public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections) {
+    private LatestActivityImageManager latestActivityImageManager;
+
+    public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections, LatestActivityImageManager
+                                         latestActivityImageManager) {
 
         this.sections = sections;
+
+        this.latestActivityImageManager = latestActivityImageManager;
 
         stringBuilder = new StringBuilder();
 
@@ -71,6 +78,11 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
             TextView rowTitleTextView = (TextView) view.findViewById(R.id.adapterLatestActivityRowTitle);
 
             TextView rowDescriptionTextView = (TextView) view.findViewById(R.id.adapterLatestActivityRowDescription);
+
+            ImageView activityTypeImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowType);
+
+            activityTypeImageView.setImageResource(latestActivityImageManager.
+                    getIconForLatestActivity(latestActivityResponse.getType()));
 
             ImageView userAvatarImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowAvatar);
 
