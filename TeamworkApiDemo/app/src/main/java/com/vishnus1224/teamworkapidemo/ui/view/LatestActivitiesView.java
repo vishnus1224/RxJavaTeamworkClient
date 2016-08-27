@@ -16,6 +16,8 @@ public interface LatestActivitiesView extends BaseView {
 
     void showNoActivityView();
 
+    void hideNoActivityView();
+
     void showProgressBar();
 
     void hideProgressBar();
@@ -23,6 +25,8 @@ public interface LatestActivitiesView extends BaseView {
     void showError();
 
     void showLatestActivityView();
+
+    void hideLatestActivityView();
 
     void hideRefreshIndicator();
 

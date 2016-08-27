@@ -81,20 +81,35 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
             onResponseReceived(latestActivityResponse);
 
-
         }
     }
 
     private void onResponseReceived(List<LatestActivityResponse> latestActivityResponse) {
 
-        //create a list of sections for the recycler view to display.
-        List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+        //if the response does not contain any items, then show the no activity view.
+        if(latestActivityResponse.isEmpty()) {
 
-        //show the recycler view.
-        latestActivitiesView.showLatestActivityView();
+            //hide latest activity view if it was shown previously.
+            latestActivitiesView.hideLatestActivityView();
 
-        //show the items in a list.
-        latestActivitiesView.showLatestActivity(sections);
+            latestActivitiesView.showNoActivityView();
+
+        }else{
+
+            //create a list of sections for the recycler view to display.
+            List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+
+            //hide the no activity view if it was shown previously.
+            latestActivitiesView.hideNoActivityView();
+
+            //show the recycler view.
+            latestActivitiesView.showLatestActivityView();
+
+            //show the items in a list.
+            latestActivitiesView.showLatestActivity(sections);
+
+
+        }
 
     }
 }

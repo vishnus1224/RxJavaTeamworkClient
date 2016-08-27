@@ -228,6 +228,12 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     }
 
     @Override
+    public void hideNoActivityView() {
+
+        noActivityLayout.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showProgressBar() {
 
         progressDialog.setMessage("Loading latest activity");
@@ -253,6 +259,13 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     public void showLatestActivityView() {
 
         latestActivityRecyclerView.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideLatestActivityView() {
+
+        latestActivityRecyclerView.setVisibility(View.GONE);
 
     }
 
