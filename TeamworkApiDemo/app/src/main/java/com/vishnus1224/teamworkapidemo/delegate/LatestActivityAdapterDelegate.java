@@ -13,13 +13,11 @@ import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
+import com.vishnus1224.teamworkapidemo.util.DateTimeHelper;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 
 /**
@@ -30,8 +28,6 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
     private List<Section<LatestActivityResponse>> sections;
 
     private StringBuilder stringBuilder;
-
-    private SimpleDateFormat dateFormat;
 
     private LatestActivityImageManager latestActivityImageManager;
 
@@ -48,7 +44,6 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
         stringBuilder = new StringBuilder();
 
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
 
     }
 
@@ -159,17 +154,11 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
         try {
 
-            dateFormat.applyPattern("yyyy-MM-dd'T'hh:mm:ss'Z'");
+            DateTimeHelper dateTimeHelper = new DateTimeHelper();
 
-            dateFormat.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
+            Date date = dateTimeHelper.latestActivityDateTimeToDate(latestActivityResponse.getDateTime());
 
-            Date date = dateFormat.parse(latestActivityResponse.getDateTime());
-
-            dateFormat.applyPattern("E hh:mm a");
-
-            dateFormat.setTimeZone(TimeZone.getDefault());
-
-            String dateToDisplay = dateFormat.format(date);
+            String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(date);
 
             stringBuilder.append(dateToDisplay);
 
