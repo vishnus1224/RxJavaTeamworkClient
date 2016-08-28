@@ -137,7 +137,7 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
 
         try {
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMDDHHMMSS");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYYMMDD");
 
             simpleDateFormat.parse(date);
 
@@ -145,7 +145,7 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
 
             e.printStackTrace();
 
-            throw new ParseException("Date should be in YYYYMMDDHHMMSS format", 0);
+            throw new ParseException("Date should be in YYYYMMDDH format", 0);
 
         }
 
