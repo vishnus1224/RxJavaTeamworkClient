@@ -60,6 +60,10 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
         super(teamworkApiConfig);
     }
 
+    /**
+     * Get all the projects from the server.
+     * @return Observable containing a list of projects.
+     */
     public Observable<ProjectResponseWrapper> getAllProjects(){
 
         return getRetrofit().create(ProjectApi.class).getAllProjects(buildQueryMap());

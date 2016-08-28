@@ -1,6 +1,7 @@
 package com.vishnus1224.rxjavateamworkclient.client;
 
 import com.vishnus1224.rxjavateamworkclient.api.ProjectApi;
+import com.vishnus1224.rxjavateamworkclient.model.ProjectResponseWrapper;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,7 +11,12 @@ import java.text.ParseException;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+import retrofit2.adapter.rxjava.HttpException;
+import rx.Observable;
+import rx.observers.TestSubscriber;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 /**
@@ -100,6 +106,32 @@ public class ProjectApiClientTest extends ApiClientTest {
         ProjectApiClient projectApiClient = new ProjectApiClient(buildFakeApiConfig());
 
         projectApiClient.createdAfterTime("802");
+
+    }
+
+    @Test
+    public void testGetAllProjectsThrowsHttpException() throws Exception{
+
+        MockResponse mockResponse = new MockResponse();
+        mockResponse.setResponseCode(401);
+
+        mockWebServer.enqueue(mockResponse);
+
+        ProjectApiClient projectApiClient = new ProjectApiClient(buildFakeApiConfig());
+
+        Observable<ProjectResponseWrapper> observable = projectApiClient.getAllProjects();
+
+        TestSubscriber<ProjectResponseWrapper> testSubscriber = new TestSubscriber<>();
+
+        observable.subscribe(testSubscriber);
+
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertThat(recordedRequest.getPath(), containsString("page=0"));
+
+        testSubscriber.assertError(HttpException.class);
+        testSubscriber.assertNotCompleted();
+
 
     }
 }
