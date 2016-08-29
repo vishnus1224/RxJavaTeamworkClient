@@ -1,7 +1,5 @@
 package com.vishnus1224.teamworkapidemo.datastore;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
-
 import java.util.List;
 
 import rx.Observable;
@@ -9,13 +7,13 @@ import rx.Observable;
 /**
  * Created by vishnu on 24/08/16.
  */
-public interface LatestActivityDataStore {
+public interface LatestActivityDataStore<DataType> {
 
     /**
      * Fetch the latest activity from the data store.
      * @return
      */
-    Observable<List<LatestActivityResponse>> getLatestActivity();
+    Observable<List<DataType>> getLatestActivity();
 
 
 }
