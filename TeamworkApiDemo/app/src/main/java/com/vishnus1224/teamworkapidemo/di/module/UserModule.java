@@ -4,6 +4,7 @@ import com.vishnus1224.rxjavateamworkclient.client.LatestActivityApiClient;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityCloudDataStore;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityDataStore;
+import com.vishnus1224.teamworkapidemo.datastore.LatestActivityRealmDataStore;
 import com.vishnus1224.teamworkapidemo.di.scope.PerUser;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityRepository;
@@ -64,6 +65,14 @@ public class UserModule {
     LatestActivityApiClient provideLatestActivityApiClient(TeamworkApiConfig teamworkApiConfig){
 
         return new LatestActivityApiClient(teamworkApiConfig);
+
+    }
+
+    @Provides @PerUser
+    @Named("activityRealmDataStore")
+    LatestActivityDataStore provideLatestActivityRealmDataStore(LatestActivityRealmDataStore latestActivityRealmDataStore){
+
+        return latestActivityRealmDataStore;
 
     }
 }
