@@ -12,6 +12,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by Vishnu on 8/13/2016.
@@ -45,6 +47,25 @@ public class ApplicationModule {
     SharedPreferences provideSharedPreferences(Application application){
 
         return application.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+
+    }
+
+    @Provides @Singleton
+    RealmConfiguration provideRealmConfiguration(){
+
+        return new RealmConfiguration.Builder(application)
+                .name("teamworkapidemo.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+    }
+
+    @Provides @Singleton
+    Realm provideRealm(RealmConfiguration realmConfiguration){
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        return Realm.getDefaultInstance();
 
     }
 }
