@@ -10,11 +10,11 @@ import java.text.ParseException;
  * Maps the latest activity response to latest activity realm model.
  * Created by Vishnu on 8/28/2016.
  */
-public class LatestActivityRealmMapper implements Mapper<LatestActivityResponse, LatestActivityModel> {
+public class LatestActivityResponseToModelMapper implements Mapper<LatestActivityResponse, LatestActivityModel> {
 
     private DateTimeHelper dateTimeHelper;
 
-    public LatestActivityRealmMapper(DateTimeHelper dateTimeHelper){
+    public LatestActivityResponseToModelMapper(DateTimeHelper dateTimeHelper){
 
         this.dateTimeHelper = dateTimeHelper;
 
