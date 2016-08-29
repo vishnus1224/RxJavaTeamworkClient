@@ -24,6 +24,7 @@ import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
 import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.Section;
@@ -367,7 +368,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     private void injectDependencies() {
 
 
-        userComponent.inject(this);
+        userComponent.fragmentComponent(new FragmentModule(this))
+                .inject(this);
 
 
     }
