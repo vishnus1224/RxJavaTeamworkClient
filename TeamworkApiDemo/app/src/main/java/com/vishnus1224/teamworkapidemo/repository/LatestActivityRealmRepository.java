@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.repository;
 
+import com.vishnus1224.teamworkapidemo.manager.RealmManager;
 import com.vishnus1224.teamworkapidemo.mapper.RealmResultToListMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 
@@ -16,26 +17,30 @@ import rx.Observable;
  */
 public class LatestActivityRealmRepository implements BaseRepository<LatestActivityModel> {
 
-    private Realm realm;
+    private RealmManager realmManager;
 
     private RealmResultToListMapper realmResultToListMapper;
 
     @Inject
-    public LatestActivityRealmRepository(Realm realm, RealmResultToListMapper realmResultToListMapper) {
+    public LatestActivityRealmRepository(RealmManager realmManager, RealmResultToListMapper realmResultToListMapper) {
 
-        this.realm = realm;
+        this.realmManager = realmManager;
 
         this.realmResultToListMapper = realmResultToListMapper;
 
     }
 
     @Override
-    public void add(LatestActivityModel latestActivityModel) {
+    public void add(final LatestActivityModel latestActivityModel) {
+
+        realmManager.addToRealmAsync(latestActivityModel);
 
     }
 
     @Override
-    public void allAll(List<LatestActivityModel> latestActivityModels) {
+    public void addAll(final List<LatestActivityModel> latestActivityModels) {
+
+        realmManager.addAllToRealmAsync(latestActivityModels);
 
     }
 
@@ -52,9 +57,14 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
     @Override
     public Observable<List<LatestActivityModel>> getAllItems() {
 
+        Realm realm = realmManager.newRealm();
+
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
 
-        return Observable.just(realmResultToListMapper.map(realmResults));
+        Observable<List<LatestActivityModel>> observable = Observable.just(realmResultToListMapper.map(realmResults));
 
+        realm.close();
+
+        return observable;
     }
 }
