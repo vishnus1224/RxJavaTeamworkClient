@@ -38,7 +38,7 @@ public class LatestActivityCloudRepository implements BaseRepository<LatestActiv
     }
 
     @Override
-    public void allAll(List<LatestActivityModel> latestActivityModels) {
+    public void addAll(List<LatestActivityModel> latestActivityModels) {
 
     }
 
