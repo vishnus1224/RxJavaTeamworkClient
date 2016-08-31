@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.vishnus1224.rxjavateamworkclient.client.AuthenticationApiClient;
+import com.vishnus1224.teamworkapidemo.manager.RealmManager;
 import com.vishnus1224.teamworkapidemo.manager.TokenManager;
 import com.vishnus1224.teamworkapidemo.util.Constants;
 
@@ -12,7 +13,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
@@ -61,11 +61,9 @@ public class ApplicationModule {
     }
 
     @Provides @Singleton
-    Realm provideRealm(RealmConfiguration realmConfiguration){
+    RealmManager provideRealmManager(RealmConfiguration realmConfiguration){
 
-        Realm.setDefaultConfiguration(realmConfiguration);
-
-        return Realm.getDefaultInstance();
+        return new RealmManager(realmConfiguration);
 
     }
 }
