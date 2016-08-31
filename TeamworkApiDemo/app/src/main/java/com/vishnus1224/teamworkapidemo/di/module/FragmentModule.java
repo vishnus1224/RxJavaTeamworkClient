@@ -8,6 +8,8 @@ import com.vishnus1224.teamworkapidemo.datastore.LatestActivityCloudDataStore;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityDataStore;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityRealmDataStore;
 import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
+import com.vishnus1224.teamworkapidemo.manager.DataManager;
+import com.vishnus1224.teamworkapidemo.manager.LatestActivityDataManager;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityRepository;
 import com.vishnus1224.teamworkapidemo.usecase.GetLatestActivityCloudUseCase;
@@ -68,6 +70,14 @@ public class FragmentModule {
     LatestActivityDataStore provideLatestActivityRealmDataStore(LatestActivityRealmDataStore latestActivityRealmDataStore){
 
         return latestActivityRealmDataStore;
+
+    }
+
+    @Provides @PerFragment
+    @Named("activityDataManager")
+    DataManager provideLatestActivityDataManager(LatestActivityDataManager latestActivityDataManager){
+
+        return latestActivityDataManager;
 
     }
 
