@@ -38,6 +38,11 @@ public class LatestActivityCloudRepository implements BaseRepository<LatestActiv
     }
 
     @Override
+    public void allAll(List<LatestActivityModel> latestActivityModels) {
+
+    }
+
+    @Override
     public LatestActivityModel removeItem() {
         return null;
     }

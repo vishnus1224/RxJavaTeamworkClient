@@ -16,6 +16,12 @@ public interface BaseRepository<Type> {
     void add(Type type);
 
     /**
+     * Add all items contained in the list.
+     * @param typeList The data type to hold in the list.
+     */
+    void allAll(List<Type> typeList);
+
+    /**
      * Remove an item from the repository.
      * @return The type of the removed item.
      */
