@@ -11,7 +11,7 @@ import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityDataManager;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
-import com.vishnus1224.teamworkapidemo.repository.LatestActivityRepository;
+import com.vishnus1224.teamworkapidemo.repository.LatestActivityCloudRepository;
 import com.vishnus1224.teamworkapidemo.usecase.GetLatestActivityCloudUseCase;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
@@ -44,9 +44,9 @@ public class FragmentModule {
 
     @Provides @PerFragment
     @Named("activityRepo")
-    BaseRepository provideLatestActivityRepository(LatestActivityRepository latestActivityRepository){
+    BaseRepository provideLatestActivityRepository(LatestActivityCloudRepository latestActivityCloudRepository){
 
-        return latestActivityRepository;
+        return latestActivityCloudRepository;
 
     }
 

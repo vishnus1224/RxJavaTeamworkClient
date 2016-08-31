@@ -17,14 +17,14 @@ import rx.functions.Func1;
 /**
  * Created by vishnu on 24/08/16.
  */
-public class LatestActivityRepository implements BaseRepository<LatestActivityModel> {
+public class LatestActivityCloudRepository implements BaseRepository<LatestActivityModel> {
 
     private LatestActivityDataStore latestActivityDataStore;
 
     private LatestActivityResponseToModelMapper latestActivityResponseToModelMapper;
 
     @Inject
-    public LatestActivityRepository(@Named("activityCloudDataStore") LatestActivityDataStore latestActivityDataStore, LatestActivityResponseToModelMapper latestActivityResponseToModelMapper) {
+    public LatestActivityCloudRepository(@Named("activityCloudDataStore") LatestActivityDataStore latestActivityDataStore, LatestActivityResponseToModelMapper latestActivityResponseToModelMapper) {
 
         this.latestActivityDataStore = latestActivityDataStore;
 
