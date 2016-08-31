@@ -7,16 +7,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 import com.vishnus1224.teamworkapidemo.util.DateTimeHelper;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActivitiesAdapter.LatestActivityViewHolder> {
 
-    private List<Section<LatestActivityResponse>> sections;
+    private List<Section<LatestActivityModel>> sections;
 
     private StringBuilder stringBuilder;
 
@@ -33,7 +31,7 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     private LatestActivityItemClickListener latestActivityItemClickListener;
 
-    public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections, LatestActivityImageManager
+    public LatestActivityAdapterDelegate(List<Section<LatestActivityModel>> sections, LatestActivityImageManager
             latestActivityImageManager, LatestActivityItemClickListener latestActivityItemClickListener) {
 
         this.sections = sections;
@@ -60,19 +58,19 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
     @Override
     public void onBindViewHolder(LatestActivitiesAdapter.LatestActivityViewHolder holder, int position) {
 
-        Section<LatestActivityResponse> section = sections.get(position);
+        Section<LatestActivityModel> section = sections.get(position);
 
         //add views to the container, based on the number of items in the section.
-        List<LatestActivityResponse> latestActivityResponses = section.getTypeList();
+        List<LatestActivityModel> latestActivityModels = section.getTypeList();
 
         holder.titleTextView.setText(section.getSectionTitle());
 
         //remove existing views from the container.
         holder.itemContainer.removeAllViews();
 
-        for(int i = 0; i < latestActivityResponses.size(); i++){
+        for (int i = 0; i < latestActivityModels.size(); i++) {
 
-            final LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
+            final LatestActivityModel latestActivityModel = latestActivityModels.get(i);
 
             View view = LayoutInflater.from(holder.itemContainer.getContext()).inflate(R.layout.adapter_latest_activity_container_row, holder.itemContainer, false);
 
@@ -85,15 +83,15 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
             ImageView activityTypeImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowTypeImage);
 
             activityTypeImageView.setImageResource(latestActivityImageManager.
-                    getIconForLatestActivity(latestActivityResponse.getType()));
+                    getIconForLatestActivity(latestActivityModel.type));
 
             ImageView userAvatarImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowAvatar);
 
-            latestActivityImageManager.loadImage(latestActivityResponse.getFromUserAvatarUrl(), userAvatarImageView);
+            latestActivityImageManager.loadImage(latestActivityModel.fromUserAvatarUrl, userAvatarImageView);
 
-            rowTitleTextView.setText(latestActivityResponse.getDescription());
+            rowTitleTextView.setText(latestActivityModel.description);
 
-            String formattedDescription = formatDescription(latestActivityResponse);
+            String formattedDescription = formatDescription(latestActivityModel);
 
             rowDescriptionTextView.setText(formattedDescription);
 
@@ -101,9 +99,9 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
                 @Override
                 public void onClick(View view) {
 
-                    if(latestActivityItemClickListener != null){
+                    if (latestActivityItemClickListener != null) {
 
-                        handleItemClick(latestActivityResponse);
+                        handleItemClick(latestActivityModel);
 
                     }
 
@@ -114,9 +112,9 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
                 @Override
                 public void onClick(View view) {
 
-                    if(latestActivityItemClickListener != null){
+                    if (latestActivityItemClickListener != null) {
 
-                        latestActivityItemClickListener.onAvatarClicked(latestActivityResponse);
+                        latestActivityItemClickListener.onAvatarClicked(latestActivityModel);
 
                     }
 
@@ -129,42 +127,35 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     }
 
-    private void handleItemClick(LatestActivityResponse latestActivityResponse) {
+    private void handleItemClick(LatestActivityModel latestActivityModel) {
 
-        if(latestActivityResponse.getType().equalsIgnoreCase("project")){
+        if (latestActivityModel.type.equalsIgnoreCase("project")) {
 
-            latestActivityItemClickListener.onProjectClicked(latestActivityResponse);
+            latestActivityItemClickListener.onProjectClicked(latestActivityModel);
 
-        }else if(latestActivityResponse.getType().equalsIgnoreCase("task")){
+        } else if (latestActivityModel.type.equalsIgnoreCase("task")) {
 
-            latestActivityItemClickListener.onTaskClicked(latestActivityResponse);
+            latestActivityItemClickListener.onTaskClicked(latestActivityModel);
 
         }
 
     }
 
 
-    private String formatDescription(LatestActivityResponse latestActivityResponse) {
+    private String formatDescription(LatestActivityModel latestActivityModel) {
 
         stringBuilder.setLength(0);
 
         stringBuilder.append("added by ");
 
-        stringBuilder.append(latestActivityResponse.getFromUsername());
+        stringBuilder.append(latestActivityModel.fromUsername);
 
-        try {
+        DateTimeHelper dateTimeHelper = new DateTimeHelper();
 
-            DateTimeHelper dateTimeHelper = new DateTimeHelper();
+        String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(latestActivityModel.dateTime);
 
-            Date date = dateTimeHelper.latestActivityDateTimeToDate(latestActivityResponse.getDateTime());
+        stringBuilder.append(dateToDisplay);
 
-            String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(date);
-
-            stringBuilder.append(dateToDisplay);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         return stringBuilder.toString();
     }

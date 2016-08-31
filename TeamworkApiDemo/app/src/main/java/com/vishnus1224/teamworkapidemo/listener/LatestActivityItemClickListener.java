@@ -1,15 +1,15 @@
 package com.vishnus1224.teamworkapidemo.listener;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 
 /**
  * Created by Vishnu on 8/27/2016.
  */
 public interface LatestActivityItemClickListener {
 
-    void onProjectClicked(LatestActivityResponse latestActivityResponse);
+    void onProjectClicked(LatestActivityModel latestActivityModel);
 
-    void onTaskClicked(LatestActivityResponse latestActivityResponse);
+    void onTaskClicked(LatestActivityModel latestActivityModel);
 
-    void onAvatarClicked(LatestActivityResponse latestActivityResponse);
+    void onAvatarClicked(LatestActivityModel latestActivityModel);
 }

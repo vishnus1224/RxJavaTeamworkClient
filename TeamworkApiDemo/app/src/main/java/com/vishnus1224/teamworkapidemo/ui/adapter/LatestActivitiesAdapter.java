@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.LatestActivityAdapterDelegate;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.manager.PicassoImageManager;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActivitiesAdapter.LatestActivityViewHolder> {
 
-    private List<Section<LatestActivityResponse>> sections = new ArrayList<>();
+    private List<Section<LatestActivityModel>> sections = new ArrayList<>();
 
     private LatestActivityAdapterDelegate latestActivityAdapterDelegate;
 
@@ -35,7 +35,7 @@ public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActiviti
 
     }
 
-    public void updateData(List<Section<LatestActivityResponse>> sections){
+    public void updateData(List<Section<LatestActivityModel>> sections){
 
         this.sections.clear();
 

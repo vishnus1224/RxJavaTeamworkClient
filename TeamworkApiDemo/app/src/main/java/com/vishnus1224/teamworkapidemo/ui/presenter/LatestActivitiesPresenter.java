@@ -2,6 +2,7 @@ package com.vishnus1224.teamworkapidemo.ui.presenter;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityToSectionMapper;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
@@ -55,7 +56,7 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     }
 
-    public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityResponse>>{
+    public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityModel>>{
 
         @Override
         public void onCompleted() {
@@ -77,17 +78,17 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         }
 
         @Override
-        public void onNext(List<LatestActivityResponse> latestActivityResponse) {
+        public void onNext(List<LatestActivityModel> latestActivityModel) {
 
-            onResponseReceived(latestActivityResponse);
+            onResponseReceived(latestActivityModel);
 
         }
     }
 
-    private void onResponseReceived(List<LatestActivityResponse> latestActivityResponse) {
+    private void onResponseReceived(List<LatestActivityModel> latestActivityModel) {
 
         //if the response does not contain any items, then show the no activity view.
-        if(latestActivityResponse.isEmpty()) {
+        if(latestActivityModel.isEmpty()) {
 
             //hide latest activity view if it was shown previously.
             latestActivitiesView.hideLatestActivityView();
@@ -97,7 +98,7 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         }else{
 
             //create a list of sections for the recycler view to display.
-            List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+            List<Section<LatestActivityModel>> sections = latestActivityToSectionMapper.map(latestActivityModel);
 
             //hide the no activity view if it was shown previously.
             latestActivitiesView.hideNoActivityView();
