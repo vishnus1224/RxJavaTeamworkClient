@@ -1,11 +1,10 @@
 package com.vishnus1224.teamworkapidemo.ui.presenter;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityToSectionMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
-import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
 import java.util.List;
 
@@ -21,16 +20,17 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     private LatestActivitiesView latestActivitiesView;
 
-    private UseCase useCase;
-
     private LatestActivityToSectionMapper latestActivityToSectionMapper;
 
-    @Inject
-    public LatestActivitiesPresenter(@Named("activityCloud") UseCase useCase, LatestActivityToSectionMapper latestActivityToSectionMapper) {
+    private DataManager latestActivityDataManager;
 
-        this.useCase = useCase;
+    @Inject
+    public LatestActivitiesPresenter(LatestActivityToSectionMapper latestActivityToSectionMapper,
+                                     @Named("activityDataManager") DataManager latestActivityDataManager) {
 
         this.latestActivityToSectionMapper = latestActivityToSectionMapper;
+
+        this.latestActivityDataManager = latestActivityDataManager;
 
     }
 
@@ -52,7 +52,7 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
         latestActivitiesView.showProgressBar();
 
-        useCase.execute(new LatestActivityCloudSubscriber());
+        latestActivityDataManager.getAllItems(new LatestActivityCloudSubscriber());
 
     }
 
