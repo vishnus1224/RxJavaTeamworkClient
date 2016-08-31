@@ -6,6 +6,8 @@ import com.vishnus1224.teamworkapidemo.util.DateTimeHelper;
 
 import java.text.ParseException;
 
+import javax.inject.Inject;
+
 /**
  * Maps the latest activity response to latest activity realm model.
  * Created by Vishnu on 8/28/2016.
@@ -14,6 +16,7 @@ public class LatestActivityResponseToModelMapper implements Mapper<LatestActivit
 
     private DateTimeHelper dateTimeHelper;
 
+    @Inject
     public LatestActivityResponseToModelMapper(DateTimeHelper dateTimeHelper){
 
         this.dateTimeHelper = dateTimeHelper;
