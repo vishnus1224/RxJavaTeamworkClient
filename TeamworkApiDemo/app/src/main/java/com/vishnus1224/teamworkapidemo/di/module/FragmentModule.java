@@ -12,6 +12,7 @@ import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityDataManager;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityCloudRepository;
+import com.vishnus1224.teamworkapidemo.repository.LatestActivityRealmRepository;
 import com.vishnus1224.teamworkapidemo.usecase.GetLatestActivityCloudUseCase;
 import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
@@ -81,4 +82,11 @@ public class FragmentModule {
 
     }
 
+    @Provides @PerFragment
+    @Named("activityRealmRepo")
+    BaseRepository provideLatestActivityRealmRepository(LatestActivityRealmRepository latestActivityRealmRepository){
+
+        return latestActivityRealmRepository;
+
+    }
 }
