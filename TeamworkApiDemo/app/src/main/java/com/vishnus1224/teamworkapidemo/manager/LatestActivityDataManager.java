@@ -1,7 +1,9 @@
 package com.vishnus1224.teamworkapidemo.manager;
 
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
+import com.vishnus1224.teamworkapidemo.subscriber.LatestActivityDatabaseSubscriber;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ import rx.subjects.PublishSubject;
 /**
  * Created by vishnu on 31/08/16.
  */
-public class LatestActivityDataManager implements DataManager<LatestActivityModel> {
+public class LatestActivityDataManager implements DataManager<LatestActivityDto> {
 
-    private PublishSubject<List<LatestActivityModel>> publishSubject = PublishSubject.create();
+    private PublishSubject<List<LatestActivityDto>> publishSubject = PublishSubject.create();
 
     private BaseRepository latestActivityRepository;
 
@@ -34,31 +36,13 @@ public class LatestActivityDataManager implements DataManager<LatestActivityMode
     }
 
     @Override
-    public void getAllItems(Subscriber<List<LatestActivityModel>> subscriber) {
+    public void getAllItems(Subscriber<List<LatestActivityDto>> subscriber) {
 
         publishSubject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
 
         latestActivityRealmRepository.getAllItems()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<LatestActivityModel>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                        publishSubject.onError(e);
-                    }
-
-                    @Override
-                    public void onNext(List<LatestActivityModel> latestActivityModels) {
-
-                        publishSubject.onNext(latestActivityModels);
-
-                    }
-                });
+                .subscribe(new LatestActivityDatabaseSubscriber(publishSubject));
 
         latestActivityRepository.getAllItems()
                 .doOnNext(new Action1<List<LatestActivityModel>>() {
@@ -73,7 +57,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityMode
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<LatestActivityModel>>() {
+                .subscribe(new Subscriber<List<LatestActivityDto>>() {
                     @Override
                     public void onCompleted() {
 
@@ -85,7 +69,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityMode
                     }
 
                     @Override
-                    public void onNext(List<LatestActivityModel> latestActivityModels) {
+                    public void onNext(List<LatestActivityDto> latestActivityModels) {
 
                     }
                 });
