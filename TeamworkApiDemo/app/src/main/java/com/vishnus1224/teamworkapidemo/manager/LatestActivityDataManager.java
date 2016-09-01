@@ -67,15 +67,16 @@ public class LatestActivityDataManager implements DataManager<LatestActivityMode
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
+                        latestActivityRealmRepository.getAllItems().subscribe(publishSubject);
+
+
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<LatestActivityModel>>() {
                     @Override
                     public void onCompleted() {
-                        latestActivityRealmRepository.getAllItems()
-                                .subscribeOn(Schedulers.io())
-                                .subscribe(publishSubject);
+
                     }
 
                     @Override
