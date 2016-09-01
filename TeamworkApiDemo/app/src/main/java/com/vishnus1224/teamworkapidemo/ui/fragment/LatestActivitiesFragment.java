@@ -26,6 +26,7 @@ import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
 import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
@@ -215,7 +216,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     @Override
-    public void showLatestActivity(final List<Section<LatestActivityModel>> sections) {
+    public void showLatestActivity(final List<Section<LatestActivityDto>> sections) {
 
         latestActivitiesAdapter.updateData(sections);
 
@@ -282,21 +283,21 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     @Override
-    public void onProjectClicked(LatestActivityModel latestActivityModel) {
+    public void onProjectClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show project home", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onTaskClicked(LatestActivityModel latestActivityModel) {
+    public void onTaskClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show task details", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onAvatarClicked(LatestActivityModel latestActivityModel) {
+    public void onAvatarClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show contact details", Toast.LENGTH_SHORT).show();
 

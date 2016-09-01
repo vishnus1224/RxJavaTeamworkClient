@@ -12,7 +12,7 @@ import com.vishnus1224.teamworkapidemo.delegate.LatestActivityAdapterDelegate;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.manager.PicassoImageManager;
-import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActivitiesAdapter.LatestActivityViewHolder> {
 
-    private List<Section<LatestActivityModel>> sections = new ArrayList<>();
+    private List<Section<LatestActivityDto>> sections = new ArrayList<>();
 
     private LatestActivityAdapterDelegate latestActivityAdapterDelegate;
 
@@ -35,7 +35,7 @@ public class LatestActivitiesAdapter extends RecyclerView.Adapter<LatestActiviti
 
     }
 
-    public void updateData(List<Section<LatestActivityModel>> sections){
+    public void updateData(List<Section<LatestActivityDto>> sections){
 
         this.sections.clear();
 
