@@ -1,8 +1,8 @@
 package com.vishnus1224.teamworkapidemo.datastore;
 
-import com.vishnus1224.teamworkapidemo.mapper.RealmResultToListMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,14 +18,10 @@ public class LatestActivityRealmDataStore implements LatestActivityDataStore<Lat
 
     private Realm realm;
 
-    private RealmResultToListMapper realmResultToListMapper;
-
     @Inject
-    public LatestActivityRealmDataStore(Realm realm, RealmResultToListMapper realmResultToListMapper) {
+    public LatestActivityRealmDataStore(Realm realm) {
 
         this.realm = realm;
-
-        this.realmResultToListMapper = realmResultToListMapper;
 
     }
 
@@ -34,7 +30,11 @@ public class LatestActivityRealmDataStore implements LatestActivityDataStore<Lat
 
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
 
-        return Observable.just(realmResultToListMapper.map(realmResults));
+        List<LatestActivityModel> latestActivityModelList = new ArrayList<>(realmResults.size());
+
+        latestActivityModelList.addAll(realmResults);
+
+        return Observable.just(latestActivityModelList);
 
     }
 }
