@@ -11,4 +11,6 @@ public interface DataManager<Type> {
 
     void getAllItems(Subscriber<List<Type>> subscriber);
 
+    void searchItems(String queryString, Subscriber<List<Type>> subscriber);
+
 }

@@ -75,4 +75,9 @@ public class LatestActivityCloudRepository implements BaseRepository<LatestActiv
 
     }
 
+    @Override
+    public Observable<List<LatestActivityDto>> searchItems(String searchString) {
+        return null;
+    }
+
 }

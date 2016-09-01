@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
@@ -76,6 +77,24 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
         Realm realm = realmManager.newRealm();
 
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
+
+        Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
+
+        realm.close();
+
+        return observable;
+    }
+
+    @Override
+    public Observable<List<LatestActivityDto>> searchItems(String searchString) {
+
+        Realm realm = realmManager.newRealm();
+
+        RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class)
+                .contains("description", searchString, Case.INSENSITIVE)
+                .or()
+                .contains("fromUsername", searchString, Case.INSENSITIVE)
+                .findAll();
 
         Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
 

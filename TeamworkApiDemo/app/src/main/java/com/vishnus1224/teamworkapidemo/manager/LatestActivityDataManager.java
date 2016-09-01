@@ -51,7 +51,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        latestActivityRealmRepository.getAllItems().subscribe(new LatestActivityDatabaseSubscriber(publishSubject));
+                        latestActivityRealmRepository.getAllItems().subscribe(publishSubject);
 
 
                     }
@@ -60,6 +60,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                 .subscribe(new Subscriber<List<LatestActivityDto>>() {
                     @Override
                     public void onCompleted() {
+
 
                     }
 
@@ -75,4 +76,16 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                 });
 
     }
+
+    @Override
+    public void searchItems(String queryString, Subscriber<List<LatestActivityDto>> subscriber) {
+
+        latestActivityRealmRepository.searchItems(queryString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
+
 }

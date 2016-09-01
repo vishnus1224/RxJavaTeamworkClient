@@ -38,4 +38,11 @@ public interface BaseRepository<Type> {
      * @return List of all items.
      */
     Observable<List<Type>> getAllItems();
+
+    /**
+     * Search and return items that match the search string.
+     * @param searchString The string to search for.
+     * @return List of matching items.
+     */
+    Observable<List<Type>> searchItems(String searchString);
 }
