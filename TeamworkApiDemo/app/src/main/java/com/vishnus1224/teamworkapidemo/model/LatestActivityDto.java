@@ -54,4 +54,9 @@ public class LatestActivityDto {
     public String forUserAvatarUrl;
 
     public String userId;
+
+    /**
+     * The text shown on the second line on the latest activity screen.
+     */
+    public String formattedDescription;
 }

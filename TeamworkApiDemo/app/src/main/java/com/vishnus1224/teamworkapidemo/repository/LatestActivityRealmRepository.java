@@ -94,6 +94,8 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
                 .contains("description", searchString, Case.INSENSITIVE)
                 .or()
                 .contains("fromUsername", searchString, Case.INSENSITIVE)
+                .or()
+                .contains("formattedDescription", searchString, Case.INSENSITIVE)
                 .findAll();
 
         Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));

@@ -16,6 +16,8 @@ public class LatestActivityResponseToDtoMapper implements Mapper<LatestActivityR
 
     private DateTimeHelper dateTimeHelper;
 
+    private StringBuilder stringBuilder = new StringBuilder();
+
     @Inject
     public LatestActivityResponseToDtoMapper(DateTimeHelper dateTimeHelper){
 
@@ -84,6 +86,23 @@ public class LatestActivityResponseToDtoMapper implements Mapper<LatestActivityR
 
         latestActivityDto.userId = latestActivityResponse.getUserId();
 
+        latestActivityDto.formattedDescription = formatDescription(latestActivityDto);
+
         return latestActivityDto;
+    }
+
+    private String formatDescription(LatestActivityDto latestActivityDto) {
+
+        stringBuilder.setLength(0);
+
+        stringBuilder.append("added by ");
+
+        stringBuilder.append(latestActivityDto.fromUsername);
+
+        String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(latestActivityDto.dateTime);
+
+        stringBuilder.append(dateToDisplay);
+        
+        return stringBuilder.toString();
     }
 }

@@ -13,7 +13,6 @@ import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
-import com.vishnus1224.teamworkapidemo.util.DateTimeHelper;
 
 import java.util.List;
 
@@ -91,9 +90,7 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
             rowTitleTextView.setText(latestActivityDto.description);
 
-            String formattedDescription = formatDescription(latestActivityDto);
-
-            rowDescriptionTextView.setText(formattedDescription);
+            rowDescriptionTextView.setText(latestActivityDto.formattedDescription);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -141,22 +138,4 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     }
 
-
-    private String formatDescription(LatestActivityDto latestActivityModel) {
-
-        stringBuilder.setLength(0);
-
-        stringBuilder.append("added by ");
-
-        stringBuilder.append(latestActivityModel.fromUsername);
-
-        DateTimeHelper dateTimeHelper = new DateTimeHelper();
-
-        String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(latestActivityModel.dateTime);
-
-        stringBuilder.append(dateToDisplay);
-
-
-        return stringBuilder.toString();
-    }
 }

@@ -69,6 +69,8 @@ public class LatestActivityDtoToModelMapper implements Mapper<LatestActivityDto,
 
         latestActivityModel.userId = latestActivityDto.userId;
 
+        latestActivityModel.formattedDescription = latestActivityDto.formattedDescription;
+
         return latestActivityModel;
     }
 }

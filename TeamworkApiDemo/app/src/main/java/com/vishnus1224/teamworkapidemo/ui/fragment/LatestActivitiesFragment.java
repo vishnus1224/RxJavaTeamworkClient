@@ -166,7 +166,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        return false;
+        return true;
     }
 
     @Override

@@ -78,6 +78,8 @@ public class RealmResultToListMapper implements Mapper<RealmResults<LatestActivi
 
             latestActivityDto.userId = latestActivityModel.userId;
 
+            latestActivityDto.formattedDescription = latestActivityModel.formattedDescription;
+
             list.add(latestActivityDto);
 
         }
