@@ -1,9 +1,12 @@
 package com.vishnus1224.teamworkapidemo.repository;
 
 import com.vishnus1224.teamworkapidemo.manager.RealmManager;
+import com.vishnus1224.teamworkapidemo.mapper.LatestActivityDtoToModelMapper;
 import com.vishnus1224.teamworkapidemo.mapper.RealmResultToListMapper;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,53 +18,66 @@ import rx.Observable;
 /**
  * Created by Vishnu on 8/29/2016.
  */
-public class LatestActivityRealmRepository implements BaseRepository<LatestActivityModel> {
+public class LatestActivityRealmRepository implements BaseRepository<LatestActivityDto> {
 
     private RealmManager realmManager;
 
     private RealmResultToListMapper realmResultToListMapper;
 
+    private LatestActivityDtoToModelMapper latestActivityDtoToModelMapper;
+
     @Inject
-    public LatestActivityRealmRepository(RealmManager realmManager, RealmResultToListMapper realmResultToListMapper) {
+    public LatestActivityRealmRepository(RealmManager realmManager, RealmResultToListMapper realmResultToListMapper,
+                                         LatestActivityDtoToModelMapper latestActivityDtoToModelMapper) {
 
         this.realmManager = realmManager;
 
         this.realmResultToListMapper = realmResultToListMapper;
 
-    }
-
-    @Override
-    public void add(final LatestActivityModel latestActivityModel) {
-
-        realmManager.addToRealm(latestActivityModel);
+        this.latestActivityDtoToModelMapper = latestActivityDtoToModelMapper;
 
     }
 
     @Override
-    public void addAll(final List<LatestActivityModel> latestActivityModels) {
+    public void add(final LatestActivityDto latestActivityDto) {
 
-        realmManager.addAllToRealm(latestActivityModels);
+        realmManager.addToRealm(latestActivityDtoToModelMapper.map(latestActivityDto));
 
     }
 
     @Override
-    public LatestActivityModel removeItem() {
+    public void addAll(final List<LatestActivityDto> latestActivityDtoList) {
+
+        List<LatestActivityModel> latestActivityModelList = new ArrayList<>(latestActivityDtoList.size());
+
+        for(LatestActivityDto latestActivityDto : latestActivityDtoList){
+
+            latestActivityModelList.add(latestActivityDtoToModelMapper.map(latestActivityDto));
+
+        }
+
+        realmManager.addAllToRealm(latestActivityModelList);
+
+    }
+
+    @Override
+    public LatestActivityDto removeItem() {
         return null;
     }
 
     @Override
-    public Observable<LatestActivityModel> getItem() {
+    public Observable<LatestActivityDto> getItem() {
         return null;
     }
 
     @Override
-    public Observable<List<LatestActivityModel>> getAllItems() {
+    public Observable<List<LatestActivityDto>> getAllItems() {
 
         Realm realm = realmManager.newRealm();
 
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
 
-        Observable<List<LatestActivityModel>> observable = Observable.just(realmResultToListMapper.map(realmResults));
+        Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
 
         return observable;
     }
