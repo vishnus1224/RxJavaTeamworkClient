@@ -33,14 +33,14 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
     @Override
     public void add(final LatestActivityModel latestActivityModel) {
 
-        realmManager.addToRealmAsync(latestActivityModel);
+        realmManager.addToRealm(latestActivityModel);
 
     }
 
     @Override
     public void addAll(final List<LatestActivityModel> latestActivityModels) {
 
-        realmManager.addAllToRealmAsync(latestActivityModels);
+        realmManager.addAllToRealm(latestActivityModels);
 
     }
 
