@@ -171,7 +171,10 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     @Override
     public boolean onQueryTextChange(String s) {
-        return false;
+
+        latestActivitiesPresenter.searchItems(s);
+
+        return true;
     }
 
     @Override

@@ -56,6 +56,29 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     }
 
+    public void searchItems(String query){
+
+        latestActivityDataManager.searchItems(query, new Subscriber<List<LatestActivityDto>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<LatestActivityDto> latestActivityDtoList) {
+
+                latestActivitiesView.showLatestActivity(convertToSections(latestActivityDtoList));
+
+            }
+        });
+
+    }
+
     public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityDto>>{
 
         @Override
@@ -98,7 +121,7 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         }else{
 
             //create a list of sections for the recycler view to display.
-            List<Section<LatestActivityDto>> sections = latestActivityToSectionMapper.map(latestActivityDtoList);
+            List<Section<LatestActivityDto>> sections = convertToSections(latestActivityDtoList);
 
             latestActivitiesView.hideProgressBar();
 
@@ -115,6 +138,12 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
 
         }
+
+    }
+
+    private List<Section<LatestActivityDto>> convertToSections(List<LatestActivityDto> latestActivityDtoList) {
+
+        return latestActivityToSectionMapper.map(latestActivityDtoList);
 
     }
 }
