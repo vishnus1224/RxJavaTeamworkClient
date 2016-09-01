@@ -29,37 +29,39 @@ public class RealmManager {
 
     }
 
-    public <T extends RealmModel> void addToRealmAsync(final T object){
+    public <T extends RealmModel> void addToRealm(final T object){
 
         Realm realm = newRealm();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
 
                 realm.copyToRealmOrUpdate(object);
 
-                realm.close();
 
             }
         });
 
+        realm.close();
+
     }
 
-    public <T extends RealmModel> void addAllToRealmAsync(final Iterable<T> objects){
+    public <T extends RealmModel> void addAllToRealm(final Iterable<T> objects){
 
         Realm realm = newRealm();
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
 
                 realm.copyToRealmOrUpdate(objects);
 
-                realm.close();
 
             }
         });
+
+        realm.close();
 
     }
 
