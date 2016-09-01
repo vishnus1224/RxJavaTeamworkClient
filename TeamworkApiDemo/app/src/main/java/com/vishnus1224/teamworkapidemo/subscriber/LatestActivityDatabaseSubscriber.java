@@ -5,17 +5,17 @@ import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import java.util.List;
 
 import rx.Subscriber;
-import rx.subjects.PublishSubject;
+import rx.subjects.Subject;
 
 /**
  * Created by vishnu on 01/09/16.
  */
 public class LatestActivityDatabaseSubscriber extends Subscriber<List<LatestActivityDto>> {
 
-    private PublishSubject<List<LatestActivityDto>> publishSubject;
+    private Subject<List<LatestActivityDto>, List<LatestActivityDto>> subject;
 
-    public LatestActivityDatabaseSubscriber(PublishSubject<List<LatestActivityDto>> publishSubject) {
-        this.publishSubject = publishSubject;
+    public LatestActivityDatabaseSubscriber(Subject<List<LatestActivityDto>, List<LatestActivityDto>> subject) {
+        this.subject = subject;
     }
 
     @Override
@@ -26,14 +26,14 @@ public class LatestActivityDatabaseSubscriber extends Subscriber<List<LatestActi
     @Override
     public void onError(Throwable e) {
 
-        publishSubject.onError(e);
+        subject.onError(e);
 
     }
 
     @Override
     public void onNext(List<LatestActivityDto> latestActivityDtoList) {
 
-        publishSubject.onNext(latestActivityDtoList);
+        subject.onNext(latestActivityDtoList);
 
     }
 }

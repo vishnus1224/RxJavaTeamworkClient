@@ -15,13 +15,17 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+import rx.subjects.SerializedSubject;
+import rx.subjects.Subject;
 
 /**
  * Created by vishnu on 31/08/16.
  */
 public class LatestActivityDataManager implements DataManager<LatestActivityDto> {
 
-    private PublishSubject<List<LatestActivityDto>> publishSubject = PublishSubject.create();
+    private Subject<List<LatestActivityDto>, List<LatestActivityDto>> subject =
+            new SerializedSubject<>(PublishSubject.<List<LatestActivityDto>>create());
+
 
     private BaseRepository latestActivityRepository;
 
@@ -38,11 +42,11 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     @Override
     public void getAllItems(Subscriber<List<LatestActivityDto>> subscriber) {
 
-        publishSubject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+        subject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
 
         latestActivityRealmRepository.getAllItems()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new LatestActivityDatabaseSubscriber(publishSubject));
+                .subscribe(new LatestActivityDatabaseSubscriber(subject));
 
         latestActivityRepository.getAllItems()
                 .doOnNext(new Action1<List<LatestActivityModel>>() {
@@ -51,7 +55,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        latestActivityRealmRepository.getAllItems().subscribe(publishSubject);
+                        latestActivityRealmRepository.getAllItems().subscribe(subject);
 
 
                     }
