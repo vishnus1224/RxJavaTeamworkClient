@@ -51,7 +51,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        latestActivityRealmRepository.getAllItems().subscribe(publishSubject);
+                        latestActivityRealmRepository.getAllItems().subscribe(new LatestActivityDatabaseSubscriber(publishSubject));
 
 
                     }
