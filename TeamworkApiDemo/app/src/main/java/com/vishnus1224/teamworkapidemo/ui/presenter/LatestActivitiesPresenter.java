@@ -100,6 +100,10 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
             //create a list of sections for the recycler view to display.
             List<Section<LatestActivityDto>> sections = latestActivityToSectionMapper.map(latestActivityDtoList);
 
+            latestActivitiesView.hideProgressBar();
+
+            latestActivitiesView.hideRefreshIndicator();
+
             //hide the no activity view if it was shown previously.
             latestActivitiesView.hideNoActivityView();
 
