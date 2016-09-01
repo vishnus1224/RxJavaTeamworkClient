@@ -2,8 +2,8 @@ package com.vishnus1224.teamworkapidemo.repository;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityDataStore;
-import com.vishnus1224.teamworkapidemo.mapper.LatestActivityResponseToModelMapper;
-import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
+import com.vishnus1224.teamworkapidemo.mapper.LatestActivityResponseToDtoMapper;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,58 +17,58 @@ import rx.functions.Func1;
 /**
  * Created by vishnu on 24/08/16.
  */
-public class LatestActivityCloudRepository implements BaseRepository<LatestActivityModel> {
+public class LatestActivityCloudRepository implements BaseRepository<LatestActivityDto> {
 
     private LatestActivityDataStore latestActivityDataStore;
 
-    private LatestActivityResponseToModelMapper latestActivityResponseToModelMapper;
+    private LatestActivityResponseToDtoMapper latestActivityResponseToDtoMapper;
 
     @Inject
-    public LatestActivityCloudRepository(@Named("activityCloudDataStore") LatestActivityDataStore latestActivityDataStore, LatestActivityResponseToModelMapper latestActivityResponseToModelMapper) {
+    public LatestActivityCloudRepository(@Named("activityCloudDataStore") LatestActivityDataStore latestActivityDataStore, LatestActivityResponseToDtoMapper latestActivityResponseToDtoMapper) {
 
         this.latestActivityDataStore = latestActivityDataStore;
 
-        this.latestActivityResponseToModelMapper = latestActivityResponseToModelMapper;
+        this.latestActivityResponseToDtoMapper = latestActivityResponseToDtoMapper;
 
     }
 
     @Override
-    public void add(LatestActivityModel LatestActivityModel) {
+    public void add(LatestActivityDto latestActivityDto) {
 
     }
 
     @Override
-    public void addAll(List<LatestActivityModel> latestActivityModels) {
+    public void addAll(List<LatestActivityDto> latestActivityDtoList) {
 
     }
 
     @Override
-    public LatestActivityModel removeItem() {
+    public LatestActivityDto removeItem() {
         return null;
     }
 
     @Override
-    public Observable<LatestActivityModel> getItem() {
+    public Observable<LatestActivityDto> getItem() {
         return null;
     }
 
     @Override
-    public Observable<List<LatestActivityModel>> getAllItems() {
+    public Observable<List<LatestActivityDto>> getAllItems() {
 
         return latestActivityDataStore.getLatestActivity()
-                .flatMap(new Func1<List<LatestActivityResponse>, Observable<List<LatestActivityModel>>>() {
+                .flatMap(new Func1<List<LatestActivityResponse>, Observable<List<LatestActivityDto>>>() {
                     @Override
-                    public Observable<List<LatestActivityModel>> call(List<LatestActivityResponse> latestActivityResponses) {
+                    public Observable<List<LatestActivityDto>> call(List<LatestActivityResponse> latestActivityResponses) {
 
-                        List<LatestActivityModel> latestActivityModelList = new ArrayList<>(latestActivityResponses.size());
+                        List<LatestActivityDto> latestActivityDtoList = new ArrayList<>(latestActivityResponses.size());
 
                         for(LatestActivityResponse latestActivityResponse : latestActivityResponses){
 
-                            latestActivityModelList.add(latestActivityResponseToModelMapper.map(latestActivityResponse));
+                            latestActivityDtoList.add(latestActivityResponseToDtoMapper.map(latestActivityResponse));
 
                         }
 
-                        return Observable.just(latestActivityModelList);
+                        return Observable.just(latestActivityDtoList);
                     }
 
                 });
