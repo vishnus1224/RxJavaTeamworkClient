@@ -79,6 +79,8 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
 
         Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
 
+        realm.close();
+
         return observable;
     }
 }
