@@ -102,7 +102,7 @@ public class LatestActivityResponseToDtoMapper implements Mapper<LatestActivityR
         String dateToDisplay = dateTimeHelper.extractDayAndTimeFromDate(latestActivityDto.dateTime);
 
         stringBuilder.append(dateToDisplay);
-        
+
         return stringBuilder.toString();
     }
 }

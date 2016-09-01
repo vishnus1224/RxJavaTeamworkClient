@@ -189,6 +189,11 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
 
+        searchView.setQuery("", false);
+
+        //reset the data when the search view is collapsed.
+        latestActivitiesPresenter.searchItems("");
+
         hideSoftKeyboard(searchView);
 
         return true;
