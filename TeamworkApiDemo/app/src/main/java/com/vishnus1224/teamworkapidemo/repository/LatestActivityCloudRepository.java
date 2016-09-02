@@ -1,7 +1,7 @@
 package com.vishnus1224.teamworkapidemo.repository;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
-import com.vishnus1224.teamworkapidemo.datastore.LatestActivityDataStore;
+import com.vishnus1224.teamworkapidemo.datastore.DataStore;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityResponseToDtoMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 
@@ -19,14 +19,14 @@ import rx.functions.Func1;
  */
 public class LatestActivityCloudRepository implements BaseRepository<LatestActivityDto> {
 
-    private LatestActivityDataStore latestActivityDataStore;
+    private DataStore dataStore;
 
     private LatestActivityResponseToDtoMapper latestActivityResponseToDtoMapper;
 
     @Inject
-    public LatestActivityCloudRepository(@Named("activityCloudDataStore") LatestActivityDataStore latestActivityDataStore, LatestActivityResponseToDtoMapper latestActivityResponseToDtoMapper) {
+    public LatestActivityCloudRepository(@Named("activityCloudDataStore") DataStore dataStore, LatestActivityResponseToDtoMapper latestActivityResponseToDtoMapper) {
 
-        this.latestActivityDataStore = latestActivityDataStore;
+        this.dataStore = dataStore;
 
         this.latestActivityResponseToDtoMapper = latestActivityResponseToDtoMapper;
 
@@ -55,7 +55,7 @@ public class LatestActivityCloudRepository implements BaseRepository<LatestActiv
     @Override
     public Observable<List<LatestActivityDto>> getAllItems() {
 
-        return latestActivityDataStore.getLatestActivity()
+        return dataStore.getLatestActivity()
                 .flatMap(new Func1<List<LatestActivityResponse>, Observable<List<LatestActivityDto>>>() {
                     @Override
                     public Observable<List<LatestActivityDto>> call(List<LatestActivityResponse> latestActivityResponses) {

@@ -14,7 +14,7 @@ import rx.Observable;
 /**
  * Created by Vishnu on 8/29/2016.
  */
-public class LatestActivityRealmDataStore implements LatestActivityDataStore<LatestActivityModel> {
+public class LatestActivityRealmDataStore implements DataStore<LatestActivityModel> {
 
     private Realm realm;
 

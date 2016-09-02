@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import com.vishnus1224.rxjavateamworkclient.client.LatestActivityApiClient;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityCloudDataStore;
-import com.vishnus1224.teamworkapidemo.datastore.LatestActivityDataStore;
+import com.vishnus1224.teamworkapidemo.datastore.DataStore;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityRealmDataStore;
 import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.manager.DataManager;
@@ -53,7 +53,7 @@ public class FragmentModule {
 
     @Provides @PerFragment
     @Named("activityCloudDataStore")
-    LatestActivityDataStore provideLatestActivityCloudDataStore(LatestActivityCloudDataStore latestActivityCloudDataStore){
+    DataStore provideLatestActivityCloudDataStore(LatestActivityCloudDataStore latestActivityCloudDataStore){
 
         return latestActivityCloudDataStore;
 
@@ -68,7 +68,7 @@ public class FragmentModule {
 
     @Provides @PerFragment
     @Named("activityRealmDataStore")
-    LatestActivityDataStore provideLatestActivityRealmDataStore(LatestActivityRealmDataStore latestActivityRealmDataStore){
+    DataStore provideLatestActivityRealmDataStore(LatestActivityRealmDataStore latestActivityRealmDataStore){
 
         return latestActivityRealmDataStore;
 
