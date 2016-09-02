@@ -2,7 +2,7 @@ package com.vishnus1224.teamworkapidemo.repository;
 
 import com.vishnus1224.teamworkapidemo.manager.RealmManager;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityDtoToModelMapper;
-import com.vishnus1224.teamworkapidemo.mapper.RealmResultToListMapper;
+import com.vishnus1224.teamworkapidemo.mapper.LatestActivityModelToDtoMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 
@@ -23,17 +23,17 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
 
     private RealmManager realmManager;
 
-    private RealmResultToListMapper realmResultToListMapper;
+    private LatestActivityModelToDtoMapper latestActivityModelToDtoMapper;
 
     private LatestActivityDtoToModelMapper latestActivityDtoToModelMapper;
 
     @Inject
-    public LatestActivityRealmRepository(RealmManager realmManager, RealmResultToListMapper realmResultToListMapper,
+    public LatestActivityRealmRepository(RealmManager realmManager, LatestActivityModelToDtoMapper latestActivityModelToDtoMapper,
                                          LatestActivityDtoToModelMapper latestActivityDtoToModelMapper) {
 
         this.realmManager = realmManager;
 
-        this.realmResultToListMapper = realmResultToListMapper;
+        this.latestActivityModelToDtoMapper = latestActivityModelToDtoMapper;
 
         this.latestActivityDtoToModelMapper = latestActivityDtoToModelMapper;
 
@@ -78,7 +78,7 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
 
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
 
-        Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
+        Observable<List<LatestActivityDto>> observable = Observable.just(latestActivityModelToDtoMapper.map(realmResults));
 
         realm.close();
 
@@ -98,7 +98,7 @@ public class LatestActivityRealmRepository implements BaseRepository<LatestActiv
                 .contains("formattedDescription", searchString, Case.INSENSITIVE)
                 .findAll();
 
-        Observable<List<LatestActivityDto>> observable = Observable.just(realmResultToListMapper.map(realmResults));
+        Observable<List<LatestActivityDto>> observable = Observable.just(latestActivityModelToDtoMapper.map(realmResults));
 
         realm.close();
 

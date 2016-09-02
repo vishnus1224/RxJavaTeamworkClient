@@ -13,10 +13,10 @@ import io.realm.RealmResults;
 /**
  * Created by Vishnu on 8/29/2016.
  */
-public class RealmResultToListMapper implements Mapper<RealmResults<LatestActivityModel>, List<LatestActivityDto>> {
+public class LatestActivityModelToDtoMapper implements Mapper<RealmResults<LatestActivityModel>, List<LatestActivityDto>> {
 
     @Inject
-    public RealmResultToListMapper() {
+    public LatestActivityModelToDtoMapper() {
 
     }
 
