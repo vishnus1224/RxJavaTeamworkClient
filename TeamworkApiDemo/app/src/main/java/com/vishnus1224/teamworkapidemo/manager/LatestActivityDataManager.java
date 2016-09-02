@@ -3,6 +3,7 @@ package com.vishnus1224.teamworkapidemo.manager;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
+import com.vishnus1224.teamworkapidemo.subscriber.EmptySubscriber;
 import com.vishnus1224.teamworkapidemo.subscriber.LatestActivityDatabaseSubscriber;
 
 import java.util.List;
@@ -61,23 +62,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<LatestActivityDto>>() {
-                    @Override
-                    public void onCompleted() {
-
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<LatestActivityDto> latestActivityModels) {
-
-                    }
-                });
+                .subscribe(new EmptySubscriber<List<LatestActivityDto>>());
 
     }
 
