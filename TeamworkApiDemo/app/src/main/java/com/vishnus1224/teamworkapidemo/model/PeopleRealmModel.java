@@ -7,5 +7,5 @@ import io.realm.RealmObject;
  */
 public class PeopleRealmModel extends RealmObject {
 
-    public String name;
+    public String id;
 }

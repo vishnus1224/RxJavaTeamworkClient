@@ -5,5 +5,9 @@ package com.vishnus1224.teamworkapidemo.model;
  */
 public class PeopleDto {
 
-    public String name;
+    public String id;
+
+    public PeopleDto(String id) {
+        this.id = id;
+    }
 }
