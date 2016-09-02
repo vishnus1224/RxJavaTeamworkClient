@@ -1,7 +1,6 @@
 package com.vishnus1224.teamworkapidemo.manager;
 
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
-import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.subscriber.EmptySubscriber;
 import com.vishnus1224.teamworkapidemo.subscriber.LatestActivityDatabaseSubscriber;
@@ -50,9 +49,9 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                 .subscribe(new LatestActivityDatabaseSubscriber(subject));
 
         latestActivityRepository.getAllItems()
-                .doOnNext(new Action1<List<LatestActivityModel>>() {
+                .doOnNext(new Action1<List<LatestActivityDto>>() {
                     @Override
-                    public void call(List<LatestActivityModel> latestActivityModels) {
+                    public void call(List<LatestActivityDto> latestActivityModels) {
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
