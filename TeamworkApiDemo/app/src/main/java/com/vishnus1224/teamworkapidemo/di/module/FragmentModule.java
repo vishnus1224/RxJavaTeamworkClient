@@ -3,6 +3,7 @@ package com.vishnus1224.teamworkapidemo.di.module;
 import android.support.v4.app.Fragment;
 
 import com.vishnus1224.rxjavateamworkclient.client.LatestActivityApiClient;
+import com.vishnus1224.rxjavateamworkclient.client.ProjectApiClient;
 import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityCloudDataStore;
 import com.vishnus1224.teamworkapidemo.datastore.DataStore;
@@ -87,6 +88,13 @@ public class FragmentModule {
     BaseRepository provideLatestActivityRealmRepository(LatestActivityRealmRepository latestActivityRealmRepository){
 
         return latestActivityRealmRepository;
+
+    }
+
+    @Provides @PerFragment
+    ProjectApiClient provideProjectApiClient(TeamworkApiConfig teamworkApiConfig){
+
+        return new ProjectApiClient(teamworkApiConfig);
 
     }
 }

@@ -56,7 +56,7 @@ public class ProjectApiClient extends TeamworkApiClient implements UpdatedAfterD
 
     private int page;
 
-    protected ProjectApiClient(TeamworkApiConfig teamworkApiConfig) {
+    public ProjectApiClient(TeamworkApiConfig teamworkApiConfig) {
         super(teamworkApiConfig);
     }
 
