@@ -14,7 +14,7 @@ import rx.functions.Func1;
 /**
  * Created by vishnu on 24/08/16.
  */
-public class LatestActivityCloudDataStore implements LatestActivityDataStore {
+public class LatestActivityCloudDataStore implements LatestActivityDataStore<LatestActivityResponse> {
 
     private LatestActivityApiClient latestActivityApiClient;
 

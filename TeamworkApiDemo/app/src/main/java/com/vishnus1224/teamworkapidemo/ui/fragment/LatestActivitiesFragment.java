@@ -20,12 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
+import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
 import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityModel;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 import com.vishnus1224.teamworkapidemo.ui.fragment.dialog.AddNewActivityDialogFragment;
@@ -164,12 +166,15 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-        return false;
+
+        latestActivitiesPresenter.searchItems(s);
+
+        return true;
     }
 
     @Override
@@ -183,6 +188,11 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
+
+        searchView.setQuery("", false);
+
+        //reset the data when the search view is collapsed.
+        latestActivitiesPresenter.searchItems("");
 
         hideSoftKeyboard(searchView);
 
@@ -214,7 +224,7 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     @Override
-    public void showLatestActivity(final List<Section<LatestActivityResponse>> sections) {
+    public void showLatestActivity(final List<Section<LatestActivityDto>> sections) {
 
         latestActivitiesAdapter.updateData(sections);
 
@@ -281,21 +291,21 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
 
 
     @Override
-    public void onProjectClicked(LatestActivityResponse latestActivityResponse) {
+    public void onProjectClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show project home", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onTaskClicked(LatestActivityResponse latestActivityResponse) {
+    public void onTaskClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show task details", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
-    public void onAvatarClicked(LatestActivityResponse latestActivityResponse) {
+    public void onAvatarClicked(LatestActivityDto latestActivityDto) {
 
         Toast.makeText(getActivity(), "Show contact details", Toast.LENGTH_SHORT).show();
 
@@ -367,7 +377,8 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     private void injectDependencies() {
 
 
-        userComponent.inject(this);
+        userComponent.fragmentComponent(new FragmentModule(this))
+                .inject(this);
 
 
     }

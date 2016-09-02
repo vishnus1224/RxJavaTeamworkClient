@@ -1,6 +1,6 @@
 package com.vishnus1224.teamworkapidemo.mapper;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 /**
  * Created by vishnu on 25/08/16.
  */
-public class LatestActivityToSectionMapper implements Mapper<List<LatestActivityResponse>, List<Section<LatestActivityResponse>>> {
+public class LatestActivityToSectionMapper implements Mapper<List<LatestActivityDto>, List<Section<LatestActivityDto>>> {
 
 
     @Inject
@@ -20,34 +20,34 @@ public class LatestActivityToSectionMapper implements Mapper<List<LatestActivity
     }
 
     @Override
-    public List<Section<LatestActivityResponse>> map(List<LatestActivityResponse> latestActivityResponses) {
+    public List<Section<LatestActivityDto>> map(List<LatestActivityDto> latestActivityDtoList) {
 
         //The id of the previous project for comparing.
         String previousProjectId = "";
 
-        Section<LatestActivityResponse> section = null;
+        Section<LatestActivityDto> section = null;
 
-        List<Section<LatestActivityResponse>> sections = new ArrayList<>();
+        List<Section<LatestActivityDto>> sections = new ArrayList<>();
 
-        for(int i = 0; i < latestActivityResponses.size(); i++){
+        for(int i = 0; i < latestActivityDtoList.size(); i++){
 
-            LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
+            LatestActivityDto latestActivityDto = latestActivityDtoList.get(i);
 
             //compare the previous project id to the project id of the latestActivity
-            if(!previousProjectId.equals(latestActivityResponse.getProjectId())){
+            if(!previousProjectId.equals(latestActivityDto.projectId)){
 
-                previousProjectId = latestActivityResponse.getProjectId();
+                previousProjectId = latestActivityDto.projectId;
 
-                section = new Section<>(i, formatTitle(latestActivityResponse));
+                section = new Section<>(i, formatTitle(latestActivityDto));
 
-                section.addToList(latestActivityResponse);
+                section.addToList(latestActivityDto);
 
                 sections.add(section);
 
 
             }else{
 
-                section.addToList(latestActivityResponse);
+                section.addToList(latestActivityDto);
 
 
             }
@@ -58,18 +58,18 @@ public class LatestActivityToSectionMapper implements Mapper<List<LatestActivity
     }
 
 
-    private String formatTitle(LatestActivityResponse latestActivityResponse){
+    private String formatTitle(LatestActivityDto latestActivityDto){
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append(latestActivityResponse.getProjectName());
+        stringBuilder.append(latestActivityDto.projectName);
 
         //if the company name is not self, then append it to the project name.
-        if(!latestActivityResponse.getCompanyName().equals("Self")){
+        if(!latestActivityDto.companyName.equals("Self")){
 
             stringBuilder.append(" : ");
 
-            stringBuilder.append(latestActivityResponse.getCompanyName());
+            stringBuilder.append(latestActivityDto.companyName);
         }
 
         return stringBuilder.toString();

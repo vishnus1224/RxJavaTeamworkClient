@@ -7,19 +7,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.listener.LatestActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityImageManager;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.LatestActivitiesAdapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 
 /**
@@ -27,17 +22,15 @@ import java.util.TimeZone;
  */
 public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActivitiesAdapter.LatestActivityViewHolder> {
 
-    private List<Section<LatestActivityResponse>> sections;
+    private List<Section<LatestActivityDto>> sections;
 
     private StringBuilder stringBuilder;
-
-    private SimpleDateFormat dateFormat;
 
     private LatestActivityImageManager latestActivityImageManager;
 
     private LatestActivityItemClickListener latestActivityItemClickListener;
 
-    public LatestActivityAdapterDelegate(List<Section<LatestActivityResponse>> sections, LatestActivityImageManager
+    public LatestActivityAdapterDelegate(List<Section<LatestActivityDto>> sections, LatestActivityImageManager
             latestActivityImageManager, LatestActivityItemClickListener latestActivityItemClickListener) {
 
         this.sections = sections;
@@ -48,7 +41,6 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
         stringBuilder = new StringBuilder();
 
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault());
 
     }
 
@@ -65,19 +57,19 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
     @Override
     public void onBindViewHolder(LatestActivitiesAdapter.LatestActivityViewHolder holder, int position) {
 
-        Section<LatestActivityResponse> section = sections.get(position);
+        Section<LatestActivityDto> section = sections.get(position);
 
         //add views to the container, based on the number of items in the section.
-        List<LatestActivityResponse> latestActivityResponses = section.getTypeList();
+        List<LatestActivityDto> latestActivityDtoList = section.getTypeList();
 
         holder.titleTextView.setText(section.getSectionTitle());
 
         //remove existing views from the container.
         holder.itemContainer.removeAllViews();
 
-        for(int i = 0; i < latestActivityResponses.size(); i++){
+        for (int i = 0; i < latestActivityDtoList.size(); i++) {
 
-            final LatestActivityResponse latestActivityResponse = latestActivityResponses.get(i);
+            final LatestActivityDto latestActivityDto = latestActivityDtoList.get(i);
 
             View view = LayoutInflater.from(holder.itemContainer.getContext()).inflate(R.layout.adapter_latest_activity_container_row, holder.itemContainer, false);
 
@@ -90,25 +82,23 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
             ImageView activityTypeImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowTypeImage);
 
             activityTypeImageView.setImageResource(latestActivityImageManager.
-                    getIconForLatestActivity(latestActivityResponse.getType()));
+                    getIconForLatestActivity(latestActivityDto.type));
 
             ImageView userAvatarImageView = (ImageView) view.findViewById(R.id.adapterLatestActivityRowAvatar);
 
-            latestActivityImageManager.loadImage(latestActivityResponse.getFromUserAvatarUrl(), userAvatarImageView);
+            latestActivityImageManager.loadImage(latestActivityDto.fromUserAvatarUrl, userAvatarImageView);
 
-            rowTitleTextView.setText(latestActivityResponse.getDescription());
+            rowTitleTextView.setText(latestActivityDto.description);
 
-            String formattedDescription = formatDescription(latestActivityResponse);
-
-            rowDescriptionTextView.setText(formattedDescription);
+            rowDescriptionTextView.setText(latestActivityDto.formattedDescription);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    if(latestActivityItemClickListener != null){
+                    if (latestActivityItemClickListener != null) {
 
-                        handleItemClick(latestActivityResponse);
+                        handleItemClick(latestActivityDto);
 
                     }
 
@@ -119,9 +109,9 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
                 @Override
                 public void onClick(View view) {
 
-                    if(latestActivityItemClickListener != null){
+                    if (latestActivityItemClickListener != null) {
 
-                        latestActivityItemClickListener.onAvatarClicked(latestActivityResponse);
+                        latestActivityItemClickListener.onAvatarClicked(latestActivityDto);
 
                     }
 
@@ -134,49 +124,18 @@ public class LatestActivityAdapterDelegate implements AdapterDelegate<LatestActi
 
     }
 
-    private void handleItemClick(LatestActivityResponse latestActivityResponse) {
+    private void handleItemClick(LatestActivityDto latestActivityModel) {
 
-        if(latestActivityResponse.getType().equalsIgnoreCase("project")){
+        if (latestActivityModel.type.equalsIgnoreCase("project")) {
 
-            latestActivityItemClickListener.onProjectClicked(latestActivityResponse);
+            latestActivityItemClickListener.onProjectClicked(latestActivityModel);
 
-        }else if(latestActivityResponse.getType().equalsIgnoreCase("task")){
+        } else if (latestActivityModel.type.equalsIgnoreCase("task")) {
 
-            latestActivityItemClickListener.onTaskClicked(latestActivityResponse);
+            latestActivityItemClickListener.onTaskClicked(latestActivityModel);
 
         }
 
     }
 
-
-    private String formatDescription(LatestActivityResponse latestActivityResponse) {
-
-        stringBuilder.setLength(0);
-
-        stringBuilder.append("added by ");
-
-        stringBuilder.append(latestActivityResponse.getFromUsername());
-
-        try {
-
-            dateFormat.applyPattern("yyyy-MM-dd'T'hh:mm:ss'Z'");
-
-            dateFormat.setTimeZone(TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
-
-            Date date = dateFormat.parse(latestActivityResponse.getDateTime());
-
-            dateFormat.applyPattern("E hh:mm a");
-
-            dateFormat.setTimeZone(TimeZone.getDefault());
-
-            String dateToDisplay = dateFormat.format(date);
-
-            stringBuilder.append(dateToDisplay);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return stringBuilder.toString();
-    }
 }

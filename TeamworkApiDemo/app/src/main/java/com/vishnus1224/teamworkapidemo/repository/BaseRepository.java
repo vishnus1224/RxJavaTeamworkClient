@@ -16,6 +16,12 @@ public interface BaseRepository<Type> {
     void add(Type type);
 
     /**
+     * Add all items contained in the list.
+     * @param typeList The data type to hold in the list.
+     */
+    void addAll(List<Type> typeList);
+
+    /**
      * Remove an item from the repository.
      * @return The type of the removed item.
      */
@@ -32,4 +38,11 @@ public interface BaseRepository<Type> {
      * @return List of all items.
      */
     Observable<List<Type>> getAllItems();
+
+    /**
+     * Search and return items that match the search string.
+     * @param searchString The string to search for.
+     * @return List of matching items.
+     */
+    Observable<List<Type>> searchItems(String searchString);
 }

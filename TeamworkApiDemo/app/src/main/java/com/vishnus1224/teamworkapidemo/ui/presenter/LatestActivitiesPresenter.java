@@ -1,10 +1,10 @@
 package com.vishnus1224.teamworkapidemo.ui.presenter;
 
-import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
+import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityToSectionMapper;
+import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.view.LatestActivitiesView;
-import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
 import java.util.List;
 
@@ -20,16 +20,17 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     private LatestActivitiesView latestActivitiesView;
 
-    private UseCase useCase;
-
     private LatestActivityToSectionMapper latestActivityToSectionMapper;
 
-    @Inject
-    public LatestActivitiesPresenter(@Named("activityCloud") UseCase useCase, LatestActivityToSectionMapper latestActivityToSectionMapper) {
+    private DataManager latestActivityDataManager;
 
-        this.useCase = useCase;
+    @Inject
+    public LatestActivitiesPresenter(LatestActivityToSectionMapper latestActivityToSectionMapper,
+                                     @Named("activityDataManager") DataManager latestActivityDataManager) {
 
         this.latestActivityToSectionMapper = latestActivityToSectionMapper;
+
+        this.latestActivityDataManager = latestActivityDataManager;
 
     }
 
@@ -51,11 +52,34 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
         latestActivitiesView.showProgressBar();
 
-        useCase.execute(new LatestActivityCloudSubscriber());
+        latestActivityDataManager.getAllItems(new LatestActivityCloudSubscriber());
 
     }
 
-    public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityResponse>>{
+    public void searchItems(String query){
+
+        latestActivityDataManager.searchItems(query, new Subscriber<List<LatestActivityDto>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<LatestActivityDto> latestActivityDtoList) {
+
+                latestActivitiesView.showLatestActivity(convertToSections(latestActivityDtoList));
+
+            }
+        });
+
+    }
+
+    public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityDto>>{
 
         @Override
         public void onCompleted() {
@@ -77,17 +101,17 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         }
 
         @Override
-        public void onNext(List<LatestActivityResponse> latestActivityResponse) {
+        public void onNext(List<LatestActivityDto> latestActivityDtoList) {
 
-            onResponseReceived(latestActivityResponse);
+            onResponseReceived(latestActivityDtoList);
 
         }
     }
 
-    private void onResponseReceived(List<LatestActivityResponse> latestActivityResponse) {
+    private void onResponseReceived(List<LatestActivityDto> latestActivityDtoList) {
 
         //if the response does not contain any items, then show the no activity view.
-        if(latestActivityResponse.isEmpty()) {
+        if(latestActivityDtoList.isEmpty()) {
 
             //hide latest activity view if it was shown previously.
             latestActivitiesView.hideLatestActivityView();
@@ -97,7 +121,11 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         }else{
 
             //create a list of sections for the recycler view to display.
-            List<Section<LatestActivityResponse>> sections = latestActivityToSectionMapper.map(latestActivityResponse);
+            List<Section<LatestActivityDto>> sections = convertToSections(latestActivityDtoList);
+
+            latestActivitiesView.hideProgressBar();
+
+            latestActivitiesView.hideRefreshIndicator();
 
             //hide the no activity view if it was shown previously.
             latestActivitiesView.hideNoActivityView();
@@ -110,6 +138,12 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
 
         }
+
+    }
+
+    private List<Section<LatestActivityDto>> convertToSections(List<LatestActivityDto> latestActivityDtoList) {
+
+        return latestActivityToSectionMapper.map(latestActivityDtoList);
 
     }
 }

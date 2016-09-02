@@ -23,5 +23,4 @@ public interface ApplicationComponent {
 
     UserComponent userComponent(UserModule userModule);
 
-    FragmentComponent fragmentComponent(FragmentModule fragmentModule);
 }
