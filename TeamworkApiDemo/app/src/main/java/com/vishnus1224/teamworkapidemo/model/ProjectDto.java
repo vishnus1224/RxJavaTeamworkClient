@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class ProjectDto {
 
     public String logo;
 
-    public String startDate;
+    public Date startDate;
 
     public String id;
 
@@ -39,7 +40,7 @@ public class ProjectDto {
 
     public List<PeopleDto> people;
 
-    public String endDate;
+    public Date endDate;
 
     public String name;
 
