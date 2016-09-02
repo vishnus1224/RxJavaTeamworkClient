@@ -12,4 +12,12 @@ public class CategoryRealmModel extends RealmObject {
 
     @PrimaryKey
     public String id;
+
+    public CategoryRealmModel() {
+    }
+
+    public CategoryRealmModel(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
 }

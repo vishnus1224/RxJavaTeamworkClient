@@ -8,4 +8,11 @@ import io.realm.RealmObject;
 public class TagRealmModel extends RealmObject {
 
     public String name;
+
+    public TagRealmModel() {
+    }
+
+    public TagRealmModel(String name) {
+        this.name = name;
+    }
 }
