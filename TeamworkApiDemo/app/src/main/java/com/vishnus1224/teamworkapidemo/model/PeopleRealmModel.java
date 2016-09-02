@@ -8,4 +8,11 @@ import io.realm.RealmObject;
 public class PeopleRealmModel extends RealmObject {
 
     public String id;
+
+    public PeopleRealmModel() {
+    }
+
+    public PeopleRealmModel(String id) {
+        this.id = id;
+    }
 }
