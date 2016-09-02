@@ -22,7 +22,7 @@ public class ProjectDto {
 
     public String defaultPrivacy;
 
-    public String createdOn;
+    public Date createdOn;
 
     public CategoryDto category;
 
@@ -36,7 +36,7 @@ public class ProjectDto {
 
     public String id;
 
-    public String lastChangeOn;
+    public Date lastChangeOn;
 
     public List<PeopleDto> people;
 

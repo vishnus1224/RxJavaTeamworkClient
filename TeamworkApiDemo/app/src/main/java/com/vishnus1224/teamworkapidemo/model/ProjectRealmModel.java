@@ -1,5 +1,7 @@
 package com.vishnus1224.teamworkapidemo.model;
 
+import java.util.Date;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -23,7 +25,7 @@ public class ProjectRealmModel extends RealmObject {
 
     public String defaultPrivacy;
 
-    public String createdOn;
+    public Date createdOn;
 
     public CategoryRealmModel category;
 
@@ -33,16 +35,16 @@ public class ProjectRealmModel extends RealmObject {
 
     public String logo;
 
-    public String startDate;
+    public Date startDate;
 
     @PrimaryKey
     public String id;
 
-    public String lastChangeOn;
+    public Date lastChangeOn;
 
     public RealmList<PeopleRealmModel> people;
 
-    public String endDate;
+    public Date endDate;
 
     public String name;
 
