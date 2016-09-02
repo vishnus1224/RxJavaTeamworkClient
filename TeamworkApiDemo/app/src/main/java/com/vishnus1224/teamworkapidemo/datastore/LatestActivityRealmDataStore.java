@@ -26,7 +26,7 @@ public class LatestActivityRealmDataStore implements DataStore<LatestActivityMod
     }
 
     @Override
-    public Observable<List<LatestActivityModel>> getLatestActivity() {
+    public Observable<List<LatestActivityModel>> getAllItems() {
 
         RealmResults<LatestActivityModel> realmResults = realm.where(LatestActivityModel.class).findAll();
 

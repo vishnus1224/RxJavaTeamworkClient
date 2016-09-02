@@ -55,7 +55,7 @@ public class LatestActivityCloudRepository implements BaseRepository<LatestActiv
     @Override
     public Observable<List<LatestActivityDto>> getAllItems() {
 
-        return dataStore.getLatestActivity()
+        return dataStore.getAllItems()
                 .flatMap(new Func1<List<LatestActivityResponse>, Observable<List<LatestActivityDto>>>() {
                     @Override
                     public Observable<List<LatestActivityDto>> call(List<LatestActivityResponse> latestActivityResponses) {

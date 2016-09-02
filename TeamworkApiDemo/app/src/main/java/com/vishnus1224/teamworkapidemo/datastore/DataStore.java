@@ -13,7 +13,7 @@ public interface DataStore<DataType> {
      * Fetch the latest activity from the data store.
      * @return
      */
-    Observable<List<DataType>> getLatestActivity();
+    Observable<List<DataType>> getAllItems();
 
 
 }

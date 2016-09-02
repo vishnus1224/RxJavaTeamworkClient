@@ -26,7 +26,7 @@ public class LatestActivityCloudDataStore implements DataStore<LatestActivityRes
     }
 
     @Override
-    public Observable<List<LatestActivityResponse>> getLatestActivity() {
+    public Observable<List<LatestActivityResponse>> getAllItems() {
 
         return latestActivityApiClient.getLatestActivity().
                 flatMap(new Func1<LatestActivityResponseWrapper, Observable<List<LatestActivityResponse>>>() {
