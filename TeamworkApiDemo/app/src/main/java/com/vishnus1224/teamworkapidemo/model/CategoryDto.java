@@ -9,4 +9,9 @@ public class CategoryDto {
     public String name;
 
     public String id;
+
+    public CategoryDto(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
 }
