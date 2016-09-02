@@ -50,6 +50,36 @@ public final class DateTimeHelper {
 
     }
 
+    public Date createdOnDate(String createdOnDateString) throws ParseException {
+
+        return convertStringToDate(createdOnDateString, ZULU_DATE_TIME_PATTERN,
+                TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
+
+    }
+
+    public Date lastChangedOnDate(String lastChangedOnDateString) throws ParseException {
+
+        return convertStringToDate(lastChangedOnDateString, ZULU_DATE_TIME_PATTERN,
+                TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
+
+    }
+
+    public Date startDate(String startDateString) throws ParseException {
+
+        return convertStringToDate(startDateString, DUE_DATE_PATTERN,
+                TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
+
+
+    }
+
+    public Date endDate(String endDateString) throws ParseException {
+
+        return convertStringToDate(endDateString, DUE_DATE_PATTERN,
+                TimeZone.getTimeZone(TimeZone.getDefault().getDisplayName()));
+
+
+    }
+
     private Date convertStringToDate(String dateString, String pattern, TimeZone timeZone) throws ParseException {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
