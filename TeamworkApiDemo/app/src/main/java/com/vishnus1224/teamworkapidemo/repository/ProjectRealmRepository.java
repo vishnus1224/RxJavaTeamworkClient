@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
@@ -87,6 +88,21 @@ public class ProjectRealmRepository implements BaseRepository<ProjectDto> {
 
     @Override
     public Observable<List<ProjectDto>> searchItems(String searchString) {
-        return null;
+
+        Realm realm = realmManager.newRealm();
+
+        RealmResults<ProjectRealmModel> realmModels = realm.where(ProjectRealmModel.class)
+                .contains("name", searchString, Case.INSENSITIVE)
+                .findAll();
+
+        List<ProjectDto> projectDtoList = new ArrayList<>(realmModels.size());
+
+        for(ProjectRealmModel projectRealmModel : realmModels){
+
+            projectDtoList.add(projectModelToDtoMapper.map(projectRealmModel));
+
+        }
+
+        return Observable.just(projectDtoList);
     }
 }

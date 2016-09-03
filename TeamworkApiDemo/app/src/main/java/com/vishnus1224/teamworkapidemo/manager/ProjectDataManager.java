@@ -68,5 +68,10 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
     @Override
     public void searchItems(String queryString, Subscriber<List<ProjectDto>> subscriber) {
 
+        projectRealmRepository.searchItems(queryString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
     }
 }
