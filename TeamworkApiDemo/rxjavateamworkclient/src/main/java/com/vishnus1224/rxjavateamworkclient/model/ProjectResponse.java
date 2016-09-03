@@ -47,6 +47,10 @@ public class ProjectResponse {
 
     private String endDate;
 
+    private Defaults defaults;
+
+    private Company company;
+
     private String name;
 
     private boolean privacyEnabled;
@@ -199,6 +203,22 @@ public class ProjectResponse {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Defaults getDefaults() {
+        return defaults;
+    }
+
+    public void setDefaults(Defaults defaults) {
+        this.defaults = defaults;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getName() {
