@@ -8,6 +8,7 @@ import com.vishnus1224.rxjavateamworkclient.config.TeamworkApiConfig;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityCloudDataStore;
 import com.vishnus1224.teamworkapidemo.datastore.DataStore;
 import com.vishnus1224.teamworkapidemo.datastore.LatestActivityRealmDataStore;
+import com.vishnus1224.teamworkapidemo.datastore.ProjectCloudDataStore;
 import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityDataManager;
@@ -95,6 +96,13 @@ public class FragmentModule {
     ProjectApiClient provideProjectApiClient(TeamworkApiConfig teamworkApiConfig){
 
         return new ProjectApiClient(teamworkApiConfig);
+
+    }
+
+    @Provides @PerFragment @Named("projectCloudDataStore")
+    DataStore provideProjectCloudDataStore(ProjectCloudDataStore projectCloudDataStore){
+
+        return projectCloudDataStore;
 
     }
 }
