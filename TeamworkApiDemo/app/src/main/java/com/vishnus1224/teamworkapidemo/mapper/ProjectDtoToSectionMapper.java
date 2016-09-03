@@ -6,10 +6,16 @@ import com.vishnus1224.teamworkapidemo.model.Section;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by Vishnu on 9/3/2016.
  */
 public class ProjectDtoToSectionMapper implements Mapper<List<ProjectDto>, List<Section<ProjectDto>>> {
+
+    @Inject
+    public ProjectDtoToSectionMapper() {
+    }
 
     @Override
     public List<Section<ProjectDto>> map(List<ProjectDto> projectDtoList) {
