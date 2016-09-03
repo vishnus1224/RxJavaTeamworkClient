@@ -12,6 +12,7 @@ import com.vishnus1224.teamworkapidemo.datastore.ProjectCloudDataStore;
 import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.manager.DataManager;
 import com.vishnus1224.teamworkapidemo.manager.LatestActivityDataManager;
+import com.vishnus1224.teamworkapidemo.manager.ProjectDataManager;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityCloudRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityRealmRepository;
@@ -119,6 +120,13 @@ public class FragmentModule {
     BaseRepository provideProjectRealmRepository(ProjectRealmRepository projectRealmRepository){
 
         return projectRealmRepository;
+
+    }
+
+    @Provides @PerFragment @Named("projectDataManager")
+    DataManager provideProjectDataManager(ProjectDataManager projectDataManager){
+
+        return projectDataManager;
 
     }
 }
