@@ -46,6 +46,10 @@ public class ProjectRealmModel extends RealmObject {
 
     public Date endDate;
 
+    public DefaultsRealmModel defaults;
+
+    public CompanyRealmModel company;
+
     public String name;
 
     public boolean privacyEnabled;

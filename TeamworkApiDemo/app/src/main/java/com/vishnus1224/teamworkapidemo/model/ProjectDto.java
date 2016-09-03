@@ -42,6 +42,10 @@ public class ProjectDto {
 
     public Date endDate;
 
+    public DefaultsDto defaults;
+
+    public CompanyDto company;
+
     public String name;
 
     public boolean privacyEnabled;
