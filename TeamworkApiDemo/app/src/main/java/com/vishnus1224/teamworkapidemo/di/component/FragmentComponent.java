@@ -3,6 +3,7 @@ package com.vishnus1224.teamworkapidemo.di.component;
 import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
 import com.vishnus1224.teamworkapidemo.di.scope.PerFragment;
 import com.vishnus1224.teamworkapidemo.ui.fragment.LatestActivitiesFragment;
+import com.vishnus1224.teamworkapidemo.ui.fragment.ProjectFragment;
 
 import dagger.Subcomponent;
 
@@ -14,5 +15,7 @@ import dagger.Subcomponent;
 public interface FragmentComponent {
 
     void inject(LatestActivitiesFragment latestActivitiesFragment);
+
+    void inject(ProjectFragment projectFragment);
 
 }
