@@ -8,6 +8,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
+
 /**
  * Created by Vishnu on 9/3/2016.
  */
@@ -23,11 +27,31 @@ public class ProjectDtoToSectionMapper implements Mapper<List<ProjectDto>, List<
         //the sections are made based on the company id.
         String lastCompanyId = "";
 
-        List<Section<ProjectDto>> sectionList = new ArrayList<>();
+        final List<Section<ProjectDto>> sectionList = new ArrayList<>();
 
         Section<ProjectDto> section = null;
 
-        for(int i = 0; i < projectDtoList.size(); i++){
+        //make a section from starred projects first.
+        Observable.from(projectDtoList).filter(new Func1<ProjectDto, Boolean>() {
+            @Override
+            public Boolean call(ProjectDto projectDto) {
+                return projectDto.starred;
+            }
+        }).toList().subscribe(new Action1<List<ProjectDto>>() {
+            @Override
+            public void call(List<ProjectDto> projectDtoList) {
+
+                if(!projectDtoList.isEmpty()){
+
+                    Section<ProjectDto> section = new Section<>(0, "Starred Projects", projectDtoList);
+
+                    sectionList.add(section);
+                }
+            }
+        });
+
+
+        for(int i = 1; i < projectDtoList.size(); i++){
 
             ProjectDto projectDto = projectDtoList.get(i);
 
