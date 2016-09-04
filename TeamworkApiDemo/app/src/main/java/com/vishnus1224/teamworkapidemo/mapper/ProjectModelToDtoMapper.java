@@ -60,13 +60,9 @@ public class ProjectModelToDtoMapper implements Mapper<ProjectRealmModel, Projec
         projectDto.people = peopleModelToDtoListMapper.map(projectRealmModel.people);
 
         projectDto.endDate = projectRealmModel.endDate;
-
-        if(projectRealmModel.company != null) {
-
-            projectDto.company = new CompanyDto(projectRealmModel.company.name, projectRealmModel.company.isOwner,
-                    projectRealmModel.company.id);
-
-        }
+        
+        projectDto.company = new CompanyDto(projectRealmModel.company.name, projectRealmModel.company.isOwner,
+                projectRealmModel.company.id);
 
         projectDto.name = projectRealmModel.name;
 
