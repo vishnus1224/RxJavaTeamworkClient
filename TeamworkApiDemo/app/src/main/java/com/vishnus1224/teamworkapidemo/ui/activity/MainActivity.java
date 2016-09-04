@@ -19,6 +19,7 @@ import com.vishnus1224.teamworkapidemo.listener.AddNewActivityItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.ActionBarTitle;
 import com.vishnus1224.teamworkapidemo.model.UserConfig;
 import com.vishnus1224.teamworkapidemo.ui.fragment.LatestActivitiesFragment;
+import com.vishnus1224.teamworkapidemo.ui.fragment.ProjectFragment;
 import com.vishnus1224.teamworkapidemo.ui.presenter.MainPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.MainView;
 import com.vishnus1224.teamworkapidemo.util.Constants;
@@ -110,6 +111,10 @@ public class MainActivity extends BaseActivity implements MainView, UserComponen
 
     @Override
     public void showProjectsScreen() {
+
+        ProjectFragment projectFragment = new ProjectFragment();
+
+        replaceFragment(R.id.drawerContentFrame, projectFragment);
 
     }
 
