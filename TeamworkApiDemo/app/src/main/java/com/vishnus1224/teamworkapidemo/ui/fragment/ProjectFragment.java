@@ -23,6 +23,7 @@ import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
+import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.presenter.ProjectsPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.ProjectsView;
 
@@ -97,7 +98,7 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
     }
 
     @Override
-    public void showProjects(List<ProjectDto> projectDtoList) {
+    public void showProjects(List<Section<ProjectDto>> projectDtoSectionList) {
 
     }
 
@@ -160,7 +161,7 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
             swipeRefreshLayout.setRefreshing(false);
 
         }
-        
+
     }
 
 
