@@ -2,6 +2,8 @@ package com.vishnus1224.teamworkapidemo.mapper;
 
 import com.vishnus1224.rxjavateamworkclient.model.ProjectResponse;
 import com.vishnus1224.teamworkapidemo.model.CategoryDto;
+import com.vishnus1224.teamworkapidemo.model.CompanyDto;
+import com.vishnus1224.teamworkapidemo.model.DefaultsDto;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.util.DateTimeHelper;
 
@@ -84,6 +86,10 @@ public class ProjectResponseToDtoMapper implements Mapper<ProjectResponse,Projec
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
+        projectDto.company = new CompanyDto(projectResponse.getCompany().getName(),
+                projectResponse.getCompany().getIsOwner(), projectResponse.getCompany().getId());
 
         projectDto.name = projectResponse.getName();
 

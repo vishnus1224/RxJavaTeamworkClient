@@ -50,8 +50,10 @@ public class ProjectDtoToSectionMapper implements Mapper<List<ProjectDto>, List<
             }
         });
 
+        int nextSectionNumber = sectionList.isEmpty() ? 0 : 1;
 
-        for(int i = 1; i < projectDtoList.size(); i++){
+
+        for(int i = 0; i < projectDtoList.size(); i++){
 
             ProjectDto projectDto = projectDtoList.get(i);
 
@@ -60,7 +62,9 @@ public class ProjectDtoToSectionMapper implements Mapper<List<ProjectDto>, List<
 
                 lastCompanyId = projectDto.company.id;
 
-                section = new Section<>(i, projectDto.name);
+                section = new Section<>(nextSectionNumber, projectDto.company.name);
+
+                nextSectionNumber++;
 
                 section.addToList(projectDto);
 

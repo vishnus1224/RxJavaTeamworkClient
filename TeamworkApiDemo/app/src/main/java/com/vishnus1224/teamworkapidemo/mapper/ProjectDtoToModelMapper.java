@@ -1,6 +1,7 @@
 package com.vishnus1224.teamworkapidemo.mapper;
 
 import com.vishnus1224.teamworkapidemo.model.CategoryRealmModel;
+import com.vishnus1224.teamworkapidemo.model.CompanyRealmModel;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.model.ProjectRealmModel;
 
@@ -62,6 +63,9 @@ public class ProjectDtoToModelMapper implements Mapper<ProjectDto, ProjectRealmM
         projectRealmModel.people = peopleDtoToModelListMapper.map(projectDto.people);
 
         projectRealmModel.endDate = projectDto.endDate;
+
+        projectRealmModel.company = new CompanyRealmModel(projectDto.company.name, projectDto.company.isOwner,
+                projectDto.company.id);
 
         projectRealmModel.name = projectDto.name;
 
