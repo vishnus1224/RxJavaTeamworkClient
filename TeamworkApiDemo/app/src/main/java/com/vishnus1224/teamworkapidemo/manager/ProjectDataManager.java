@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -29,6 +30,12 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
 
     private BaseRepository projectRealmRepository;
 
+    private Subscription subjectSubscription;
+
+    private Subscription databaseSubscription;
+
+    private Subscription cloudSubscription;
+
     @Inject
     public ProjectDataManager(@Named("projectCloudRepo") BaseRepository projectCloudRepository,
                               @Named("projectRealmRepo") BaseRepository projectRealmRepository) {
@@ -41,21 +48,21 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
     @Override
     public void getAllItems(Subscriber<List<ProjectDto>> subscriber) {
 
-        serializedSubject.observeOn(AndroidSchedulers.mainThread())
+        subjectSubscription = serializedSubject.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
 
-        projectRealmRepository.getAllItems()
+        databaseSubscription = projectRealmRepository.getAllItems()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new ProjectDatabaseSubscriber(serializedSubject));
 
-        projectCloudRepository.getAllItems()
+        cloudSubscription = projectCloudRepository.getAllItems()
                 .doOnNext(new Action1<List<ProjectDto>>() {
                     @Override
                     public void call(List<ProjectDto> projectDtoList) {
 
                         projectRealmRepository.addAll(projectDtoList);
 
-                        projectRealmRepository.getAllItems().subscribe(serializedSubject);
+                        databaseSubscription = projectRealmRepository.getAllItems().subscribe(serializedSubject);
 
                     }
 
@@ -72,6 +79,27 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
+    }
+
+    @Override
+    public void unSubscribe() {
+
+        unSubscribeIfNotAlreadyDone(subjectSubscription);
+
+        unSubscribeIfNotAlreadyDone(databaseSubscription);
+
+        unSubscribeIfNotAlreadyDone(cloudSubscription);
+
+    }
+
+    private void unSubscribeIfNotAlreadyDone(Subscription subscription) {
+
+        if(subscription != null && !subscription.isUnsubscribed()){
+
+            subscription.unsubscribe();
+
+        }
 
     }
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -26,6 +27,11 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     private Subject<List<LatestActivityDto>, List<LatestActivityDto>> subject =
             new SerializedSubject<>(PublishSubject.<List<LatestActivityDto>>create());
 
+    private Subscription subjectSubscription;
+
+    private Subscription databaseSubscription;
+
+    private Subscription cloudSubscription;
 
     private BaseRepository latestActivityRepository;
 
@@ -42,20 +48,20 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     @Override
     public void getAllItems(Subscriber<List<LatestActivityDto>> subscriber) {
 
-        subject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
+        subjectSubscription = subject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
 
-        latestActivityRealmRepository.getAllItems()
+        databaseSubscription = latestActivityRealmRepository.getAllItems()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new LatestActivityDatabaseSubscriber(subject));
 
-        latestActivityRepository.getAllItems()
+        cloudSubscription = latestActivityRepository.getAllItems()
                 .doOnNext(new Action1<List<LatestActivityDto>>() {
                     @Override
                     public void call(List<LatestActivityDto> latestActivityModels) {
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        latestActivityRealmRepository.getAllItems().subscribe(subject);
+                        databaseSubscription = latestActivityRealmRepository.getAllItems().subscribe(subject);
 
 
                     }
@@ -72,6 +78,27 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+
+    }
+
+    @Override
+    public void unSubscribe() {
+
+        unSubscribeIfNotAlreadyDone(subjectSubscription);
+
+        unSubscribeIfNotAlreadyDone(databaseSubscription);
+
+        unSubscribeIfNotAlreadyDone(cloudSubscription);
+
+    }
+
+    private void unSubscribeIfNotAlreadyDone(Subscription subscription){
+
+        if(subscription != null && !subscription.isUnsubscribed()){
+
+            subscription.unsubscribe();
+
+        }
 
     }
 

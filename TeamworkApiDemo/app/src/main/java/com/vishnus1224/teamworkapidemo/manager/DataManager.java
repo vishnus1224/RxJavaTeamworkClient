@@ -13,4 +13,6 @@ public interface DataManager<Type> {
 
     void searchItems(String queryString, Subscriber<List<Type>> subscriber);
 
+    void unSubscribe();
+
 }

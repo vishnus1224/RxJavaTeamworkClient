@@ -46,6 +46,8 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
         this.latestActivitiesView = null;
 
+        latestActivityDataManager.unSubscribe();
+
     }
 
     public void fetchLatestActivityFromCloud(){
