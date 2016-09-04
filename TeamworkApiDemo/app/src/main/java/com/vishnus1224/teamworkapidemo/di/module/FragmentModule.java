@@ -18,8 +18,6 @@ import com.vishnus1224.teamworkapidemo.repository.LatestActivityCloudRepository;
 import com.vishnus1224.teamworkapidemo.repository.LatestActivityRealmRepository;
 import com.vishnus1224.teamworkapidemo.repository.ProjectCloudRepository;
 import com.vishnus1224.teamworkapidemo.repository.ProjectRealmRepository;
-import com.vishnus1224.teamworkapidemo.usecase.GetLatestActivityCloudUseCase;
-import com.vishnus1224.teamworkapidemo.usecase.UseCase;
 
 
 import javax.inject.Named;
@@ -39,14 +37,6 @@ public class FragmentModule {
         this.fragment = fragment;
     }
 
-
-    @Provides @PerFragment
-    @Named("activityCloud")
-    UseCase provideLatestActivityCloudUseCase(GetLatestActivityCloudUseCase getLatestActivityCloudUseCase){
-
-        return getLatestActivityCloudUseCase;
-
-    }
 
     @Provides @PerFragment
     @Named("activityRepo")
