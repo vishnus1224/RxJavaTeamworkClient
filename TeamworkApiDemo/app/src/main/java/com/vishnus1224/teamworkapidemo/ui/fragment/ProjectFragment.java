@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,6 +44,8 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
     private ProgressDialog progressDialog;
 
     private SearchView searchView;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Inject
     ProjectsPresenter projectsPresenter;
@@ -147,6 +150,17 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
 
         progressDialog.hide();
 
+    }
+
+    @Override
+    public void hideRefreshIndicator() {
+
+        if(swipeRefreshLayout.isRefreshing()){
+
+            swipeRefreshLayout.setRefreshing(false);
+
+        }
+        
     }
 
 
@@ -280,6 +294,8 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
         createProjectButton = (Button) view.findViewById(R.id.noProjectsButtonCreateProject);
 
         noProjectsView = (LinearLayout) view.findViewById(R.id.layoutNoProjects);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.projectsSwipeRefresh);
 
         progressDialog = new ProgressDialog(getActivity());
 

@@ -24,4 +24,6 @@ public interface ProjectsView extends BaseView {
     void showProgressBar();
 
     void hideProgressBar();
+
+    void hideRefreshIndicator();
 }
