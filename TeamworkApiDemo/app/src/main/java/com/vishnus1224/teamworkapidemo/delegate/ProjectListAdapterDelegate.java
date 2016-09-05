@@ -15,6 +15,7 @@ import com.vishnus1224.teamworkapidemo.listener.ProjectListItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
 import com.vishnus1224.teamworkapidemo.ui.adapter.ProjectListAdapter;
+import com.vishnus1224.teamworkapidemo.ui.customview.OneLetterImageView;
 
 import java.util.List;
 
@@ -64,7 +65,9 @@ public class ProjectListAdapterDelegate implements AdapterDelegate<ProjectListAd
 
             LinearLayout container = (LinearLayout) view.findViewById(R.id.adapterProjectRowDetailContainer);
 
-            ImageView firstLetterImageView = (ImageView) view.findViewById(R.id.adapterProjectsRowImageFirstLetter);
+            OneLetterImageView firstLetterImageView = (OneLetterImageView) view.findViewById(R.id.adapterProjectsRowImageFirstLetter);
+
+            firstLetterImageView.setText(projectDto.name.substring(0,1));
 
             TextView titleTextView = (TextView) view.findViewById(R.id.adapterProjectsRowTitle);
 

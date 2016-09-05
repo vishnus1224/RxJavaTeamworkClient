@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="4"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:paddingTop="10dp"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/adapterProjectRowDetailContainer"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.vishnus1224.teamworkapidemo.ui.customview.OneLetterImageView
             android:id="@+id/adapterProjectsRowImageFirstLetter"
             android:layout_width="40dp"
             android:layout_height="40dp" />
