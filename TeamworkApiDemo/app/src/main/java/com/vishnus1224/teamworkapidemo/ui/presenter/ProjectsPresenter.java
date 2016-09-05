@@ -114,7 +114,11 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
 
         if(projectDtoList.isEmpty()){
 
-            projectsView.hideNoProjectsView();
+            projectsView.hideProgressBar();
+
+            projectsView.hideRefreshIndicator();
+
+            projectsView.hideProjectsView();
 
             projectsView.showNoProjectsView();
 

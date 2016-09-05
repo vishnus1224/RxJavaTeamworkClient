@@ -115,6 +115,10 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         //if the response does not contain any items, then show the no activity view.
         if(latestActivityDtoList.isEmpty()) {
 
+            latestActivitiesView.hideProgressBar();
+
+            latestActivitiesView.hideRefreshIndicator();
+
             //hide latest activity view if it was shown previously.
             latestActivitiesView.hideLatestActivityView();
 
