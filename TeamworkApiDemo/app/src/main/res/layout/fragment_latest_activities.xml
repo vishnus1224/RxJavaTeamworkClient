@@ -4,14 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:visibility="gone"
-        layout="@layout/layout_latest_activities" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include
-        android:visibility="gone"
-        layout="@layout/layout_no_activities" />
+        <include
+            layout="@layout/layout_latest_activities"
+            android:visibility="gone" />
 
+        <include
+            layout="@layout/layout_no_activities"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 
 </android.support.v4.widget.SwipeRefreshLayout>
