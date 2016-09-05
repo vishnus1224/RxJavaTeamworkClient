@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,8 +23,10 @@ import com.vishnus1224.teamworkapidemo.R;
 import com.vishnus1224.teamworkapidemo.delegate.UserComponentDelegate;
 import com.vishnus1224.teamworkapidemo.di.component.UserComponent;
 import com.vishnus1224.teamworkapidemo.di.module.FragmentModule;
+import com.vishnus1224.teamworkapidemo.listener.ProjectListItemClickListener;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.model.Section;
+import com.vishnus1224.teamworkapidemo.ui.adapter.ProjectListAdapter;
 import com.vishnus1224.teamworkapidemo.ui.presenter.ProjectsPresenter;
 import com.vishnus1224.teamworkapidemo.ui.view.ProjectsView;
 
@@ -34,7 +37,7 @@ import javax.inject.Inject;
 /**
  * Created by Vishnu on 9/4/2016.
  */
-public class ProjectFragment extends BaseFragment implements ProjectsView, View.OnClickListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener {
+public class ProjectFragment extends BaseFragment implements ProjectsView, View.OnClickListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, ProjectListItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
 
@@ -50,6 +53,8 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
 
     @Inject
     ProjectsPresenter projectsPresenter;
+
+    private ProjectListAdapter projectListAdapter;
 
     private UserComponent userComponent;
 
@@ -76,6 +81,8 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
 
         setupViews(view);
 
+        setupAdapter();
+
         return view;
     }
 
@@ -99,6 +106,8 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
 
     @Override
     public void showProjects(List<Section<ProjectDto>> projectDtoSectionList) {
+
+        projectListAdapter.updateData(projectDtoSectionList);
 
     }
 
@@ -248,12 +257,39 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
         return true;
     }
 
+
+    @Override
+    public void onProjectClicked(ProjectDto projectDto) {
+
+        Toast.makeText(getActivity(), "Show project home " + projectDto.id, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onProjectStarred(ProjectDto projectDto) {
+
+        Toast.makeText(getActivity(), "Star project " + projectDto.id, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProjectUnStarred(ProjectDto projectDto) {
+
+        Toast.makeText(getActivity(), "Unstar project " + projectDto.id, Toast.LENGTH_SHORT).show();
+    }
+
     private void createProjectButtonClicked() {
 
         Toast.makeText(getActivity(), "Show new project screen", Toast.LENGTH_SHORT).show();
 
     }
 
+
+    @Override
+    public void onRefresh() {
+
+        projectsPresenter.fetchAllProjects();
+
+    }
 
     private void addNewProjectClicked() {
 
@@ -300,8 +336,24 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
 
         progressDialog = new ProgressDialog(getActivity());
 
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         createProjectButton.setOnClickListener(this);
 
     }
+
+
+    private void setupAdapter() {
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        projectListAdapter = new ProjectListAdapter(getActivity(), this);
+
+        recyclerView.setAdapter(projectListAdapter);
+
+    }
+
 
 }
