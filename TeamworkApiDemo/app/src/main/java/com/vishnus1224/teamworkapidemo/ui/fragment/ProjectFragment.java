@@ -232,7 +232,11 @@ public class ProjectFragment extends BaseFragment implements ProjectsView, View.
     @Override
     public boolean onQueryTextChange(String s) {
 
-        projectsPresenter.searchProjects(s);
+        //if the search view is not iconified, then search
+        // to prevent searching when fragment is for shown the first time.
+        if(!searchView.isIconified()) {
+            projectsPresenter.searchProjects(s);
+        }
 
         return true;
     }

@@ -172,7 +172,10 @@ public class LatestActivitiesFragment extends BaseFragment implements MenuItemCo
     @Override
     public boolean onQueryTextChange(String s) {
 
-        latestActivitiesPresenter.searchItems(s);
+        //only search when search view is in expanded state.
+        if(!searchView.isIconified()) {
+            latestActivitiesPresenter.searchItems(s);
+        }
 
         return true;
     }
