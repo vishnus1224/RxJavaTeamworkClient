@@ -3,38 +3,29 @@ package com.vishnus1224.teamworkapidemo.manager;
 import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.subscriber.EmptySubscriber;
-import com.vishnus1224.teamworkapidemo.subscriber.ProjectDatabaseSubscriber;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
 
 /**
  * Created by Vishnu on 9/3/2016.
  */
 public class ProjectDataManager implements DataManager<ProjectDto> {
 
-    private SerializedSubject<List<ProjectDto>, List<ProjectDto>> serializedSubject =
-            new SerializedSubject<>(PublishSubject.<List<ProjectDto>>create());
-
     private BaseRepository projectCloudRepository;
 
     private BaseRepository projectRealmRepository;
 
-    private Subscription subjectSubscription;
-
-    private Subscription databaseSubscription;
-
-    private Subscription cloudSubscription;
 
     @Inject
     public ProjectDataManager(@Named("projectCloudRepo") BaseRepository projectCloudRepository,
@@ -46,29 +37,41 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
     }
 
     @Override
-    public void getAllItems(Subscriber<List<ProjectDto>> subscriber) {
+    public void getAllItems(Subscriber<List<ProjectDto>> databaseSubscriber, final Subscriber<List<ProjectDto>> cloudSubscriber) {
 
-        subjectSubscription = serializedSubject.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
-        databaseSubscription = projectRealmRepository.getAllItems()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new ProjectDatabaseSubscriber(serializedSubject));
-
-        cloudSubscription = projectCloudRepository.getAllItems()
+        final Observable<List<ProjectDto>> cloudObservable = projectCloudRepository.getAllItems()
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<List<ProjectDto>>() {
                     @Override
                     public void call(List<ProjectDto> projectDtoList) {
 
                         projectRealmRepository.addAll(projectDtoList);
 
-                        databaseSubscription = projectRealmRepository.getAllItems().subscribe(serializedSubject);
+                        projectRealmRepository.getAllItems().subscribe(cloudSubscriber);
 
                     }
 
+                }).doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                        cloudSubscriber.onError(throwable);
+
+                    }
+                });
+
+        projectRealmRepository.getAllItems()
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+
+                        cloudObservable.subscribe(new EmptySubscriber<List<ProjectDto>>());
+
+                    }
                 })
                 .subscribeOn(Schedulers.io())
-                .subscribe(new EmptySubscriber<List<ProjectDto>>());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(databaseSubscriber);
 
     }
 
@@ -85,11 +88,6 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
     @Override
     public void unSubscribe() {
 
-        unSubscribeIfNotAlreadyDone(subjectSubscription);
-
-        unSubscribeIfNotAlreadyDone(databaseSubscription);
-
-        unSubscribeIfNotAlreadyDone(cloudSubscription);
 
     }
 

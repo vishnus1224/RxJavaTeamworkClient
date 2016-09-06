@@ -9,7 +9,8 @@ import rx.Subscriber;
  */
 public interface DataManager<Type> {
 
-    void getAllItems(Subscriber<List<Type>> subscriber);
+    void getAllItems(Subscriber<List<Type>> databaseSubscriber,
+                     Subscriber<List<Type>> cloudSubscriber);
 
     void searchItems(String queryString, Subscriber<List<Type>> subscriber);
 

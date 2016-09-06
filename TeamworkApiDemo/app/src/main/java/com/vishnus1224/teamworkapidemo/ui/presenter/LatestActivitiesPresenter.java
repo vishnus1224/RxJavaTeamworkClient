@@ -54,7 +54,8 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
         latestActivitiesView.showProgressBar();
 
-        latestActivityDataManager.getAllItems(new LatestActivityCloudSubscriber());
+        latestActivityDataManager.getAllItems(new LatestActivityDatabaseSubscribe(),
+                new LatestActivityCloudSubscriber());
 
     }
 
@@ -81,6 +82,31 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
     }
 
+    public class LatestActivityDatabaseSubscribe extends Subscriber<List<LatestActivityDto>>{
+
+        @Override
+        public void onCompleted() {
+
+
+            String s = "Sds";
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+            String s = "Sds";
+
+        }
+
+        @Override
+        public void onNext(List<LatestActivityDto> latestActivityDtoList) {
+
+            onDatabaseResponseReceived(latestActivityDtoList);
+
+        }
+    }
+
+
     public class LatestActivityCloudSubscriber extends Subscriber<List<LatestActivityDto>>{
 
         @Override
@@ -105,19 +131,38 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onNext(List<LatestActivityDto> latestActivityDtoList) {
 
-            onResponseReceived(latestActivityDtoList);
+            onCloudResponseReceived(latestActivityDtoList);
 
         }
     }
 
-    private void onResponseReceived(List<LatestActivityDto> latestActivityDtoList) {
+    private void onDatabaseResponseReceived(List<LatestActivityDto> latestActivityDtoList) {
 
-        //if the response does not contain any items, then show the no activity view.
-        if(latestActivityDtoList.isEmpty()) {
+        if(!latestActivityDtoList.isEmpty()) {
+
+            //create a list of sections for the recycler view to display.
+            List<Section<LatestActivityDto>> sections = convertToSections(latestActivityDtoList);
 
             latestActivitiesView.hideProgressBar();
 
             latestActivitiesView.hideRefreshIndicator();
+
+            //hide the no activity view if it was shown previously.
+            latestActivitiesView.hideNoActivityView();
+
+            //show the recycler view.
+            latestActivitiesView.showLatestActivityView();
+
+            //show the items in a list.
+            latestActivitiesView.showLatestActivity(sections);
+
+        }
+    }
+
+    private void onCloudResponseReceived(List<LatestActivityDto> latestActivityDtoList) {
+
+        //if the response does not contain any items, then show the no activity view.
+        if(latestActivityDtoList.isEmpty()) {
 
             //hide latest activity view if it was shown previously.
             latestActivitiesView.hideLatestActivityView();

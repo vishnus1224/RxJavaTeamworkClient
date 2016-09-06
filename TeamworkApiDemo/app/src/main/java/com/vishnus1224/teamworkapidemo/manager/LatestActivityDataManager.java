@@ -1,37 +1,27 @@
 package com.vishnus1224.teamworkapidemo.manager;
 
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
+import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 import com.vishnus1224.teamworkapidemo.subscriber.EmptySubscriber;
-import com.vishnus1224.teamworkapidemo.subscriber.LatestActivityDatabaseSubscriber;
 
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
 
 /**
  * Created by vishnu on 31/08/16.
  */
 public class LatestActivityDataManager implements DataManager<LatestActivityDto> {
-
-    private Subject<List<LatestActivityDto>, List<LatestActivityDto>> subject =
-            new SerializedSubject<>(PublishSubject.<List<LatestActivityDto>>create());
-
-    private Subscription subjectSubscription;
-
-    private Subscription databaseSubscription;
-
-    private Subscription cloudSubscription;
 
     private BaseRepository latestActivityRepository;
 
@@ -46,28 +36,42 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     }
 
     @Override
-    public void getAllItems(Subscriber<List<LatestActivityDto>> subscriber) {
+    public void getAllItems(Subscriber<List<LatestActivityDto>> databaseSubscriber, final Subscriber<List<LatestActivityDto>> cloudSubscriber) {
 
-        subjectSubscription = subject.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
-
-        databaseSubscription = latestActivityRealmRepository.getAllItems()
-                .subscribeOn(Schedulers.io())
-                .subscribe(new LatestActivityDatabaseSubscriber(subject));
-
-        cloudSubscription = latestActivityRepository.getAllItems()
+        final Observable<List<ProjectDto>> cloudObservable = latestActivityRepository.getAllItems()
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Action1<List<LatestActivityDto>>() {
                     @Override
                     public void call(List<LatestActivityDto> latestActivityModels) {
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        databaseSubscription = latestActivityRealmRepository.getAllItems().subscribe(subject);
+                        latestActivityRealmRepository.getAllItems().subscribe(cloudSubscriber);
 
+
+                    }
+                }).doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
+                        cloudSubscriber.onError(throwable);
+
+                    }
+                });
+
+        latestActivityRealmRepository.getAllItems()
+                .doOnCompleted(new Action0() {
+                    @Override
+                    public void call() {
+
+                        cloudObservable.subscribe(new EmptySubscriber<List<ProjectDto>>());
 
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .subscribe(new EmptySubscriber<List<LatestActivityDto>>());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(databaseSubscriber);
+
 
     }
 
@@ -84,11 +88,6 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     @Override
     public void unSubscribe() {
 
-        unSubscribeIfNotAlreadyDone(subjectSubscription);
-
-        unSubscribeIfNotAlreadyDone(databaseSubscription);
-
-        unSubscribeIfNotAlreadyDone(cloudSubscription);
 
     }
 

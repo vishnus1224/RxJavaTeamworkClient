@@ -51,7 +51,7 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
 
         projectsView.showProgressBar();
 
-        projectsDataManager.getAllItems(new ProjectsSubscriber());
+        projectsDataManager.getAllItems(new ProjectsDatabaseSubscriber(), new ProjectCloudSubscriber());
 
     }
 
@@ -79,7 +79,28 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
 
     }
 
-    public class ProjectsSubscriber extends Subscriber<List<ProjectDto>> {
+    public class ProjectsDatabaseSubscriber extends Subscriber<List<ProjectDto>> {
+
+        @Override
+        public void onCompleted() {
+
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+
+        }
+
+        @Override
+        public void onNext(List<ProjectDto> projectDtoList) {
+
+            onDatabaseResponseReceived(projectDtoList);
+
+        }
+    }
+
+    public class ProjectCloudSubscriber extends Subscriber<List<ProjectDto>>{
 
         @Override
         public void onCompleted() {
@@ -98,19 +119,40 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
             projectsView.hideRefreshIndicator();
 
             projectsView.showError();
-
         }
 
         @Override
         public void onNext(List<ProjectDto> projectDtoList) {
 
-            onResponseReceived(projectDtoList);
+            onCloudResponseReceived(projectDtoList);
 
         }
     }
 
+    private void onDatabaseResponseReceived(List<ProjectDto> projectDtoList) {
 
-    private void onResponseReceived(List<ProjectDto> projectDtoList) {
+        if(!projectDtoList.isEmpty()){
+
+            List<Section<ProjectDto>> sectionList = createSectionsFromProjectList(projectDtoList);
+
+            projectsView.hideProgressBar();
+
+            projectsView.hideRefreshIndicator();
+
+            projectsView.hideNoProjectsView();
+
+            projectsView.showProjectsView();
+
+            projectsView.showProjects(sectionList);
+
+
+        }
+
+    }
+
+
+
+    private void onCloudResponseReceived(List<ProjectDto> projectDtoList) {
 
         if(projectDtoList.isEmpty()){
 
@@ -138,7 +180,6 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
             projectsView.showProjects(sectionList);
 
         }
-
     }
 
     private List<Section<ProjectDto>> createSectionsFromProjectList(List<ProjectDto> projectDtoList){
