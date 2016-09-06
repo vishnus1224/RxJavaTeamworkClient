@@ -84,4 +84,8 @@ To get all the projects
             }
         });
         
+#Sample   
+A sample project is included which demonstrates the usage of the API client. The sample displays a list of latest activity and projects exactly as per the current teamwork android app.   
+
+The sample is built using the MVP architecture alongwith RxJava, Retrofit2, Dagger2, Picasso and Realm.
 
