@@ -56,7 +56,7 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
     }
 
 
-    public void searchProjects(String queryString){
+    public void searchProjects(final String queryString){
 
         projectsDataManager.searchItems(queryString, new Subscriber<List<ProjectDto>>() {
             @Override
@@ -72,7 +72,21 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
             @Override
             public void onNext(List<ProjectDto> projectDtoList) {
 
-                projectsView.showProjects(projectDtoToSectionMapper.map(projectDtoList));
+                List<Section<ProjectDto>> sectionList = projectDtoToSectionMapper.map(projectDtoList);
+
+                if(!queryString.equals("") && !sectionList.isEmpty()){
+
+                    Section<ProjectDto> section = sectionList.get(0);
+
+                    if(section.getSectionTitle().equals("Starred Projects")){
+
+                        sectionList.remove(section);
+
+                    }
+
+                }
+
+                projectsView.showProjects(sectionList);
 
             }
         });
