@@ -36,8 +36,10 @@ A TeamworkApiConfig instance is needed to make any kind of request. This object 
 **LatestActivityApiClient**   
 The LatestActivityApiClient provides all the information about latest activities of an user. The client offers a fluent interface for setting query parameter on the request.    
 
+To get all the latest activity   
+
         LatestActivityApiClient latestActivityClient = new LatestActivityApiClient(teamworkApiConfig);
-        latestActivityApiClient.maxItems(10).onlyStarred(false).subscribe(new Subscriber<List<LatestActivityDto>>() {
+        latestActivityApiClient.maxItems(10).onlyStarred(false).getLatestActivity().subscribe(new Subscriber<List<LatestActivityDto>>() {
             @Override
             public void onCompleted() {
 
@@ -57,3 +59,29 @@ The LatestActivityApiClient provides all the information about latest activities
         });
 
 By default, `maxItems` are set to 60 and `onlyStarred` is false.
+
+**ProjectApiClient**   
+Handles all the operations related to the teamworks projects api. All the options that can be passed in while fetching projects can be set on this client with the help of the fluent interface.
+
+To get all the projects    
+
+        ProjectApiClient projectApiClient = new ProjectApiClient(teamworkApiConfig);
+        //set the page number to fetch the results from using the page method.
+        projectApiClient.page(2).getAllProjects().subscribe(new Subscriber<List<ProjectDto>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(List<ProjectDto> projectDtoList) {
+
+            }
+        });
+        
+
