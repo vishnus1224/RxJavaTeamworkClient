@@ -84,6 +84,10 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
         @Override
         public void onCompleted() {
 
+            projectsView.hideProgressBar();
+
+            projectsView.hideRefreshIndicator();
+
         }
 
         @Override
@@ -135,10 +139,6 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
 
             List<Section<ProjectDto>> sectionList = createSectionsFromProjectList(projectDtoList);
 
-            projectsView.hideProgressBar();
-
-            projectsView.hideRefreshIndicator();
-
             projectsView.hideNoProjectsView();
 
             projectsView.showProjectsView();
@@ -156,10 +156,6 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
 
         if(projectDtoList.isEmpty()){
 
-            projectsView.hideProgressBar();
-
-            projectsView.hideRefreshIndicator();
-
             projectsView.hideProjectsView();
 
             projectsView.showNoProjectsView();
@@ -168,10 +164,6 @@ public class ProjectsPresenter implements BasePresenter<ProjectsView> {
         }else{
 
             List<Section<ProjectDto>> sectionList = createSectionsFromProjectList(projectDtoList);
-
-            projectsView.hideProgressBar();
-
-            projectsView.hideRefreshIndicator();
 
             projectsView.hideNoProjectsView();
 

@@ -87,14 +87,15 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
         @Override
         public void onCompleted() {
 
+            latestActivitiesView.hideProgressBar();
 
-            String s = "Sds";
+            latestActivitiesView.hideRefreshIndicator();
+
         }
 
         @Override
         public void onError(Throwable e) {
 
-            String s = "Sds";
 
         }
 
@@ -143,10 +144,6 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
             //create a list of sections for the recycler view to display.
             List<Section<LatestActivityDto>> sections = convertToSections(latestActivityDtoList);
 
-            latestActivitiesView.hideProgressBar();
-
-            latestActivitiesView.hideRefreshIndicator();
-
             //hide the no activity view if it was shown previously.
             latestActivitiesView.hideNoActivityView();
 
@@ -173,10 +170,6 @@ public class LatestActivitiesPresenter implements BasePresenter<LatestActivities
 
             //create a list of sections for the recycler view to display.
             List<Section<LatestActivityDto>> sections = convertToSections(latestActivityDtoList);
-
-            latestActivitiesView.hideProgressBar();
-
-            latestActivitiesView.hideRefreshIndicator();
 
             //hide the no activity view if it was shown previously.
             latestActivitiesView.hideNoActivityView();
