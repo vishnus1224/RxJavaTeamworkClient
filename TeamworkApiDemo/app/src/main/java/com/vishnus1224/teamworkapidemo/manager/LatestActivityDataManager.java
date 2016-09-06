@@ -27,6 +27,10 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
 
     private BaseRepository latestActivityRealmRepository;
 
+    private Subscription databaseSubscription;
+
+    private Subscription cloudSubscription;
+
     @Inject
     public LatestActivityDataManager(@Named("activityRepo") BaseRepository latestActivityRepository,
                                      @Named("activityRealmRepo") BaseRepository latestActivityRealmRepository) {
@@ -46,7 +50,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
 
                         latestActivityRealmRepository.addAll(latestActivityModels);
 
-                        latestActivityRealmRepository.getAllItems().subscribe(cloudSubscriber);
+                        cloudSubscription = latestActivityRealmRepository.getAllItems().subscribe(cloudSubscriber);
 
 
                     }
@@ -59,7 +63,7 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
                     }
                 });
 
-        latestActivityRealmRepository.getAllItems()
+        databaseSubscription = latestActivityRealmRepository.getAllItems()
                 .doOnCompleted(new Action0() {
                     @Override
                     public void call() {
@@ -88,6 +92,9 @@ public class LatestActivityDataManager implements DataManager<LatestActivityDto>
     @Override
     public void unSubscribe() {
 
+        unSubscribeIfNotAlreadyDone(databaseSubscription);
+
+        unSubscribeIfNotAlreadyDone(cloudSubscription);
 
     }
 

@@ -26,6 +26,10 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
 
     private BaseRepository projectRealmRepository;
 
+    private Subscription databaseSubscription;
+
+    private Subscription cloudSubscription;
+
 
     @Inject
     public ProjectDataManager(@Named("projectCloudRepo") BaseRepository projectCloudRepository,
@@ -47,7 +51,7 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
 
                         projectRealmRepository.addAll(projectDtoList);
 
-                        projectRealmRepository.getAllItems().subscribe(cloudSubscriber);
+                        cloudSubscription = projectRealmRepository.getAllItems().subscribe(cloudSubscriber);
 
                     }
 
@@ -60,7 +64,7 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
                     }
                 });
 
-        projectRealmRepository.getAllItems()
+        databaseSubscription = projectRealmRepository.getAllItems()
                 .doOnCompleted(new Action0() {
                     @Override
                     public void call() {
@@ -88,6 +92,9 @@ public class ProjectDataManager implements DataManager<ProjectDto> {
     @Override
     public void unSubscribe() {
 
+        unSubscribeIfNotAlreadyDone(databaseSubscription);
+
+        unSubscribeIfNotAlreadyDone(cloudSubscription);
 
     }
 
