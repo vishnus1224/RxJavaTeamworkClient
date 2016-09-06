@@ -3,7 +3,7 @@ A reactive Teamwork API client written using RxJava.
 
 #Usage
 
-**Authentication**
+**Authentication**   
 Authentication is done using the `AuthenticationApiClient`. It has a single method `authenticate()` which returns an `Observable` of type `AccountResponse`.    
 
     AuthenticationApiClient authClient = new AuthenticationApiClient("token");    
@@ -24,5 +24,14 @@ Authentication is done using the `AuthenticationApiClient`. It has a single meth
             //get the account url.
             String url = account.getURL();
             
-        }});
+        }});    
+        
+        
+**TeamworkApiConfig**    
+A TeamworkApiConfig instance is needed to make any kind of request. This object is formed by passing in the apiToken and the userURL obtained from the authentication. The config is used to authenticate the user requests.
+
+e.g.
+
+        TeamworkApiConfig config = new TeamworkApiConfig("token", "url");
+
 
