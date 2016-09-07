@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * Helper class for handling operations related to dates.
  * Created by Vishnu on 8/28/2016.
  */
-public final class DateTimeHelper {
+public class DateTimeHelper {
 
     private static final String ZULU_DATE_TIME_PATTERN = "yyyy-MM-dd'T'hh:mm:ss'Z'";
 
