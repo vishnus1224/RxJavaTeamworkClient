@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.repository;
 
+import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.datastore.DataStore;
 import com.vishnus1224.teamworkapidemo.mapper.LatestActivityResponseToDtoMapper;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
@@ -15,7 +16,7 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,6 +57,7 @@ public class LatestActivityCloudRepositoryTest {
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
 
+        verify(latestActivityResponseToDtoMapper, never()).map(new LatestActivityResponse());
         verify(dataStore).getAllItems();
 
     }
