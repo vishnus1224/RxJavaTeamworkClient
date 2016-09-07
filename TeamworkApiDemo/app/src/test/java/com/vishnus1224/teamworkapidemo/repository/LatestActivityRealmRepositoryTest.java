@@ -79,7 +79,6 @@ public class LatestActivityRealmRepositoryTest {
     @Test
     public void testGetAllItems() throws Exception {
 
-        latestActivityRealmRepository.getAllItems();
 
     }
 
