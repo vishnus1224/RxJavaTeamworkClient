@@ -2,6 +2,7 @@ package com.vishnus1224.teamworkapidemo;
 
 import com.vishnus1224.rxjavateamworkclient.model.LatestActivityResponse;
 import com.vishnus1224.teamworkapidemo.model.LatestActivityDto;
+import com.vishnus1224.teamworkapidemo.model.PeopleDto;
 
 /**
  * Created by Vishnu on 9/7/2016.
@@ -33,6 +34,12 @@ public class TestDataStore {
         latestActivityResponse.setId(id);
 
         return latestActivityResponse;
+
+    }
+
+    protected PeopleDto createPeopleDto(String id){
+
+        return new PeopleDto(id);
 
     }
 }
