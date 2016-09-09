@@ -1,6 +1,10 @@
 # RxJavaTeamworkClient
 A reactive Teamwork API client written using RxJava.
 
+##Workflow Demo
+
+![](https://github.com/vishnus1224/RxJavaTeamworkClient/blob/master/demo/demo.gif)
+
 #Usage
 
 **Authentication**   
