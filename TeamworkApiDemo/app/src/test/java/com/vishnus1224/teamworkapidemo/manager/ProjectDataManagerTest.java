@@ -1,5 +1,6 @@
 package com.vishnus1224.teamworkapidemo.manager;
 
+import com.vishnus1224.teamworkapidemo.model.ProjectDto;
 import com.vishnus1224.teamworkapidemo.repository.BaseRepository;
 
 import org.junit.Before;
@@ -21,6 +22,7 @@ import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -46,6 +48,10 @@ public class ProjectDataManagerTest {
 
         MockitoAnnotations.initMocks(this);
 
+        mockStatic(Schedulers.class);
+
+        mockStatic(AndroidSchedulers.class);
+
         projectDataManager = new ProjectDataManager(cloudRepository, realmRepository);
 
     }
@@ -56,10 +62,6 @@ public class ProjectDataManagerTest {
         when(cloudRepository.getAllItems()).thenReturn(Observable.error(new UnknownHostException()));
 
         when(realmRepository.getAllItems()).thenReturn(Observable.empty());
-
-        mockStatic(Schedulers.class);
-
-        mockStatic(AndroidSchedulers.class);
 
         TestScheduler testScheduler = new TestScheduler();
 
@@ -84,10 +86,12 @@ public class ProjectDataManagerTest {
     @Test
     public void testSearchItems() throws Exception {
 
+        when(realmRepository.searchItems(anyString())).thenReturn(Observable.empty());
+
+        projectDataManager.searchItems("cvz", new TestSubscriber<List<ProjectDto>>());
+
+        verify(realmRepository).searchItems(anyString());
+
     }
 
-    @Test
-    public void testUnSubscribe() throws Exception {
-
-    }
 }
