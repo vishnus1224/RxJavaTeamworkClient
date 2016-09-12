@@ -1,6 +1,7 @@
 package com.vishnus1224.teamworkapidemo;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -15,6 +16,12 @@ public class RealmMockProvider {
     protected Realm mockRealm(){
 
         return mock(Realm.class);
+
+    }
+
+    protected RealmConfiguration mockRealmConfiguration(){
+
+        return mock(RealmConfiguration.class);
 
     }
 
